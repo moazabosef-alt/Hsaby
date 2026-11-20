@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d0d0d" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="حساباتي" />
+  <title>حساباتي - AZHA</title>
+  <style>
+    :root {
+      --bg: #0b0b0d;
+      --card: #151519;
+      --card-2: #1e1e24;
+      --gold: #d4af37;
+      --gold-soft: rgba(212, 175, 55, 0.14);
+      --red: #dc2626;
+      --red-soft: rgba(220, 38, 38, 0.15);
+      --green: #16a34a;
+      --text: #f5f5f7;
+      --muted: #a1a1aa;
+      --border: rgba(212, 175, 55, 0.22);
+    }
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    .hidden { display: none !important; }
+    button, input, select, textarea {
+      font-family: inherit;
+      color: var(--text);
+    }
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    .btn-gold { background: var(--gold); color: #111; }
+    .btn-gold:hover { filter: brightness(1.08); }
+    .btn-red { background: var(--red); color: #fff; }
+    .btn-dark { background: var(--card-2); color: var(--text); border: 1px solid var(--border); }
+    .btn-sm { padding: 6px 10px; font-size: 12px; border-radius: 8px; }
+
+    /* شاشة القفل */
+    #lockScreen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: radial-gradient(circle at top, rgba(220, 38, 38, 0.16), transparent 55%), var(--bg);
+    }
+    .lock-box {
+      width: 100%;
+      max-width: 390px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 22px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+    }
+    .logo-ring {
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      background: var(--card-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
+    }
+    .logo-ring img { width: 100%; height: 100%; object-fit: cover; }
+    .field { text-align: right; margin-bottom: 14px; }
+    .field label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      background: var(--card-2);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 11px 12px;
+      font-size: 14px;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    .err-msg { color: #f87171; font-size: 13px; margin-bottom: 10px; min-height: 18px; }
+
+    /* التطبيق الرئيسي */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(18, 18, 22, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold);
+      object-fit: cover;
+    }
+    .brand-title { font-size: 17px; font-weight: 800; color: var(--gold); }
+    .brand-sub { font-size: 11px; color: var(--muted); }
+    .top-actions { display: flex; gap: 8px; align-items: center; }
+
+    .nav {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 10px 16px;
+      background: #101014;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-btn {
+      background: var(--card);
+      color: var(--muted);
+      border: 1px solid transparent;
+      white-space: nowrap;
+      padding: 8px 13px;
+      font-size: 13px;
+    }
+    .nav-btn.active {
+      background: var(--gold-soft);
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    main { max-width: 1050px; margin: 0 auto; padding: 16px; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .stat {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .stat small { color: var(--muted); font-size: 12px; }
+    .stat strong { display: block; font-size: 20px; margin-top: 6px; }
+    .gold-txt { color: var(--gold); }
+    .red-txt { color: #f87171; }
+    .green-txt { color: #4ade80; }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 14px; }
+    .panel {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .panel h3 { margin: 0 0 12px; font-size: 15px; color: var(--gold); }
+    .item-card {
+      background: var(--card-2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+    .row-between { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .badge {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(212, 175, 55, 0.15);
+      color: var(--gold);
+    }
+    .badge-red { background: var(--red-soft); color: #fca5a5; }
+    .badge-green { background: rgba(22, 163, 74, 0.18); color: #86efac; }
+    .sub-list { margin-top: 8px; padding-top: 8px; border-top: 1px dashed rgba(255,255,255,0.1); font-size: 12px; color: var(--muted); }
+    .sub-row { display: flex; justify-content: space-between; padding: 3px 0; }
+
+    .flex-actions { display:flex;gap:6px;flex-wrap:wrap;margin-top:10px; }
+    .mini-action { padding:6px 9px;font-size:12px; }
+    .pay-row { display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px dashed rgba(255,255,255,.09);padding:7px 0; }
+    .financial-line { margin-top:8px;font-size:13px;line-height:2; }
+    .status-select { max-width:180px;width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:7px;font-size:12px; }
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: #111;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 13px;
+      z-index: 99;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+
+    /* لوحة البداية والتقارير الدورية */
+    .stat-link{cursor:pointer;text-align:right;transition:transform .16s,border-color .16s;min-width:0}
+    .stat-link:hover,.stat-link:focus-visible{transform:translateY(-2px);border-color:var(--gold);outline:none}
+    .stat-link small{display:block;line-height:1.7}
+    .stat-link strong{overflow-wrap:anywhere}
+    .stat-hint{font-size:11px;color:var(--muted);margin-top:7px}
+    .section-caption{color:var(--muted);font-size:12px;line-height:1.9;margin:0 0 12px}
+    .report-intro{padding:12px 14px;border:1px solid var(--border);background:linear-gradient(130deg,rgba(212,175,55,.16),rgba(212,175,55,.03));border-radius:14px;margin-bottom:14px}
+    .report-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .report-actions button{flex:1;min-width:150px}
+    .report-kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
+    .report-kpi{background:#202026;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.08)}
+    .report-kpi small{color:var(--muted);display:block;font-size:11px}
+    .report-kpi b{display:block;font-size:18px;margin-top:6px;overflow-wrap:anywhere}
+    .report-row{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+    .report-row small{color:var(--muted);font-size:11px}
+    .report-note{padding:11px;border:1px solid var(--border);border-radius:10px;color:#ead5a5;font-size:12px;line-height:1.9}
+    .report-logo{height:49px;width:49px;border-radius:50%;object-fit:contain;background:#fff;border:1px solid var(--gold)}
+    @media(max-width:400px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat{padding:12px}.stat strong{font-size:16px}.report-kpi b{font-size:16px}}
+
+  </style>
+</head>
+<body>
+
+  <!-- شاشة القفل -->
+  <section id="lockScreen">
+    <div class="lock-box">
+      <div class="logo-ring">
+        <img id="lockLogo" alt="AZHA Logo" />
+      </div>
+      <h2 style="margin:0 0 4px; color:var(--gold);">حساباتي</h2>
+      <p style="margin:0 0 18px; font-size:12px; color:var(--muted);">نظام الإدارة المالية ومتابعة الأشغال</p>
+      <div class="field">
+        <label>اسم المستخدم</label>
+        <input id="loginUser" type="text" placeholder="أدخل اسم المستخدم" autocomplete="username" />
+      </div>
+      <div class="field">
+        <label>الرقم السري</label>
+        <input id="loginPass" type="password" placeholder="أدخل الرقم السري" autocomplete="current-password" />
+      </div>
+      <p id="authHint" style="font-size:12px;color:var(--muted);line-height:1.8;">جاري التحقق من الإعدادات...</p>
+      <div id="loginError" class="err-msg" role="alert"></div>
+      <button id="loginButton" class="btn-gold" style="width:100%;" onclick="handleLogin()">دخول إلى حساباتي</button>
+    </div>
+  </section>
+
+  <!-- التطبيق -->
+  <div id="app" class="hidden">
+    <header>
+      <div class="brand">
+        <img id="topLogo" alt="AZHA Logo" />
+        <div>
+          <div class="brand-title">حساباتي</div>
+          <div class="brand-sub" id="welcomeSub">مرحباً بك</div>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="btn-dark btn-sm" onclick="testAlertSound()">🔊 تجربة التنبيه</button>
+        <button class="btn-red btn-sm" onclick="lockApp()">🔒 قفل</button>
+      </div>
+    </header>
+
+    <nav class="nav">
+      <button class="nav-btn active" data-tab="dash" onclick="switchTab('dash')">📊 الملخص</button>
+      <button class="nav-btn" data-tab="owedToMe" onclick="switchTab('owedToMe')">💰 ديون لي عند الناس</button>
+      <button class="nav-btn" data-tab="owedByMe" onclick="switchTab('owedByMe')">📤 ديون عليّ للناس</button>
+      <button class="nav-btn" data-tab="tx" onclick="switchTab('tx')">💳 المصروفات والدخل</button>
+      <button class="nav-btn" data-tab="tasks" onclick="switchTab('tasks')">🛠️ أشغال الزبائن</button>
+      <button class="nav-btn" data-tab="reports" onclick="switchTab('reports')">📅 التقارير</button>
+      <button class="nav-btn" data-tab="settings" onclick="switchTab('settings')">⚙️ الإعدادات</button>
+    </nav>
+
+    <main>
+      <!-- الملخص -->
+      <section id="tab-dash">
+        <div class="report-intro"><div class="row-between"><div><div style="font-size:17px;font-weight:800;color:var(--gold)">📊 لوحة حساباتي</div><div style="font-size:12px;color:var(--muted);margin-top:6px">نظرة سريعة إلى أقسامك المالية — اضغط أي بطاقة لفتح تفاصيلها</div></div><button class="btn-dark btn-sm" onclick="switchTab('reports')">📅 عرض التقارير</button></div></div>
+        <div class="stats">
+          <div class="stat stat-link" tabindex="0" role="button" aria-label="فتح قسم tx" onclick="switchTab('tx')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('tx')}"><small>صافي المقبوضات والمصروفات المسجّلة</small><strong id="stNet" class="gold-txt">0 د.ل</strong><div class="stat-hint">اضغط لعرض التفاصيل ←</div></div>
+          <div class="stat stat-link" tabindex="0" role="button" aria-label="فتح قسم owedToMe" onclick="switchTab('owedToMe')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('owedToMe')}"><small>إجمالي الديون لي</small><strong id="stOwedToMe" class="green-txt">0 د.ل</strong><div class="stat-hint">اضغط لعرض التفاصيل ←</div></div>
+          <div class="stat stat-link" tabindex="0" role="button" aria-label="فتح قسم owedByMe" onclick="switchTab('owedByMe')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('owedByMe')}"><small>إجمالي الديون عليّ</small><strong id="stOwedByMe" class="red-txt">0 د.ل</strong><div class="stat-hint">اضغط لعرض التفاصيل ←</div></div>
+          <div class="stat stat-link" tabindex="0" role="button" aria-label="فتح قسم tasks" onclick="switchTab('tasks')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('tasks')}"><small>أشغال لم تُسلّم</small><strong id="stTasks" class="gold-txt">0 شغل</strong><div class="stat-hint">اضغط لعرض التفاصيل ←</div></div>
+          <div class="stat stat-link" tabindex="0" role="button" aria-label="فتح قسم tasks" onclick="switchTab('tasks')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('tasks')}"><small>مقبوض من أشغال الزبائن</small><strong id="stTaskPaid" class="green-txt">0 د.ل</strong><div class="stat-hint">اضغط لعرض التفاصيل ←</div></div>
+          <div class="stat stat-link" tabindex="0" role="button" aria-label="فتح قسم tasks" onclick="switchTab('tasks')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('tasks')}"><small>مبالغ متبقية على الزبائن</small><strong id="stTaskDue" class="gold-txt">0 د.ل</strong><div class="stat-hint">اضغط لعرض التفاصيل ←</div></div>
+          <div class="stat stat-link" tabindex="0" role="button" onclick="switchTab('tasks')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('tasks')}"><small>القيمة الكلية لأشغال الزبائن</small><strong id="stJobTotal" class="gold-txt">0 د.ل</strong><div class="stat-hint">اضغط لعرض تفاصيل الأشغال ←</div></div>
+          <div class="stat stat-link" tabindex="0" role="button" onclick="switchTab('reports')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('reports')}"><small>صافي حركة هذا الشهر</small><strong id="stMonthNet" class="gold-txt">0 د.ل</strong><div class="stat-hint">اضغط لفتح التقرير الشهري ←</div></div>
+        </div>
+        <div class="panel">
+          <h3>تذكيرات اليوم والأشغال المعلقة</h3>
+          <div id="dashReminders" style="font-size:13px; color:var(--muted);">جاري التحميل...</div>
+          <div id="legacyNotice" class="hidden" style="margin-top:10px;padding:10px;border:1px solid var(--border);border-radius:10px;font-size:12px;color:#f3ca78;line-height:1.8"></div>
+        </div>
+      </section>
+
+      <!-- ديون لي عند الناس -->
+      <section id="tab-owedToMe" class="hidden">
+        <div class="grid-2">
+          <div class="panel">
+            <h3>إضافة سلفة / دين لي عند شخص</h3>
+            <div class="field"><label>اسم المدين</label><input id="dToMeName" type="text" placeholder="مثال: أحمد سالم" /></div>
+            <div class="field"><label>رقم الهاتف (اختياري)</label><input id="dToMePhone" type="tel" inputmode="tel" placeholder="091..." /></div>
+            <div class="field"><label>المبلغ (د.ل)</label><input id="dToMeAmt" type="number" step="0.01" placeholder="0.00" /></div>
+            <div class="field"><label>في ماذا أخذ المال؟</label><input id="dToMeReason" type="text" placeholder="سبب السلفة أو الشراء" /></div>
+            <div class="field"><label>تاريخ الاستلام</label><input id="dToMeDate" type="date" /></div>
+            <button class="btn-gold" style="width:100%;" onclick="addDebt('owedToMe')">إضافة وتجميع تلقائي</button>
+          </div>
+          <div>
+            <div id="listOwedToMe"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ديون عليّ للناس -->
+      <section id="tab-owedByMe" class="hidden">
+        <div class="grid-2">
+          <div class="panel">
+            <h3>إضافة دين عليّ لشخص أو جهة</h3>
+            <div class="field"><label>اسم الدائن (الذي أطلب منه)</label><input id="dByMeName" type="text" placeholder="مثال: مورد / شخص" /></div>
+            <div class="field"><label>رقم الهاتف (اختياري)</label><input id="dByMePhone" type="tel" inputmode="tel" placeholder="091..." /></div>
+            <div class="field"><label>المبلغ (د.ل)</label><input id="dByMeAmt" type="number" step="0.01" placeholder="0.00" /></div>
+            <div class="field"><label>في ماذا أخذت المال؟</label><input id="dByMeReason" type="text" placeholder="سبب الالتزام أو الدين" /></div>
+            <div class="field"><label>تاريخ الاستلام</label><input id="dByMeDate" type="date" /></div>
+            <button class="btn-red" style="width:100%;" onclick="addDebt('owedByMe')">تسجيل الدين عليّ</button>
+          </div>
+          <div>
+            <div id="listOwedByMe"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- المصروفات والدخل -->
+      <section id="tab-tx" class="hidden">
+        <div class="grid-2">
+          <div class="panel">
+            <h3>تسجيل عملية جديدة (مصروف أو دخل)</h3>
+            <div class="field">
+              <label>نوع العملية</label>
+              <select id="txType">
+                <option value="expense">مصروف (صرف مال)</option>
+                <option value="income">دخل (إيراد / شغل منجز)</option>
+              </select>
+            </div>
+            <div class="field"><label>تصنيف العملية</label><select id="txScope"><option value="business">متعلقة بالشغل / النشاط</option><option value="personal">شخصية / منزلية</option><option value="unknown">غير مصنفة</option></select></div>
+            <div class="field"><label>المبلغ (د.ل)</label><input id="txAmt" type="number" step="0.01" placeholder="0.00" /></div>
+            <div class="field"><label>البيان / أين صُرف أو من أين جاء؟</label><input id="txNote" type="text" placeholder="مثال: وقود، غداء، تصميم، صيانة..." /></div>
+            <div class="field"><label>التاريخ</label><input id="txDate" type="date" /></div>
+            <button class="btn-gold" style="width:100%;" onclick="addTx()">حفظ العملية</button>
+          </div>
+          <div class="panel">
+            <h3>سجل المصروفات والدخل</h3>
+            <div id="listTx"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- أشغال الزبائن -->
+      <section id="tab-tasks" class="hidden">
+        <div class="grid-2">
+          <div class="panel">
+            <h3>إضافة شغل زبون وموعد تسليمه</h3>
+            <div class="field"><label>اسم الزبون</label><input id="taskClient" type="text" placeholder="اسم الزبون" /></div>
+            <div class="field"><label>هاتف الزبون (اختياري)</label><input id="taskPhone" type="tel" inputmode="tel" placeholder="091..." /></div>
+            <div class="field"><label>تفاصيل الشغل المطلوب</label><input id="taskDesc" type="text" placeholder="مثال: تصميم، طباعة، صيانة..." /></div>
+            <div class="field"><label>تاريخ التسليم المحدد</label><input id="taskDue" type="date" /></div>
+            <div class="field"><label>قيمة الشغل المتفق عليها (د.ل)</label><input id="taskPrice" type="number" step="0.01" placeholder="0.00" /></div>
+            <div class="field"><label>العربون المقبوض الآن (اختياري) — يُحتسب دخلًا عند تسجيله فقط</label><input id="taskDeposit" type="number" min="0" step="0.01" placeholder="0.00" /></div>
+            <button id="saveTaskBtn" class="btn-gold" style="width:100%;" onclick="addTask()">إضافة الشغل</button>
+            <button id="cancelTaskEditBtn" class="btn-dark hidden" style="width:100%;margin-top:8px" onclick="cancelTaskEdit()">إلغاء تعديل الشغل</button>
+            <p style="font-size:12px;color:var(--muted);line-height:1.8">تسجيل الشغل أو تسليمه لا يُضيف دخلًا. يُضاف للدخل فقط ما استلمته بالفعل من عربون ودفعات.</p>
+          </div>
+          <div class="panel">
+            <h3>أشغال الزبائن — حالة الشغل وحالة السداد منفصلتان</h3>
+            <div id="listTasks"></div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- التقارير اليومية والشهرية -->
+      <section id="tab-reports" class="hidden">
+        <div class="report-intro"><div style="font-weight:800;color:var(--gold);font-size:18px">📅 التقارير المالية</div>
+          <p class="section-caption">تقرير يومي أو شهري تلقائي، بالمقبوض الفعلي والمصروفات والديون وأشغال الزبائن. دون إنترنت أو اشتراك.</p></div>
+        <div class="panel">
+          <h3>اختيار فترة التقرير</h3>
+          <div class="grid-2">
+            <div class="field"><label>نوع التقرير</label><select id="reportPeriod" onchange="reportPeriodChanged()"><option value="day">يومي</option><option value="month">شهري</option></select></div>
+            <div class="field"><label>التاريخ / الشهر</label><input id="reportDate" type="date" onchange="renderReport()"/></div>
+          </div>
+          <button class="btn-dark btn-sm" onclick="showCurrentReport()">اليوم / الشهر الحالي</button>
+        </div>
+        <div class="panel"><h3 id="reportTitle">ملخص التقرير</h3><div id="reportResult"></div>
+          <div class="report-actions"><button class="btn-gold" onclick="exportReportPdf()">📄 تقرير PDF (طباعة / حفظ)</button><button class="btn-dark" onclick="exportReportCsv()">📊 تنزيل Excel (CSV)</button></div>
+          <p class="section-caption" style="margin-top:12px">تُحسب الحركات حسب تاريخ العملية المدخل. ملف CSV يُفتح في Excel مجانًا وبالعربية. PDF يُحفظ عبر خيار «حفظ كملف PDF» من نافذة طباعة Android. لا تتطلب التقارير استضافة.</p>
+        </div>
+      </section>
+
+      <!-- الإعدادات -->
+      <section id="tab-settings" class="hidden">
+        <div class="grid-2">
+          <div class="panel">
+            <h3>التنبيهات وبيانات الدخول</h3>
+            <div class="field">
+              <label>تكرار تنبيه الأشغال غير المنجزة (بالساعات)</label>
+              <select id="setTaskHours">
+                <option value="3">كل 3 ساعات</option>
+                <option value="4">كل 4 ساعات</option>
+                <option value="5">كل 5 ساعات</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>ساعة التذكير اليومي لفتح البرنامج وتسجيل اليوميات</label>
+              <input id="setDailyTime" type="time" value="21:00" />
+            </div>
+            <div class="field"><label>موعد إشعار ملخص اليوم</label><select id="setReportTime"><option value="23:00">11:00 ليلاً</option><option value="23:30">11:30 ليلاً</option><option value="00:00">12:00 منتصف الليل (عن اليوم السابق)</option></select></div>
+            <div class="field"><label>تفعيل التقرير اليومي</label><select id="setDailyReportEnabled"><option value="yes">نعم — إشعار كل يوم</option><option value="no">لا</option></select></div>
+            <div class="field"><label>تفعيل التقرير الشهري</label><select id="setMonthlyReportEnabled"><option value="yes">نعم — يوم 1 من الشهر الجديد عن الشهر السابق</option><option value="no">لا</option></select></div>
+            <p class="section-caption">إشعارات Android تعمل في الخلفية إذا منحت التطبيق إذن الإشعارات. قد يتأخر وقتها قليلًا بسبب توفير البطارية.</p>
+            <div class="field"><label>اسم المستخدم</label><input id="setUser" type="text" /></div>
+            <div class="field"><label>كلمة مرور جديدة (اتركها فارغة إن لم ترغب بتغييرها)</label><input id="setPass" type="password" autocomplete="new-password" placeholder="8 أحرف أو أكثر" /></div>
+            <button class="btn-gold" style="width:100%;" onclick="saveSettings()">حفظ الإعدادات</button>
+          </div>
+          <div class="panel">
+            <h3>شعار التطبيق ونسخة احتياطية</h3>
+            <div class="field">
+              <label>تغيير شعار التطبيق (اختياري)</label>
+              <input id="setLogoFile" type="file" accept="image/*" onchange="updateCustomLogo(event)" />
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;">
+              <button class="btn-dark" onclick="exportBackup()">⬇️ تحميل نسخة احتياطية</button>
+              <button class="btn-dark" onclick="importBackup()">⬆️ استيراد نسخة احتياطية</button>
+              <input id="backupFile" type="file" accept="application/json,.json" class="hidden" onchange="importBackupFromFile(event)" />
+              <button class="btn-red" onclick="resetAllData()">🗑️ مسح الكل</button>
+            </div>
+            <p style="font-size:12px;color:var(--muted);line-height:1.8">احفظ نسخة احتياطية دورياً. الملف غير مشفّر وقد يحتوي على بياناتك المالية. استيراد نسخة يستبدل السجلات الحالية.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'hisabati_azha_v1';
+
+    function defaultLogoSvg() {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="95" fill="#141418" stroke="#d4af37" stroke-width="6"/>
+        <circle cx="100" cy="100" r="68" fill="#1f1f26" stroke="#dc2626" stroke-width="4"/>
+        <path d="M100 42 L117 82 L160 85 L127 112 L138 154 L100 130 L62 154 L73 112 L40 85 L83 82 Z" fill="#d4af37"/>
+        <text x="100" y="182" text-anchor="middle" fill="#d4af37" font-size="16" font-weight="bold">AZHA</text>
+      </svg>`;
+      return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    }
+
+    function todayLocal() {
+      const d=new Date();
+      return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+    }
+    function money(n) { return Number(Number(n||0).toFixed(2)).toLocaleString('ar-LY',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+    function roundMoney(n) { return Math.round((Number(n)+Number.EPSILON)*100)/100; }
+    function esc(value) { return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+    function nextId() { return Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10); }
+    function cleanId(x) { return /^[A-Za-z0-9._-]{1,100}$/.test(String(x||''))?String(x):nextId(); }
+    function cleanText(x,max=500) { return String(x??'').slice(0,max); }
+    function cleanMoney(x) { const n=Number(x); return Number.isFinite(n)&&n>=0&&n<=1e12?roundMoney(n):0; }
+    function sumTaskPaid(task){return roundMoney((task.payments||[]).reduce((sum,p)=>sum+Number(p.amount||0),0));}
+    function taskRemaining(task){return Math.max(0,roundMoney(Number(task.price||0)-sumTaskPaid(task)));}
+    function taskStatus(task){return ['working','ready','delivered'].includes(task.status)?task.status:(task.done?'delivered':'working');}
+    function safePhone(phone){return String(phone??'').replace(/[^+0-9]/g,'').slice(0,24);}
+    function callPhone(phone){
+      const normalized=safePhone(phone);
+      if(!normalized)return showToast('لا يوجد رقم هاتف مسجل');
+      if(window.HisabatiAndroid?.openDialer){window.HisabatiAndroid.openDialer(normalized);return;}
+      window.location.href='tel:'+normalized;
+    }
+    function confirmRemove(message){return confirm(message+'\nيفضل حفظ نسخة احتياطية قبل الحذف.');}
+    function validDate(x) { const v=String(x||'');return /^\d{4}-\d{2}-\d{2}$/.test(v)?v:todayLocal(); }
+    function normalizeData(obj) {
+      if(!obj || typeof obj!=='object' || Array.isArray(obj))throw Error('صيغة بيانات غير صحيحة');
+      const normalized=structuredClone(defaultState);
+      for(const bucket of ['owedToMe','owedByMe']){
+        normalized[bucket]=(Array.isArray(obj[bucket])?obj[bucket]:[]).slice(0,10000).map(p=>({
+          id:cleanId(p?.id),name:cleanText(p?.name,160),phone:safePhone(p?.phone),
+          entries:(Array.isArray(p?.entries)?p.entries:[]).slice(0,10000).map(e=>({id:cleanId(e?.id),amount:cleanMoney(e?.amount),reason:cleanText(e?.reason,500),date:validDate(e?.date)})),
+          payments:(Array.isArray(p?.payments)?p.payments:[]).slice(0,10000).map(e=>({id:cleanId(e?.id),amount:cleanMoney(e?.amount),date:validDate(e?.date)}))
+        })).filter(p=>p.name);
+      }
+      normalized.tasks=(Array.isArray(obj.tasks)?obj.tasks:[]).slice(0,10000).map(t=>{
+        const status=['working','ready','delivered'].includes(t?.status)?t.status:(t?.done?'delivered':'working');
+        return {id:cleanId(t?.id),client:cleanText(t?.client,160),phone:safePhone(t?.phone),desc:cleanText(t?.desc,500),
+          due:String(t?.due||'غير محدد').slice(0,24),createdAt:/^\d{4}-\d{2}-\d{2}$/.test(String(t?.createdAt||''))?String(t.createdAt):'',deliveredAt:/^\d{4}-\d{2}-\d{2}$/.test(String(t?.deliveredAt||''))?String(t.deliveredAt):'',price:cleanMoney(t?.price),status,done:status==='delivered',
+          payments:(Array.isArray(t?.payments)?t.payments:[]).slice(0,10000).map(p=>({id:cleanId(p?.id),amount:cleanMoney(p?.amount),date:validDate(p?.date),note:cleanText(p?.note,200)}))};
+      }).filter(t=>t.client && t.desc);
+      // Older Gemini versions booked the *entire* agreed amount as income on delivery.
+      // Preserve those historical rows for audit, but exclude them from real cash income.
+      normalized.tx=(Array.isArray(obj.tx)?obj.tx:[]).slice(0,20000).map(t=>{
+        const note=cleanText(t?.note,500);
+        const taskId=t?.taskId?cleanId(t.taskId):undefined;
+        const oldAuto= t?.type==='income' && (
+          !!t?.legacyAccrual ||
+          (!!taskId && normalized.tasks.some(job=>job.id===taskId)) ||
+          normalized.tasks.some(job=>note===`تسليم شغل الزبون: ${job.client} (${job.desc})`)
+        );
+        return {id:cleanId(t?.id),type:t?.type==='income'?'income':'expense',amount:cleanMoney(t?.amount),note,
+          date:validDate(t?.date),scope:['business','personal'].includes(t?.scope)?t.scope:'unknown',taskId,legacyAccrual:!!oldAuto};
+      });
+      // This release intentionally replaces the old Gemini placeholder logo with the user's approved AZHA logo.
+      if(Number(obj.logoVersion)>=2 && typeof obj.logo==='string' && obj.logo.startsWith('data:image/') && obj.logo.length<1000000)normalized.logo=obj.logo;
+      const cfg=obj.settings||{};
+      normalized.settings.taskAlertHours=[3,4,5].includes(Number(cfg.taskAlertHours))?Number(cfg.taskAlertHours):3;
+      normalized.settings.dailyReminderTime=/^([01]\d|2[0-3]):[0-5]\d$/.test(String(cfg.dailyReminderTime))?String(cfg.dailyReminderTime):'21:00';
+      normalized.settings.reportTime=['23:00','23:30','00:00'].includes(String(cfg.reportTime))?String(cfg.reportTime):'23:00';
+      normalized.settings.dailyReportEnabled=cfg.dailyReportEnabled!==false;
+      normalized.settings.monthlyReportEnabled=cfg.monthlyReportEnabled!==false;
+      normalized.settings.lastTaskAlert=Number.isFinite(Number(cfg.lastTaskAlert))?Number(cfg.lastTaskAlert):0;
+      normalized.settings.lastDailyAlertDate=cleanText(cfg.lastDailyAlertDate,10);
+      return normalized;
+    }
+
+    function hasAccount() {return !!(state.auth?.username && state.auth?.passwordHash && state.auth?.passwordSalt);}
+    function refreshAuthScreen(){
+      const created=hasAccount();
+      document.getElementById('authHint').textContent=created
+        ?'أدخل بيانات دخولك الخاصة للوصول إلى سجلاتك المحفوظة على هذا الهاتف.'
+        :'أول تشغيل: اختر اسم مستخدم وكلمة مرور جديدة (8 أحرف على الأقل). لا توجد كلمة مرور افتراضية.';
+      document.getElementById('loginButton').textContent=created?'دخول إلى حساباتي':'إنشاء الدخول وفتح حساباتي';
+    }
+    function randomSalt(){const b=new Uint8Array(16);crypto.getRandomValues(b);return Array.from(b,x=>x.toString(16).padStart(2,'0')).join('');}
+    async function passwordHash(password,salt){
+      if(!crypto.subtle)throw Error('التشفير غير متاح، افتح التطبيق بطريقة آمنة');
+      const encoder=new TextEncoder();
+      const key=await crypto.subtle.importKey('raw',encoder.encode(password),'PBKDF2',false,['deriveBits']);
+      const hash=await crypto.subtle.deriveBits({name:'PBKDF2',salt:encoder.encode(salt),iterations:180000,hash:'SHA-256'},key,256);
+      return Array.from(new Uint8Array(hash),x=>x.toString(16).padStart(2,'0')).join('');
+    }
+    function nativeReminders(){
+      if(window.HisabatiAndroid?.configureReminders && hasAccount()){
+        try{window.HisabatiAndroid.configureReminders(Number(state.settings.taskAlertHours),String(state.settings.dailyReminderTime),state.tasks.filter(t=>!t.done).length);}catch(err){console.warn(err)}
+      }
+    }
+
+    const defaultState = {
+      auth: { username: '', passwordHash: '', passwordSalt: '' },
+      logo: "azha-logo.png",logoVersion:2,
+      settings: { taskAlertHours: 3, dailyReminderTime: '21:00', reportTime:'23:00',dailyReportEnabled:true,monthlyReportEnabled:true, lastTaskAlert: 0, lastDailyAlertDate: '' },
+      owedToMe: [],
+      owedByMe: [],
+      tx: [],
+      tasks: []
+    };
+
+    function loadState() {
+      try {
+        const raw=localStorage.getItem(STORAGE_KEY);
+        if(!raw)return structuredClone(defaultState);
+        const parsed=JSON.parse(raw);
+        const data=normalizeData(parsed);
+        if(parsed.auth?.passwordHash && parsed.auth?.passwordSalt && parsed.auth?.username){
+          data.auth={username:cleanText(parsed.auth.username,120),passwordHash:String(parsed.auth.passwordHash),passwordSalt:String(parsed.auth.passwordSalt)};
+        }
+        return data;
+      } catch(e){ console.error('تعذر قراءة البيانات المحفوظة',e);return structuredClone(defaultState); }
+    }
+
+    let state = loadState();
+    let editingTaskId = null;
+
+    function saveState() {
+      try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
+      catch(error){showToast('لم يُحفظ التغيير! قد تكون ذاكرة الهاتف ممتلئة');console.error(error);return false;}
+      renderAll();
+      nativeReminders();
+      syncNativeReports();
+      return true;
+    }
+
+    function applyLogos() {
+      const src = state.logo || defaultLogoSvg();
+      document.getElementById('lockLogo').src = src;
+      document.getElementById('topLogo').src = src;
+    }
+
+    function showToast(msg) {
+      const el = document.createElement('div');
+      el.className = 'toast';
+      el.textContent = msg;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 2600);
+    }
+
+    async function handleLogin() {
+      const u=document.getElementById('loginUser').value.trim();
+      const p=document.getElementById('loginPass').value;
+      const err=document.getElementById('loginError');
+      const button=document.getElementById('loginButton');
+      err.textContent='';button.disabled=true;
+      try{
+        if(!hasAccount()){
+          if(!u || p.length<8){err.textContent='اختر اسم مستخدم وكلمة مرور لا تقل عن 8 أحرف';return;}
+          const salt=randomSalt();
+          state.auth={username:u,passwordSalt:salt,passwordHash:await passwordHash(p,salt)};
+          if(!saveState())return;
+        } else {
+          const testHash=await passwordHash(p,state.auth.passwordSalt);
+          if(u!==state.auth.username || testHash!==state.auth.passwordHash){err.textContent='اسم المستخدم أو كلمة المرور غير صحيحة';return;}
+        }
+        document.getElementById('lockScreen').classList.add('hidden');
+        document.getElementById('app').classList.remove('hidden');
+        document.getElementById('loginPass').value='';
+        document.getElementById('welcomeSub').textContent='مرحباً '+state.auth.username;
+        syncSettingsInputs();renderAll();nativeReminders();
+      } catch(error){console.error(error);err.textContent='تعذر فتح التطبيق: '+error.message;}
+      finally{button.disabled=false;}
+    }
+
+    function lockApp() {
+      document.getElementById('loginPass').value = '';
+      document.getElementById('app').classList.add('hidden');
+      document.getElementById('lockScreen').classList.remove('hidden');
+    }
+
+    function switchTab(tab) {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+      ['dash', 'owedToMe', 'owedByMe', 'tx', 'tasks', 'reports', 'settings'].forEach(id => {
+        document.getElementById('tab-' + id).classList.toggle('hidden', id !== tab);
+      });
+      if(tab==='reports'){if(!document.getElementById('reportDate').value)reportPeriodChanged();else renderReport();}
+    }
+
+    function addDebt(bucket){
+      const prefix=bucket==='owedToMe'?'dToMe':'dByMe';
+      const name=document.getElementById(prefix+'Name').value.trim();
+      const phone=safePhone(document.getElementById(prefix+'Phone').value);
+      const amount=Number(document.getElementById(prefix+'Amt').value);
+      const reason=document.getElementById(prefix+'Reason').value.trim();
+      const date=document.getElementById(prefix+'Date').value||todayLocal();
+      if(!name||!Number.isFinite(amount)||amount<=0||amount>1e12)return showToast('يرجى إدخال الاسم والمبلغ الصحيح');
+      let person=state[bucket].find(p=>p.name.trim()===name);
+      if(!person){person={id:nextId(),name,phone,entries:[],payments:[]};state[bucket].push(person);}
+      else if(phone)person.phone=phone;
+      person.entries.push({id:nextId(),amount:roundMoney(amount),reason:reason||'سلفة / التزام',date});
+      for(const suffix of ['Name','Phone','Amt','Reason'])document.getElementById(prefix+suffix).value='';
+      if(saveState())showToast('تمت إضافة الدين وتحديث حساب الشخص');
+    }
+
+    function addPayment(bucket,personId) {
+      const person=state[bucket]?.find(p=>p.id===personId);
+      if(!person)return;
+      const rem=roundMoney(person.entries.reduce((a,b)=>a+b.amount,0)-person.payments.reduce((a,b)=>a+b.amount,0));
+      if(rem<=0)return showToast('هذا الدين مسدد بالكامل');
+      const entered=prompt('أدخل قيمة الدفعة المسددة (د.ل). المتبقي: '+money(rem));
+      if(entered===null)return;
+      const amt=Number(entered.trim());
+      if(!Number.isFinite(amt)||amt<=0||amt>rem)return showToast('المبلغ غير صالح أو أكبر من المتبقي');
+      person.payments.push({id:nextId(),amount:roundMoney(amt),date:todayLocal()});
+      if(saveState())showToast('تم احتساب الدفعة والمتبقي');
+    }
+
+    function editDebtPerson(bucket,id){
+      const p=state[bucket]?.find(x=>x.id===id);if(!p)return;
+      const name=prompt('اسم الشخص:',p.name);if(name===null)return;
+      if(!name.trim())return showToast('اسم الشخص مطلوب');
+      const phone=prompt('رقم الهاتف:',p.phone||'');if(phone===null)return;
+      p.name=name.trim().slice(0,160);p.phone=safePhone(phone);
+      if(saveState())showToast('تم تعديل بيانات الشخص');
+    }
+    function editDebtEntry(bucket,personId,entryId){
+      const p=state[bucket]?.find(x=>x.id===personId);const e=p?.entries.find(x=>x.id===entryId);if(!e)return;
+      const totalOther=p.entries.filter(x=>x.id!==entryId).reduce((s,x)=>s+x.amount,0);
+      const paid=p.payments.reduce((s,x)=>s+x.amount,0);
+      const val=prompt('قيمة الدين المعدلة:',e.amount);if(val===null)return;
+      const amount=Number(val);if(!Number.isFinite(amount)||amount<=0||roundMoney(totalOther+amount)<roundMoney(paid))return showToast('مبلغ غير صالح أو أقل من الدفعات المسددة');
+      const reason=prompt('سبب الدين:',e.reason);if(reason===null)return;
+      const date=prompt('تاريخ الدين (YYYY-MM-DD):',e.date);if(date===null)return;
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(date))return showToast('صيغة التاريخ غير صحيحة');
+      e.amount=roundMoney(amount);e.reason=reason.slice(0,500);e.date=date;
+      saveState();
+    }
+    function deleteDebtEntry(bucket,personId,entryId){
+      const p=state[bucket]?.find(x=>x.id===personId);if(!p)return;
+      const e=p.entries.find(x=>x.id===entryId);if(!e)return;
+      const rest=p.entries.filter(x=>x.id!==entryId).reduce((s,x)=>s+x.amount,0);
+      const paid=p.payments.reduce((s,x)=>s+x.amount,0);
+      if(rest<paid)return showToast('لا يمكن حذف الدين لأنه سيجعل الدفعات أكبر من الإجمالي');
+      if(!confirmRemove('هل تريد حذف هذا الدين؟'))return;
+      p.entries=p.entries.filter(x=>x.id!==entryId);saveState();
+    }
+    function editDebtPayment(bucket,personId,payId){
+      const p=state[bucket]?.find(x=>x.id===personId);const pay=p?.payments.find(x=>x.id===payId);if(!pay)return;
+      const val=prompt('قيمة الدفعة:',pay.amount);if(val===null)return;
+      const amount=Number(val);
+      const total=p.entries.reduce((s,x)=>s+x.amount,0);
+      const others=p.payments.filter(x=>x.id!==payId).reduce((s,x)=>s+x.amount,0);
+      if(!Number.isFinite(amount)||amount<=0||roundMoney(others+amount)>roundMoney(total))return showToast('الدفعة أكبر من المبلغ المستحق');
+      const date=prompt('تاريخ الدفعة (YYYY-MM-DD):',pay.date);if(date===null)return;
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(date))return showToast('صيغة التاريخ غير صحيحة');
+      pay.amount=roundMoney(amount);pay.date=date;saveState();
+    }
+    function deleteDebtPayment(bucket,personId,payId){
+      const p=state[bucket]?.find(x=>x.id===personId);if(!p||!confirmRemove('حذف هذه الدفعة سيزيد المبلغ المتبقي، هل أنت متأكد؟'))return;
+      p.payments=p.payments.filter(x=>x.id!==payId);saveState();
+    }
+
+    function addTx() {
+      const type=document.getElementById('txType').value;
+      const scope=document.getElementById('txScope').value;
+      const amount=Number(document.getElementById('txAmt').value);
+      const note=document.getElementById('txNote').value.trim();
+      const date=document.getElementById('txDate').value||todayLocal();
+      if(!Number.isFinite(amount)||amount<=0||amount>1e12)return showToast('أدخل مبلغاً صحيحاً');
+      state.tx.unshift({id:nextId(),type,scope,amount:roundMoney(amount),note:note||(type==='expense'?'مصروف عام':'دخل عام'),date});
+      document.getElementById('txAmt').value='';document.getElementById('txNote').value='';
+      if(saveState())showToast('تم حفظ العملية');
+    }
+
+    function addTask(){
+      const client=document.getElementById('taskClient').value.trim();
+      const phone=safePhone(document.getElementById('taskPhone').value);
+      const desc=document.getElementById('taskDesc').value.trim();
+      const due=document.getElementById('taskDue').value||'غير محدد';
+      const priceInput=document.getElementById('taskPrice').value;
+      const price=Number(priceInput);
+      const initial=Number(document.getElementById('taskDeposit').value||0);
+      if(!client||!desc)return showToast('أدخل اسم الزبون وتفاصيل الشغل');
+      if(priceInput===''||!Number.isFinite(price)||price<0||price>1e12)return showToast('قيمة الشغل غير صحيحة');
+      if(!Number.isFinite(initial)||initial<0||initial>price)return showToast('العربون لا يمكن أن يتجاوز قيمة الشغل');
+      if(editingTaskId){
+        const task=state.tasks.find(x=>x.id===editingTaskId);
+        if(!task){cancelTaskEdit();return;}
+        if(roundMoney(price)<sumTaskPaid(task))return showToast('قيمة الشغل لا يمكن أن تقل عن الدفعات المستلمة');
+        Object.assign(task,{client,phone,desc,due,price:roundMoney(price)});
+        if(!saveState())return;
+        cancelTaskEdit();showToast('تم تحديث بيانات الشغل دون تغيير الدفعات');return;
+      }
+      const payments=initial>0?[{id:nextId(),amount:roundMoney(initial),date:todayLocal(),note:'عربون عند الاتفاق'}]:[];
+      state.tasks.unshift({id:nextId(),client,phone,desc,due,price:roundMoney(price),status:'working',done:false,createdAt:todayLocal(),deliveredAt:'',payments});
+      clearTaskForm();
+      if(saveState())showToast(initial>0?'تم تسجيل الشغل والعربون المقبوض':'تم تسجيل الشغل دون إضافة أي دخل');
+    }
+
+    function toggleTaskDone(id){
+      const task=state.tasks.find(x=>x.id===id);if(!task)return;
+      const next=taskStatus(task)==='delivered'?'working':'delivered';
+      setTaskStatus(id,next);
+    }
+
+    function clearTaskForm(){
+      for(const id of ['taskClient','taskPhone','taskDesc','taskDue','taskPrice','taskDeposit'])document.getElementById(id).value='';
+    }
+    function cancelTaskEdit(){
+      editingTaskId=null;clearTaskForm();
+      document.getElementById('saveTaskBtn').textContent='إضافة الشغل';
+      document.getElementById('taskDeposit').disabled=false;
+      document.getElementById('cancelTaskEditBtn').classList.add('hidden');
+    }
+    function editTask(id){
+      const t=state.tasks.find(x=>x.id===id);if(!t)return;
+      editingTaskId=id;switchTab('tasks');
+      for(const [key,value] of Object.entries({taskClient:t.client,taskPhone:t.phone||'',taskDesc:t.desc,taskDue:t.due==='غير محدد'?'':t.due,taskPrice:String(t.price)}))
+        document.getElementById(key).value=value;
+      document.getElementById('taskDeposit').value='';document.getElementById('taskDeposit').disabled=true;
+      document.getElementById('saveTaskBtn').textContent='حفظ تعديل الشغل';
+      document.getElementById('cancelTaskEditBtn').classList.remove('hidden');
+      document.getElementById('taskClient').scrollIntoView({behavior:'smooth',block:'center'});
+    }
+    function setTaskStatus(id,status){
+      const t=state.tasks.find(x=>x.id===id);if(!t||!['working','ready','delivered'].includes(status))return;
+      t.status=status;t.done=status==='delivered';t.deliveredAt=status==='delivered'?todayLocal():'';
+      if(saveState())showToast(status==='delivered'?'تم التسليم؛ لم يُسجَّل أي دخل جديد':'تم تعديل حالة الشغل');
+    }
+    function recordTaskPayment(id){
+      const t=state.tasks.find(x=>x.id===id);if(!t)return;
+      const due=taskRemaining(t);if(due<=0)return showToast('هذا الشغل مسدد بالكامل');
+      const entered=prompt('المبلغ المقبوض الآن (د.ل) — المتبقي: '+money(due));if(entered===null)return;
+      const amount=Number(entered.trim());
+      if(!Number.isFinite(amount)||amount<=0||roundMoney(amount)>due)return showToast('المبلغ غير صالح أو يتجاوز المتبقي');
+      const date=prompt('تاريخ القبض (YYYY-MM-DD)',todayLocal());if(date===null)return;
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(date))return showToast('صيغة التاريخ غير صحيحة');
+      const note=prompt('ملاحظة الدفعة (اختياري):',sumTaskPaid(t)===0?'عربون':'دفعة من حساب الشغل');if(note===null)return;
+      t.payments.push({id:nextId(),amount:roundMoney(amount),date,note:note.slice(0,200)});
+      if(saveState())showToast('تم تسجيل المبلغ المقبوض وخصمه من المتبقي');
+    }
+    function editTaskPayment(taskId,paymentId){
+      const t=state.tasks.find(x=>x.id===taskId);const p=t?.payments.find(x=>x.id===paymentId);if(!p)return;
+      const entered=prompt('تعديل قيمة الدفعة:',p.amount);if(entered===null)return;
+      const amount=Number(entered.trim());
+      const other=t.payments.filter(x=>x.id!==paymentId).reduce((s,x)=>s+x.amount,0);
+      if(!Number.isFinite(amount)||amount<=0||roundMoney(other+amount)>roundMoney(t.price))return showToast('الدفعة غير صحيحة أو أكبر من القيمة المستحقة');
+      const date=prompt('تاريخ الدفعة (YYYY-MM-DD):',p.date);if(date===null)return;
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(date))return showToast('صيغة التاريخ غير صحيحة');
+      const note=prompt('ملاحظة الدفعة:',p.note||'');if(note===null)return;
+      Object.assign(p,{amount:roundMoney(amount),date,note:note.slice(0,200)});
+      if(saveState())showToast('تم تعديل الدفعة وإعادة حساب الرصيد تلقائيًا');
+    }
+    function deleteTaskPayment(taskId,paymentId){
+      const t=state.tasks.find(x=>x.id===taskId);if(!t||!confirmRemove('هل تريد حذف هذه الدفعة؟ سيرتفع المبلغ المتبقي تلقائيًا.'))return;
+      t.payments=t.payments.filter(p=>p.id!==paymentId);
+      if(saveState())showToast('تم حذف الدفعة وإعادة الحساب');
+    }
+    function deleteTask(id){
+      const t=state.tasks.find(x=>x.id===id);if(!t)return;
+      if(!confirmRemove('حذف شغل «'+t.client+'» سيحذف أيضًا جميع دفعاته من التقارير. هل أنت متأكد؟'))return;
+      state.tasks=state.tasks.filter(x=>x.id!==id);
+      if(editingTaskId===id)cancelTaskEdit();
+      if(saveState())showToast('تم حذف الشغل ودفعاته من الحسابات');
+    }
+    function editTx(id){
+      const tx=state.tx.find(x=>x.id===id);if(!tx||tx.legacyAccrual)return;
+      const amountS=prompt('القيمة المعدلة:',tx.amount);if(amountS===null)return;
+      const amount=Number(amountS);
+      if(!Number.isFinite(amount)||amount<=0)return showToast('قيمة غير صحيحة');
+      const note=prompt('البيان:',tx.note);if(note===null)return;
+      const date=prompt('التاريخ (YYYY-MM-DD):',tx.date);if(date===null)return;
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(date))return showToast('صيغة التاريخ غير صحيحة');
+      const scope=prompt('التصنيف: business للنشاط / personal للشخصي / unknown لغير المصنف',tx.scope||'unknown');if(scope===null)return;
+      if(!['business','personal','unknown'].includes(scope))return showToast('التصنيف غير صحيح');
+      Object.assign(tx,{amount:roundMoney(amount),note:note.slice(0,500),date,scope});saveState();
+    }
+    function deleteTx(id){
+      const tx=state.tx.find(x=>x.id===id);if(!tx||tx.legacyAccrual)return;
+      if(!confirmRemove('حذف هذه العملية سيغير صافي الحساب. هل تريد المتابعة؟'))return;
+      state.tx=state.tx.filter(x=>x.id!==id);saveState();
+    }
+
+    function calcBucketTotal(list) {
+      return list.reduce((sum, p) => {
+        const taken = p.entries.reduce((a, b) => a + b.amount, 0);
+        const paid = p.payments.reduce((a, b) => a + b.amount, 0);
+        return sum + Math.max(0, taken - paid);
+      }, 0);
+    }
+
+    function renderDebts(bucket,targetId){
+      const container=document.getElementById(targetId),list=state[bucket];
+      if(!list.length){container.innerHTML='<div class="panel" style="color:var(--muted);font-size:13px;">لا توجد سجلات بعد.</div>';return;}
+      container.innerHTML=list.map(p=>{
+        const taken=p.entries.reduce((a,b)=>a+b.amount,0),paid=p.payments.reduce((a,b)=>a+b.amount,0),rem=Math.max(0,roundMoney(taken-paid));
+        const badge=rem===0?'<span class="badge badge-green">خالص</span>':paid>0?'<span class="badge">دفعات جزئية</span>':'<span class="badge badge-red">غير مسدد</span>';
+        const entries=p.entries.map(e=>`<div class="pay-row"><span>${esc(e.date)} — ${esc(e.reason)} — <b>${money(e.amount)} د.ل</b></span><span><button class="btn-dark mini-action" onclick="editDebtEntry('${bucket}','${p.id}','${e.id}')">تعديل</button> <button class="btn-red mini-action" onclick="deleteDebtEntry('${bucket}','${p.id}','${e.id}')">حذف</button></span></div>`).join('');
+        const payments=p.payments.map(e=>`<div class="pay-row"><span class="green-txt">دفعة ${esc(e.date)}: ${money(e.amount)} د.ل</span><span><button class="btn-dark mini-action" onclick="editDebtPayment('${bucket}','${p.id}','${e.id}')">تعديل</button> <button class="btn-red mini-action" onclick="deleteDebtPayment('${bucket}','${p.id}','${e.id}')">حذف</button></span></div>`).join('');
+        return `<div class="item-card"><div class="row-between"><strong>${esc(p.name)}</strong>${badge}</div>
+          ${p.phone?`<div style="margin-top:5px;font-size:12px;color:var(--muted)">الهاتف: ${esc(p.phone)} <button class="btn-dark mini-action" onclick="callPhone('${p.phone}')">اتصال</button></div>`:''}
+          <div class="financial-line">الإجمالي: <b>${money(taken)} د.ل</b> | المسدّد: <b class="green-txt">${money(paid)} د.ل</b> | المتبقي: <b class="gold-txt">${money(rem)} د.ل</b></div>
+          <div class="sub-list">${entries}${payments}</div>
+          <div class="flex-actions"><button class="btn-gold mini-action" onclick="addPayment('${bucket}','${p.id}')">+ تسجيل دفعة</button>
+          <button class="btn-dark mini-action" onclick="editDebtPerson('${bucket}','${p.id}')">تعديل الاسم والهاتف</button></div></div>`;
+      }).join('');
+    }
+
+    function renderAll(){
+      applyLogos();
+      const realIncome=state.tx.filter(t=>t.type==='income'&&!t.legacyAccrual).reduce((sum,t)=>sum+t.amount,0);
+      const expense=state.tx.filter(t=>t.type==='expense').reduce((sum,t)=>sum+t.amount,0);
+      const jobIncome=state.tasks.reduce((sum,t)=>sum+sumTaskPaid(t),0);
+      const jobDue=state.tasks.reduce((sum,t)=>sum+taskRemaining(t),0);
+      const unfinished=state.tasks.filter(t=>taskStatus(t)!=='delivered');
+      const legacy=state.tx.filter(t=>t.legacyAccrual);
+      document.getElementById('stNet').textContent=money(realIncome+jobIncome-expense)+' د.ل';
+      document.getElementById('stOwedToMe').textContent=money(calcBucketTotal(state.owedToMe))+' د.ل';
+      document.getElementById('stOwedByMe').textContent=money(calcBucketTotal(state.owedByMe))+' د.ل';
+      document.getElementById('stTasks').textContent=unfinished.length+' شغل';
+      document.getElementById('stTaskPaid').textContent=money(jobIncome)+' د.ل';
+      document.getElementById('stTaskDue').textContent=money(jobDue)+' د.ل';
+      document.getElementById('stJobTotal').textContent=money(state.tasks.reduce((sum,t)=>sum+Number(t.price||0),0))+' د.ل';
+      document.getElementById('stMonthNet').textContent=money(makeSummary('month',todayLocal().slice(0,7)).net)+' د.ل';
+      if(!document.getElementById('tab-reports').classList.contains('hidden'))renderReport();
+      document.getElementById('dashReminders').innerHTML=`<p>• لديك <strong>${unfinished.length}</strong> أشغال لم تُسلم بعد. التنبيه كل <b>${state.settings.taskAlertHours}</b> ساعات.</p>
+        <p>• الرصيد هنا يحسب المال المقبوض فعلاً من الأشغال والدخل اليدوي، مطروحًا منه المصروفات؛ ولا يشمل استرداد السلف كإيراد.</p>
+        <p>• تذكير تسجيل اليوميات: <b>${esc(state.settings.dailyReminderTime)}</b>.</p>`;
+      const notice=document.getElementById('legacyNotice');
+      notice.classList.toggle('hidden',legacy.length===0);
+      if(legacy.length)notice.textContent=`تنبيه بشأن البيانات القديمة: توجد ${legacy.length} عمليات أضافتها النسخة القديمة تلقائيًا عند التسليم. أبقيتها في السجل للمراجعة لكنها لا تدخل في حساب المبالغ المقبوضة؛ إذا كنت استلمت قيمتها بالفعل، سجّل المبلغ المدفوع في دفعات الشغل المناسب لتجنب تضخيم الدخل.`;
+      renderDebts('owedToMe','listOwedToMe');renderDebts('owedByMe','listOwedByMe');
+      const allTx=[...state.tx.map(t=>({id:t.id,type:t.type,amount:t.amount,note:t.note,date:t.date,legacy:!!t.legacyAccrual,job:false})),
+        ...state.tasks.flatMap(t=>(t.payments||[]).map(p=>({id:p.id,type:'income',amount:p.amount,note:`قبض من ${t.client} — ${p.note||t.desc}`,date:p.date,job:true,legacy:false})))];
+      allTx.sort((a,b)=>b.date.localeCompare(a.date));
+      document.getElementById('listTx').innerHTML=allTx.length?allTx.map(t=>`<div class="item-card row-between">
+        <div style="flex:1"><strong>${esc(t.note)}</strong><div style="font-size:11px;color:var(--muted);margin-top:5px">${esc(t.date)} — ${t.legacy?'تسجيل قديم عند التسليم (غير محسوب)':t.job?'قبض فعلي من شغل':t.type==='income'?'دخل يدوي':'مصروف'}</div></div>
+        <div><strong class="${t.legacy?'gold-txt':t.type==='income'?'green-txt':'red-txt'}">${t.legacy?'—':t.type==='income'?'+':'-'}${money(t.amount)} د.ل</strong>
+        ${!t.job&&!t.legacy?`<div class="flex-actions"><button class="btn-dark mini-action" onclick="editTx('${t.id}')">تعديل</button><button class="btn-red mini-action" onclick="deleteTx('${t.id}')">حذف</button></div>`:''}</div></div>`).join(''):'<p style="color:var(--muted);font-size:13px">لا توجد عمليات بعد.</p>';
+      document.getElementById('listTasks').innerHTML=state.tasks.length?state.tasks.map(t=>{
+        const paid=sumTaskPaid(t),remaining=taskRemaining(t);
+        const payLabel=remaining===0?'مسدّد بالكامل':paid>0?'عربون / دفعات جزئية':'لم يدفع بعد';
+        const status=taskStatus(t);
+        const payments=(t.payments||[]).map(p=>`<div class="pay-row"><span><span class="green-txt">${money(p.amount)} د.ل</span> — ${esc(p.date)} — ${esc(p.note||'دفعة')}</span>
+          <span><button class="btn-dark mini-action" onclick="editTaskPayment('${t.id}','${p.id}')">تعديل</button> <button class="btn-red mini-action" onclick="deleteTaskPayment('${t.id}','${p.id}')">حذف</button></span></div>`).join('');
+        return `<div class="item-card"><div class="row-between"><strong>${esc(t.client)} — ${esc(t.desc)}</strong>
+          <span class="badge ${remaining===0?'badge-green':paid>0?'':'badge-red'}">${payLabel}</span></div>
+          <div style="margin-top:7px;color:var(--muted);font-size:12px">موعد التسليم: ${esc(t.due)}${t.phone?` | الهاتف: ${esc(t.phone)} <button class="btn-dark mini-action" onclick="callPhone('${t.phone}')">اتصال</button>`:''}</div>
+          <div class="financial-line">قيمة الشغل: <b>${money(t.price)} د.ل</b> | المقبوض: <b class="green-txt">${money(paid)} د.ل</b> | الباقي: <b class="gold-txt">${money(remaining)} د.ل</b></div>
+          <div style="margin-top:7px;font-size:12px">حالة الشغل / التسليم: <select class="status-select" aria-label="حالة شغل ${esc(t.client)}" onchange="setTaskStatus('${t.id}',this.value)">
+          <option value="working" ${status==='working'?'selected':''}>قيد التنفيذ / لم يسلم</option>
+          <option value="ready" ${status==='ready'?'selected':''}>جاهز للتسليم</option>
+          <option value="delivered" ${status==='delivered'?'selected':''}>تم التسليم</option></select></div>
+          ${payments?`<div class="sub-list"><b>سجل الدفعات المقبوضة:</b>${payments}</div>`:''}
+          <div class="flex-actions"><button class="btn-gold mini-action" ${remaining<=0?'disabled':''} onclick="recordTaskPayment('${t.id}')">+ تسجيل دفعة مستلمة</button>
+          <button class="btn-dark mini-action" onclick="editTask('${t.id}')">تعديل الشغل</button>
+          <button class="btn-red mini-action" onclick="deleteTask('${t.id}')">حذف الشغل</button></div></div>`;
+      }).join(''):'<p style="color:var(--muted);font-size:13px">لا توجد أشغال مسجلة.</p>';
+    }
+
+
+    function openNotifiedReport(){
+      const target=window.__openHisabatiReport;
+      if(!target)return;
+      switchTab('reports');
+      if(target.period==='day'||target.period==='month'){
+        document.getElementById('reportPeriod').value=target.period;
+        reportPeriodChanged();
+        if(/^\d{4}-\d{2}(?:-\d{2})?$/.test(String(target.key||''))){
+          document.getElementById('reportDate').value=target.key;
+          renderReport();
+        }
+      }
+      window.__openHisabatiReport=null;
+    }
+
+    // التقارير تفصل المقبوض الفعلي عن قيمة العقود والديون. لا تُحسب السلف ضمن أرباح النشاط.
+    function reportMatch(date,period,key){const v=String(date||'');return period==='day'?v===key:v.slice(0,7)===key;}
+    function makeSummary(period,key){
+      const details=[];
+      const add=(date,kind,amount,note,scope)=>{if(reportMatch(date,period,key))details.push({date,kind,amount:roundMoney(amount),note:String(note||'').slice(0,500),scope:scope||'unknown'});};
+      for(const t of state.tx||[]){if(t.legacyAccrual)continue;add(t.date,t.type==='income'?'income':'expense',t.amount,t.note,t.scope||'unknown');}
+      for(const job of state.tasks||[]){for(const p of job.payments||[])add(p.date,'jobIncome',p.amount,'قبض شغل: '+job.client+' — '+(p.note||job.desc),'business');}
+      for(const [bucket,list] of [['owedToMe',state.owedToMe||[]],['owedByMe',state.owedByMe||[]]]){
+        for(const person of list){for(const e of person.entries||[])add(e.date,bucket==='owedToMe'?'lent':'borrowed',e.amount,person.name+' — '+e.reason,'debt');
+          for(const p of person.payments||[])add(p.date,bucket==='owedToMe'?'lentPaid':'borrowedPaid',p.amount,person.name+' — سداد دين','debt');}}
+      details.sort((a,b)=>b.date.localeCompare(a.date));
+      const sum=(k)=>roundMoney(details.filter(x=>x.kind===k).reduce((z,x)=>z+x.amount,0));
+      const manualIncome=sum('income'),jobIncome=sum('jobIncome'),income=roundMoney(manualIncome+jobIncome),expense=sum('expense');
+      const businessIncome=roundMoney(jobIncome+details.filter(x=>x.kind==='income'&&x.scope==='business').reduce((z,x)=>z+x.amount,0));
+      const businessExpenses=roundMoney(details.filter(x=>x.kind==='expense'&&x.scope==='business').reduce((z,x)=>z+x.amount,0));
+      const unclassified=details.filter(x=>(x.kind==='income'||x.kind==='expense')&&x.scope==='unknown').length;
+      const businessNet=roundMoney(businessIncome-businessExpenses);
+      const lent=sum('lent'),borrowed=sum('borrowed'),lentPaid=sum('lentPaid'),borrowedPaid=sum('borrowedPaid');
+      const outstandingToMe=calcBucketTotal(state.owedToMe),outstandingByMe=calcBucketTotal(state.owedByMe);
+      const jobOutstanding=roundMoney((state.tasks||[]).reduce((z,t)=>z+taskRemaining(t),0));
+      const tasksActive=state.tasks.filter(t=>taskStatus(t)!=='delivered').length;
+      const newJobs=state.tasks.filter(t=>t.createdAt&&reportMatch(t.createdAt,period,key));
+      const deliveredJobs=state.tasks.filter(t=>t.deliveredAt&&reportMatch(t.deliveredAt,period,key));
+      const newJobsValue=roundMoney(newJobs.reduce((z,t)=>z+Number(t.price||0),0));
+      const netCash=roundMoney(income-expense-lent+lentPaid+borrowed-borrowedPaid);
+      return {period,key,details,manualIncome,jobIncome,income,expense,net:roundMoney(income-expense),netCash,newJobsCount:newJobs.length,deliveredJobsCount:deliveredJobs.length,newJobsValue,
+        businessIncome,businessExpenses,businessNet,unclassified,lent,borrowed,lentPaid,borrowedPaid,
+        outstandingToMe,outstandingByMe,jobOutstanding,tasksActive};
+    }
+    function reportPeriodChanged(){
+      const isDay=document.getElementById('reportPeriod').value==='day';
+      const d=document.getElementById('reportDate');d.type=isDay?'date':'month';d.value=isDay?todayLocal():todayLocal().slice(0,7);renderReport();
+    }
+    function showCurrentReport(){reportPeriodChanged();}
+    function currentReport(){
+      const period=document.getElementById('reportPeriod').value||'day';
+      const key=document.getElementById('reportDate').value||(period==='day'?todayLocal():todayLocal().slice(0,7));
+      return makeSummary(period,key);
+    }
+    const reportTypes={income:'دخل يدوي',expense:'مصروف',jobIncome:'مقبوض من شغل',lent:'دين لك عند شخص',borrowed:'دين عليك',lentPaid:'دفعة سداد لك',borrowedPaid:'دفعة سداد منك'};
+    function reportKpi(title,value,cls='gold-txt'){return `<div class="report-kpi"><small>${title}</small><b class="${cls}">${money(value)} د.ل</b></div>`;}
+    function renderReport(){
+      const r=currentReport();
+      document.getElementById('reportTitle').textContent=(r.period==='day'?'التقرير اليومي — ':'التقرير الشهري — ')+r.key;
+      const businessLabel=r.unclassified>0?'صافي النشاط المصنف (غير مكتمل)':'صافي النشاط التجاري المسجل';
+      const rows=r.details.map(x=>`<div class="report-row"><div style="flex:1"><b>${esc(reportTypes[x.kind]||x.kind)}</b><div><small>${esc(x.date)} — ${esc(x.note)}</small></div></div><strong class="${x.kind==='expense'?'red-txt':x.kind==='income'||x.kind==='jobIncome'?'green-txt':'gold-txt'}">${money(x.amount)} د.ل</strong></div>`).join('');
+      document.getElementById('reportResult').innerHTML=`
+      <div class="report-kpis">
+        ${reportKpi('إجمالي الدخل المقبوض',r.income,'green-txt')}${reportKpi('المصروفات المسجلة',r.expense,'red-txt')}
+        ${reportKpi('صافي الدخل والمصروفات (بدون الديون)',r.net,r.net<0?'red-txt':'green-txt')}${reportKpi('تغير النقد شامل حركة الديون',r.netCash,r.netCash<0?'red-txt':'green-txt')}${reportKpi(businessLabel,r.businessNet,r.businessNet<0?'red-txt':'green-txt')}
+        ${reportKpi('مقبوض من أشغال الزبائن',r.jobIncome,'green-txt')}${reportKpi('إجمالي الديون الجديدة التي لك',r.lent)}
+        ${reportKpi('إجمالي الديون الجديدة عليك',r.borrowed)}${reportKpi('سداد ديون لصالحك',r.lentPaid,'green-txt')}
+        ${reportKpi('سداد ديون دفعتها',r.borrowedPaid,'red-txt')}${reportKpi('قيمة الأشغال الجديدة',r.newJobsValue)}
+      </div>
+      <div class="report-note">مبالغ حالية وليست رصيد نهاية الفترة: ديون لك ${money(r.outstandingToMe)} د.ل، ديون عليك ${money(r.outstandingByMe)} د.ل، باقي أشغال الزبائن ${money(r.jobOutstanding)} د.ل، أشغال لم تُسلّم ${r.tasksActive}.<div>أشغال أضيفت في الفترة: ${r.newJobsCount} | أشغال تم تسليمها في الفترة: ${r.deliveredJobsCount}.</div>
+        <div style="margin-top:7px">صافي الدخل والمصروفات = الدخل المقبوض − المصروفات. أما تغير النقد فيشمل أيضًا ما اقترضته وسددته وما أقرضته واستعدته. ولا يعني بالضرورة الربح المحاسبي؛ سداد السلف لا يدخل الإيرادات أو المصروفات، ويُحسب صافي النشاط التجاري من القيود المصنفة للنشاط فقط.
+        ${r.unclassified>0?'توجد '+r.unclassified+' حركة قديمة أو غير مصنفة؛ راجع تصنيفها قبل الاعتماد على نتيجة الربح والخسارة.':''}</div>
+      </div>
+      <h4 style="color:var(--gold);margin-bottom:4px">الحركات داخل الفترة (${r.details.length})</h4>
+      ${rows||'<div class="section-caption">لم تسجّل حركات خلال هذه الفترة.</div>'}`;
+      return r;
+    }
+    function reportCsvRows(){
+      const r=currentReport(),rows=[
+        ['حساباتي AZHA',r.period==='day'?'التقرير اليومي':'التقرير الشهري',r.key],[],
+        ['المؤشر','القيمة (د.ل)'],['الدخل المقبوض',r.income],['الدخل اليدوي',r.manualIncome],['المقبوض من الأشغال',r.jobIncome],['المصروفات',r.expense],['صافي الدخل والمصروفات',r.net],['تغير النقد شامل الديون',r.netCash],
+        ['دخل النشاط المصنف',r.businessIncome],['مصروف النشاط المصنف',r.businessExpenses],['صافي النشاط المصنف',r.businessNet],['عدد العمليات غير المصنفة',r.unclassified],
+        ['ديون جديدة لك',r.lent],['ديون جديدة عليك',r.borrowed],['سداد دين لك',r.lentPaid],['سداد دين عليك',r.borrowedPaid],['أشغال جديدة',r.newJobsCount],['قيمتها المتفق عليها',r.newJobsValue],['أشغال تم تسليمها',r.deliveredJobsCount],[],
+        ['المتبقي لك حاليًا',r.outstandingToMe],['المتبقي عليك حاليًا',r.outstandingByMe],['باقي أشغال الزبائن حاليًا',r.jobOutstanding],[],
+        ['التاريخ','نوع العملية','البيان','التصنيف','المبلغ د.ل'],
+        ...r.details.map(x=>[x.date,reportTypes[x.kind]||x.kind,x.note,x.scope,Number(x.amount).toFixed(2)]),[],
+        ['تنبيه','صافي الدخل والمصروفات ليس بالضرورة الربح المحاسبي، والأرصدة الحالية ليست أرصدة تاريخية']
+      ];return rows;
+    }
+    function csvCell(value){if(typeof value==='number'&&Number.isFinite(value))return String(value);let s=String(value??'');if(/^[=+@\-\t\r]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';}
+    function exportReportCsv(){const r=currentReport(),csv='\ufeff'+reportCsvRows().map(row=>row.map(csvCell).join(',')).join('\r\n');
+      const name='hisabati-report-'+r.period+'-'+r.key+'.csv';
+      if(window.HisabatiAndroid?.saveReportFile){window.HisabatiAndroid.saveReportFile(csv,name,'text/csv');return;}
+      const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);
+    }
+    function printableReport(){const r=currentReport(),cell=(v)=>esc(v),q=(v)=>money(v)+' د.ل';
+      const metrics=[['الدخل المقبوض',q(r.income)],['المصروفات',q(r.expense)],['صافي الدخل والمصروفات',q(r.net)],['تغير النقد شامل الديون',q(r.netCash)],['صافي النشاط المصنف',q(r.businessNet)],['مقبوض من أشغال',q(r.jobIncome)],['ديون جديدة لك',q(r.lent)],['ديون جديدة عليك',q(r.borrowed)],['سداد ديون لك',q(r.lentPaid)],['سداد ديون عليك',q(r.borrowedPaid)],['باقي ديون لك حاليًا',q(r.outstandingToMe)],['باقي ديون عليك حاليًا',q(r.outstandingByMe)],['باقي الأشغال حاليًا',q(r.jobOutstanding)]];
+      const tr=arr=>'<tr>'+arr.map(x=>'<td>'+cell(x)+'</td>').join('')+'</tr>';
+      return `<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><style>body{font-family:Arial,Tahoma,sans-serif;color:#232323;margin:26px;direction:rtl}h1{color:#8c6f19}.hint{font-size:12px;color:#666;line-height:1.7}table{width:100%;border-collapse:collapse;margin:18px 0}td,th{border:1px solid #ddd;padding:8px;text-align:right;font-size:12px}th{background:#eee}h2{font-size:17px;margin-top:22px}footer{font-size:11px;color:#666;line-height:1.8}</style></head><body>
+        <h1>حساباتي — AZHA</h1><p>التقرير ${r.period==='day'?'اليومي':'الشهري'}: ${cell(r.key)}</p><h2>الملخص المالي</h2><table>${metrics.map(tr).join('')}</table>
+        <h2>تفاصيل الحركات</h2><table><tr><th>التاريخ</th><th>النوع</th><th>البيان</th><th>المبلغ</th></tr>${r.details.map(x=>tr([x.date,reportTypes[x.kind]||x.kind,x.note,q(x.amount)])).join('')}</table>
+        <footer>صافي الدخل والمصروفات لا يعني بالضرورة الربح المحاسبي. سداد الديون منفصل عن إيرادات النشاط. الأرصدة المتبقية أعلاه أرصدة حالية وليست تاريخية. عدد القيود غير المصنفة: ${r.unclassified}.</footer></body></html>`;
+    }
+    function exportReportPdf(){const r=currentReport(),html=printableReport();
+      if(window.HisabatiAndroid?.printReport){window.HisabatiAndroid.printReport(html,'hisabati-report-'+r.period+'-'+r.key);return;}
+      const w=window.open('','_blank');if(!w){showToast('لفتح PDF اختر الطباعة من المتصفح');return;}
+      w.document.write(html);w.document.close();w.focus();w.print();
+    }
+    function syncNativeReports(){
+      if(!window.HisabatiAndroid?.syncReports || !hasAccount())return;
+      try{
+        const keys=new Set(),months=new Set(),today=todayLocal();keys.add(today);months.add(today.slice(0,7));
+        for(const x of state.tx||[]){keys.add(x.date);months.add(x.date.slice(0,7));}
+        for(const t of state.tasks||[])for(const p of t.payments||[]){keys.add(p.date);months.add(p.date.slice(0,7));}
+        for(const b of ['owedToMe','owedByMe'])for(const person of state[b]||[])for(const e of [...(person.entries||[]),...(person.payments||[])]){keys.add(e.date);months.add(e.date.slice(0,7));}
+        const days={},month={};
+        const shorten=r=>({income:r.income,expense:r.expense,net:r.net,netCash:r.netCash,newJobsCount:r.newJobsCount,deliveredJobsCount:r.deliveredJobsCount,jobIncome:r.jobIncome,businessNet:r.businessNet,unclassified:r.unclassified,lent:r.lent,borrowed:r.borrowed,lentPaid:r.lentPaid,borrowedPaid:r.borrowedPaid});
+        for(const d of keys){if(/^\d{4}-\d{2}-\d{2}$/.test(d))days[d]=shorten(makeSummary('day',d));}
+        for(const m of months){if(/^\d{4}-\d{2}$/.test(m))month[m]=shorten(makeSummary('month',m));}
+        window.HisabatiAndroid.syncReports(JSON.stringify({days,months:month}));
+        window.HisabatiAndroid.configureReports(state.settings.reportTime||'23:00',state.settings.dailyReportEnabled!==false,state.settings.monthlyReportEnabled!==false);
+      }catch(e){console.warn('تعذر تحديث ملخص الإشعارات',e);}
+    }
+
+    function syncSettingsInputs() {
+      document.getElementById('setTaskHours').value=String(state.settings.taskAlertHours||3);
+      document.getElementById('setDailyTime').value=state.settings.dailyReminderTime||'21:00';
+      document.getElementById('setReportTime').value=state.settings.reportTime||'23:00';
+      document.getElementById('setDailyReportEnabled').value=state.settings.dailyReportEnabled===false?'no':'yes';
+      document.getElementById('setMonthlyReportEnabled').value=state.settings.monthlyReportEnabled===false?'no':'yes';
+      document.getElementById('setUser').value=state.auth.username;
+      document.getElementById('setPass').value='';
+    }
+
+    async function saveSettings() {
+      const username=document.getElementById('setUser').value.trim();
+      const newPassword=document.getElementById('setPass').value;
+      if(!username)return showToast('اسم المستخدم مطلوب');
+      if(newPassword && newPassword.length<8)return showToast('كلمة المرور يجب أن تكون 8 أحرف أو أكثر');
+      state.settings.taskAlertHours=Number(document.getElementById('setTaskHours').value)||3;
+      state.settings.dailyReminderTime=document.getElementById('setDailyTime').value||'21:00';
+      state.settings.reportTime=document.getElementById('setReportTime').value||'23:00';
+      state.settings.dailyReportEnabled=document.getElementById('setDailyReportEnabled').value==='yes';
+      state.settings.monthlyReportEnabled=document.getElementById('setMonthlyReportEnabled').value==='yes';
+      state.auth.username=username;
+      if(newPassword){const salt=randomSalt();state.auth.passwordSalt=salt;state.auth.passwordHash=await passwordHash(newPassword,salt);}
+      document.getElementById('setPass').value='';
+      if(saveState())showToast('تم حفظ الإعدادات');
+    }
+
+    function updateCustomLogo(e) {
+      const file=e.target.files?.[0];if(!file)return;
+      if(!file.type.startsWith('image/')||file.size>5*1024*1024)return showToast('اختر صورة لا تتجاوز 5 ميجابايت');
+      const reader=new FileReader();
+      reader.onload=()=>{
+        const img=new Image();
+        img.onload=()=>{
+          const canvas=document.createElement('canvas');canvas.width=256;canvas.height=256;
+          const c=canvas.getContext('2d');c.fillStyle='#151519';c.fillRect(0,0,256,256);
+          const ratio=Math.min(256/img.width,256/img.height),w=img.width*ratio,h=img.height*ratio;
+          c.drawImage(img,(256-w)/2,(256-h)/2,w,h);
+          state.logo=canvas.toDataURL('image/jpeg',0.82);state.logoVersion=2;
+          if(saveState())showToast('تم تحديث الشعار');
+        };
+        img.src=reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function exportBackup() {
+      const {auth,...data}=state;
+      const serialized=JSON.stringify({format:'hisabati-azha-backup',version:2,exportedAt:new Date().toISOString(),data},null,2);
+      if(window.HisabatiAndroid?.exportBackup){window.HisabatiAndroid.exportBackup(serialized);return;}
+      const blob=new Blob([serialized],{type:'application/json'});
+      const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='hisabati-azha-backup-'+todayLocal()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);
+    }
+    function importBackup(){
+      if(window.HisabatiAndroid?.importBackup){window.HisabatiAndroid.importBackup();return;}
+      document.getElementById('backupFile').click();
+    }
+    function importBackupFromFile(e){
+      const file=e.target.files?.[0];if(!file)return;
+      if(file.size>7*1024*1024)return showToast('ملف النسخة الاحتياطية كبير جدًا');
+      file.text().then(receiveBackupFromNative).catch(()=>showToast('تعذر قراءة الملف'));
+      e.target.value='';
+    }
+    function receiveBackupFromNative(json){
+      try{
+        const backup=JSON.parse(json);
+        const source=backup.format==='hisabati-azha-backup'?backup.data:backup;
+        const imported=normalizeData(source);
+        if(!confirm('سيتم استبدال بيانات الديون والمصروفات والأشغال الحالية بالنسخة المختارة. هل أنت متأكد؟'))return;
+        // Keep this device's private authentication; ignore plaintext credentials from Gemini backup.
+        imported.auth=state.auth;
+        state=imported;
+        if(saveState()){syncSettingsInputs();showToast('تم استيراد النسخة الاحتياطية بنجاح');}
+      }catch(error){console.error(error);showToast('ملف النسخة غير صالح أو غير متوافق');}
+    }
+    window.receiveBackupFromNative=receiveBackupFromNative;
+
+    function resetAllData() {
+      if(!confirm('هل تريد مسح جميع سجلاتك نهائياً من هذا الهاتف؟ تأكد من تصدير نسخة احتياطية أولاً.'))return;
+      localStorage.removeItem(STORAGE_KEY);
+      state=structuredClone(defaultState);
+      document.getElementById('app').classList.add('hidden');
+      document.getElementById('lockScreen').classList.remove('hidden');
+      document.getElementById('loginUser').value='';document.getElementById('loginPass').value='';
+      refreshAuthScreen();renderAll();
+      if(window.HisabatiAndroid?.clearReminders)window.HisabatiAndroid.clearReminders();
+      if(window.HisabatiAndroid?.clearReports)window.HisabatiAndroid.clearReports();
+      showToast('تم مسح سجلات التطبيق');
+    }
+
+    function playBeep() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, ctx.currentTime);
+        gain.gain.setValueAtTime(0.2, ctx.currentTime);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.35);
+      } catch {}
+    }
+
+    function testAlertSound() {
+      playBeep();
+      if(window.HisabatiAndroid?.testNotification) window.HisabatiAndroid.testNotification();
+      showToast('تنبيه: لا تنسَ متابعة أشغال الزبائن وتسجيل اليوميات!');
+    }
+
+    function requestNotifyPermission() {
+      if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+      }
+    }
+
+    setInterval(() => {
+      if (window.HisabatiAndroid) return; // Native Android notifications handle the background schedule.
+      const openTasks = state.tasks.filter(t => !t.done);
+      const now = Date.now();
+      const hoursMs = (state.settings.taskAlertHours || 3) * 3600 * 1000;
+      if (openTasks.length > 0 && now - (state.settings.lastTaskAlert || 0) >= hoursMs) {
+        state.settings.lastTaskAlert = now;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        playBeep();
+        showToast(`تذكير: لديك ${openTasks.length} أشغال زبائن لم تُنجز بعد!`);
+      }
+
+      const d = new Date();
+      const hh = String(d.getHours()).padStart(2, '0');
+      const mm = String(d.getMinutes()).padStart(2, '0');
+      const todayStr = todayLocal();
+      if (`${hh}:${mm}` === state.settings.dailyReminderTime && state.settings.lastDailyAlertDate !== todayStr) {
+        state.settings.lastDailyAlertDate = todayStr;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        playBeep();
+        showToast('تذكير يومي: افتح حساباتي وسجّل مصاريفك ودخلك اليوم.');
+      }
+    }, 30000);
+
+    applyLogos();
+    refreshAuthScreen();
+    reportPeriodChanged();
+    if(hasAccount())syncNativeReports();
+  </script>
+</body>
+</html>
