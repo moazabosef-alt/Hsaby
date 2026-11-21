@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0d0d0d" />
+  <meta name="theme-color" content="#130910" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="حساباتي" />
-  <title>حساباتي - AZHA</title>
+  <title>حساباتي - AZHA | v1.5</title>
   <style>
     :root {
       --bg: #0b0b0d;
@@ -261,6 +261,204 @@
     .azha-credits .credit-author { color: var(--gold); font-weight: 700; font-size: 13px; }
     .azha-credits .credit-prayer { display: block; color: #ded4bc; margin-top: 2px; }
 
+
+    /* قسم أشغال الدعاية — فصل قيمة العقود عن النقد المقبوض فعلاً */
+    .ads-headline{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+    .ads-big-card{border:1px solid rgba(212,175,55,.3);border-radius:16px;padding:16px;background:linear-gradient(145deg,#242018,#131318);min-width:0}
+    .ads-big-card.receipts{border-color:rgba(34,197,94,.35);background:linear-gradient(145deg,#14271d,#131318)}
+    .ads-big-card small{font-size:12px;color:#ddd;line-height:1.7;display:block}
+    .ads-big-card strong{font-size:clamp(18px,5vw,28px);display:block;margin-top:10px;overflow-wrap:anywhere}
+    .ads-big-card em{display:block;font-size:11px;color:#aaa;font-style:normal;margin-top:5px;line-height:1.6}
+    .ads-period-select{display:flex;flex-wrap:wrap;align-items:end;gap:10px}
+    .ads-period-select .field{flex:1 1 145px;margin-bottom:0}
+    .ads-small-summary{font-size:12px;color:var(--muted);line-height:1.8}
+    .ads-job-title{font-size:15px;color:#f7e0a0}
+    .ads-financial{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+    .ads-metric{background:#17171e;border:1px solid rgba(255,255,255,.08);padding:9px;border-radius:10px}
+    .ads-metric small{display:block;color:var(--muted);font-size:11px}
+    .ads-metric strong{font-size:14px;display:block;margin-top:5px}
+    .ads-detail{margin-top:10px;border-top:1px solid var(--border);padding-top:10px}
+    .ads-detail summary{cursor:pointer;color:var(--gold);font-size:12px;padding:5px}
+    @media(max-width:360px){.ads-big-card{padding:12px}.ads-big-card strong{font-size:17px}}
+
+    /* واجهة AZHA الجديدة — أسود / عنابي / أحمر / ذهبي / أخضر المقبوض */
+    :root{
+      --bg:#0b090d;--card:#19121a;--card-2:#251a26;
+      --gold:#e8bc61;--gold-soft:rgba(232,188,97,.14);
+      --red:#ee4956;--red-soft:rgba(238,73,86,.15);
+      --green:#43db95;--text:#fbf6f6;--muted:#c6b5c0;
+      --border:rgba(232,188,97,.23);--burgundy:#801b3d;
+    }
+    html{scroll-behavior:smooth}
+    body{background:
+      radial-gradient(ellipse 80% 22% at 90% 2%, rgba(128,27,61,.29),transparent 82%),
+      radial-gradient(ellipse 70% 24% at -10% 80%, rgba(167,29,49,.12),transparent 80%),
+      var(--bg);background-attachment:fixed}
+    header{background:linear-gradient(112deg,rgba(37,12,24,.97),rgba(17,12,20,.97) 63%,rgba(80,16,35,.91));
+      border-bottom:1px solid rgba(232,188,97,.35);box-shadow:0 12px 34px rgba(0,0,0,.3);padding:12px 17px}
+    .brand-title{font-weight:900;font-size:19px;letter-spacing:.15px}
+    .brand img{width:46px;height:46px;box-shadow:0 0 0 3px rgba(232,188,97,.13)}
+    .brand-sub{color:#dcc3d0}
+    .nav{background:#130d14;gap:8px;box-shadow:0 8px 20px rgba(0,0,0,.23);scrollbar-width:thin;scrollbar-color:#77314c transparent}
+    .nav-btn{background:#211620;border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:11px 13px;color:#e6d6dd;font-weight:700}
+    .nav-btn.active{background:linear-gradient(120deg,#9a2342,#51172e);color:#ffe6b4;border-color:rgba(232,188,97,.65);box-shadow:inset 0 1px rgba(255,255,255,.09),0 3px 17px rgba(158,32,67,.23)}
+    button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+    button:disabled{opacity:.48;cursor:not-allowed}
+    .btn-gold{background:linear-gradient(125deg,#f4d38d,#e0ac48);box-shadow:0 3px 12px rgba(214,157,51,.13)}
+    .btn-red{background:linear-gradient(125deg,#d9364e,#911e42);border:1px solid rgba(251,128,133,.25)}
+    .btn-dark{background:linear-gradient(135deg,#33212d,#221923);border:1px solid rgba(232,188,97,.24)}
+    .lock-box{background:linear-gradient(150deg,#2b1326,#120e17);border:1px solid rgba(232,188,97,.4);box-shadow:0 24px 64px rgba(0,0,0,.7)}
+    #lockScreen{background:radial-gradient(circle at 50% 25%,rgba(132,25,62,.38),transparent 58%),#0b090d}
+    .logo-ring{width:112px;height:112px;box-shadow:0 0 0 6px rgba(232,188,97,.06),0 10px 30px rgba(177,32,65,.25)}
+    .field label{color:#dfd0d5;font-weight:650}
+    .field input,.field select,.field textarea{background:#241a26;border:1px solid rgba(231,192,131,.18);color:#fff;border-radius:12px;min-height:43px}
+    .field input::placeholder{color:#9c909a}
+    main{max-width:1140px}
+    .panel,.item-card{box-shadow:0 8px 24px rgba(0,0,0,.16)}
+    .panel{background:linear-gradient(142deg,rgba(38,24,37,.99),rgba(23,18,27,.97));border:1px solid rgba(232,188,97,.14);border-radius:19px;padding:19px}
+    .panel h3{font-size:16px;color:#f3cb81}
+    .item-card{background:linear-gradient(142deg,#291b28,#1c151e);border:1px solid rgba(232,188,97,.14);border-radius:15px;padding:14px}
+    .stat{position:relative;isolation:isolate;overflow:hidden;
+      background:linear-gradient(139deg,#2a1829,#17141d 71%);border:1px solid rgba(232,188,97,.17);border-radius:17px;padding:17px 15px;
+      box-shadow:0 10px 23px rgba(0,0,0,.17)}
+    .stat::before{content:'';position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(var(--gold),#a86732);opacity:.78}
+    .stat::after{content:'';position:absolute;width:94px;height:94px;border-radius:50%;left:-42px;top:-52px;background:rgba(232,188,97,.045);pointer-events:none;z-index:-1}
+    .stat-link{min-height:119px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:5px}
+    .stat-link strong{line-height:1.34;text-align:start;letter-spacing:-.25px}
+    .stat[data-tone='green']{background:linear-gradient(135deg,#16332a,#161e21 74%);border-color:rgba(67,219,149,.22)}
+    .stat[data-tone='green']::before{background:var(--green)}
+    .stat[data-tone='red']{background:linear-gradient(135deg,#411c2b,#231721 74%);border-color:rgba(238,73,86,.22)}
+    .stat[data-tone='red']::before{background:var(--red)}
+    .stat-hint{font-size:11px;color:#d6c1ca}
+    .red-txt{color:#ff7180!important}.green-txt{color:#61eba2!important}.gold-txt{color:#f0c977!important}
+    .badge{background:rgba(232,188,97,.14);color:#f3d593;border:1px solid rgba(232,188,97,.23);font-weight:750}
+    .badge-red{background:rgba(238,73,86,.16);color:#ff8796;border-color:rgba(238,73,86,.32)}
+    .badge-green{background:rgba(67,219,149,.14);color:#74efb2;border-color:rgba(67,219,149,.3)}
+    .report-intro{background:linear-gradient(110deg,#42152b,#241523 68%,#352018);border:1px solid rgba(232,188,97,.31);padding:17px 19px;border-radius:19px;box-shadow:0 14px 38px rgba(0,0,0,.17)}
+    .report-kpi,.ads-metric{background:linear-gradient(139deg,#291d2b,#201923);border:1px solid rgba(232,188,97,.12);border-radius:14px}
+    .ads-big-card{border:1px solid rgba(232,188,97,.55);border-radius:20px;padding:20px;background:linear-gradient(134deg,#442637,#251b26 65%,#36251c);box-shadow:0 12px 28px rgba(0,0,0,.25)}
+    .ads-big-card.receipts{border-color:rgba(67,219,149,.48);background:linear-gradient(132deg,#1b4132,#162722 70%,#23252a)}
+    .ads-big-card small{color:#f0dede;font-weight:700}
+    .ads-big-card strong{font-size:clamp(21px,5.1vw,32px)}
+    .ads-big-card em{color:#e1c8d0}
+    .ads-job-title{color:#f5d59b;font-size:16px}
+    .ads-detail{border-top:1px solid rgba(232,188,97,.2)}
+    .ads-detail summary{color:#f4cf86;font-weight:700;font-size:13px}
+    .ads-detail .ads-small-summary b{color:#f4cf86}
+    .ad-tag{display:inline-flex;gap:5px;align-items:center;font-size:11px;font-weight:750;color:#f5d599;background:rgba(232,188,97,.1);border:1px solid rgba(232,188,97,.25);border-radius:99px;padding:5px 10px}
+    .hero-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+    .hero-title{font-size:clamp(20px,5.8vw,28px);color:#f7d499;font-weight:900;letter-spacing:-.35px;line-height:1.4}
+    .hero-lede{font-size:12px;line-height:1.95;color:#e7ced9;margin-top:7px}
+    /* تعقب مراحل الأشغال ومواعيد التسليم */
+    .work-stages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0 16px}
+    .stage-card{cursor:pointer;min-width:0;text-align:right;border:1px solid rgba(232,188,97,.26);border-radius:16px;padding:12px;background:linear-gradient(145deg,#32202b,#1b1720);color:#faf3ef}
+    .stage-card strong{display:block;font-size:24px;margin:6px 0;color:var(--gold)}
+    .stage-card small{display:block;font-size:12px;line-height:1.5;color:#ddc8d3}
+    .stage-card[data-stage='new']{border-color:rgba(232,188,97,.45)}
+    .stage-card[data-stage='working']{border-color:rgba(255,125,93,.46)}
+    .stage-card[data-stage='delivered']{border-color:rgba(67,219,149,.5)}
+    .stage-card[data-stage='delivered'] strong{color:#74efb2}
+    .stage-card.is-active{outline:2px solid var(--gold);outline-offset:1px}
+    .deadline-edit{display:flex;flex-wrap:wrap;align-items:end;gap:8px;margin:9px 0;padding:10px;border:1px dashed rgba(232,188,97,.27);border-radius:12px;background:rgba(0,0,0,.12)}
+    .deadline-edit label{font-size:11px;color:#d9c0ce;display:flex;flex-direction:column;gap:5px;flex:1 1 120px}
+    .deadline-edit input{width:100%;min-width:0;color:#fafafa;background:#1c1720;border:1px solid rgba(255,255,255,.17);border-radius:9px;padding:8px}
+    .job-status-tag{display:inline-block;font-size:11px;font-weight:800;border-radius:20px;margin:8px 0 2px;padding:5px 9px;background:rgba(232,188,97,.13);color:#f6d48d;border:1px solid rgba(232,188,97,.25)}
+    .job-status-tag[data-status='working']{color:#ffad98;background:rgba(238,73,86,.12);border-color:rgba(238,73,86,.3)}
+    .job-status-tag[data-status='delivered']{color:#76efb2;background:rgba(67,219,149,.12);border-color:rgba(67,219,149,.3)}
+    .job-due-overdue{color:#ff7585!important;font-weight:800}
+    .job-due-soon{color:#f5d384!important;font-weight:700}
+    @media(max-width:370px){.work-stages{gap:6px}.stage-card{padding:9px}.stage-card strong{font-size:20px}.stage-card small{font-size:10px}}
+    .azha-credits{border-top:1px solid rgba(232,188,97,.24);margin-top:26px}
+    .azha-credits .credit-prayer{color:#f2dce4}
+    @media(max-width:650px){main{padding:12px}.panel{padding:14px}.ads-headline{gap:9px}.ads-big-card{padding:13px}.ads-big-card strong{font-size:clamp(18px,4.9vw,25px)}.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.stat{padding:13px 11px}.stat strong{font-size:17px}.nav{padding:10px 12px}}
+    @media(max-width:380px){.ads-big-card strong{font-size:18px}.ads-big-card em{font-size:10px}.stat-link small{font-size:11px}}
+
+
+    /* AZHA 1.5 — refined, responsive visual system */
+    :root{--bg:#0d0a10;--card:#201721;--card-2:#2a1c2b;--gold:#f1c67b;--gold-soft:rgba(241,198,123,.13);--red:#ec465f;--red-soft:rgba(236,70,95,.14);--green:#39d99a;--muted:#c7b8c6;--border:rgba(241,198,123,.19)}
+    body{background:radial-gradient(ellipse 780px 470px at 92% 2%,rgba(122,25,60,.24),transparent 73%),radial-gradient(ellipse 700px 520px at 0% 68%,rgba(96,39,65,.12),transparent 80%),#0d0a10;background-attachment:fixed;line-height:1.55}
+    header{background:rgba(19,10,19,.94);border-bottom:1px solid rgba(255,210,144,.22);padding:12px max(16px,calc((100vw - 1120px)/2));box-shadow:0 10px 32px rgba(0,0,0,.32)}
+    .brand-title{letter-spacing:.15px;font-size:20px;color:#f8d494}
+    .brand-sub{font-size:11px;color:#e4cfda}
+    .nav{gap:8px;padding:12px max(14px,calc((100vw - 1120px)/2));background:rgba(30,15,29,.91);scroll-behavior:smooth}
+    .nav-btn{font-size:12px;border-radius:14px;min-height:40px;padding:10px 15px;transition:transform .16s,background .16s;white-space:nowrap}
+    .nav-btn:hover{transform:translateY(-1px)}
+    .nav-btn.active{box-shadow:0 6px 17px rgba(134,32,62,.26)}
+    .panel{background:linear-gradient(157deg,rgba(44,27,43,.98),rgba(24,18,28,.98));border:1px solid rgba(241,198,123,.17);box-shadow:0 12px 36px rgba(0,0,0,.18)}
+    .stat{transition:transform .16s,box-shadow .16s}.stat:hover{transform:translateY(-2px);box-shadow:0 14px 35px rgba(0,0,0,.25)}
+    .item-card{transition:border-color .16s,transform .16s}.item-card:hover{border-color:rgba(241,198,123,.3)}
+    button{transition:transform .16s,filter .16s,box-shadow .16s}button:active{transform:scale(.985)}
+    .btn-gold{color:#221117;font-weight:850}
+    .quick-action{display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid rgba(241,198,123,.35);border-radius:14px;padding:13px 17px;font-size:13px;font-weight:800;background:linear-gradient(125deg,#f6d89c,#e0a753);color:#20121a;box-shadow:0 8px 23px rgba(222,152,49,.12)}
+    .quick-actions{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 17px}
+    .quick-actions>*{flex:1 1 150px}
+    .section-label{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#f4c986;font-weight:850;margin-bottom:7px}
+    .top-actions .new-invoice{background:linear-gradient(120deg,#edbd6d,#efdcaa);color:#311521;border:1px solid rgba(255,224,162,.64)}
+    .app-bottom-dock{display:none}
+    /* Professional invoicing workspace */
+    .invoice-banner{position:relative;overflow:hidden;border:1px solid rgba(241,198,123,.35);padding:23px;border-radius:24px;background:radial-gradient(circle at 15% 0%,rgba(255,218,153,.13),transparent 42%),linear-gradient(112deg,#421a32,#241726 72%,#302017);box-shadow:0 16px 35px rgba(0,0,0,.2)}
+    .invoice-banner:after{content:'✦';position:absolute;left:18px;top:-44px;font-size:170px;color:rgba(241,198,123,.052);pointer-events:none}
+    .invoice-banner h2{margin:3px 0 7px;font-size:clamp(21px,5vw,30px);color:#ffe3aa}
+    .invoice-banner p{font-size:13px;line-height:1.9;color:#edd4db;margin:0;max-width:680px}
+    .invoice-workspace{display:grid;grid-template-columns:minmax(0,1.07fr) minmax(0,.93fr);gap:15px;align-items:start;margin-top:17px}
+    .invoice-panel{background:linear-gradient(153deg,#2b1b2a,#17131c);border:1px solid rgba(241,198,123,.18);border-radius:20px;padding:19px;min-width:0;box-shadow:0 14px 34px rgba(0,0,0,.13)}
+    .invoice-panel h3{color:#f6d698;font-size:16px;margin:0 0 13px}
+    .invoice-panel .field{margin-bottom:12px}
+    .invoice-field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .invoice-line{display:grid;grid-template-columns:minmax(0,2fr) 60px 96px 32px;gap:6px;margin:8px 0;align-items:center;min-width:0}
+    .invoice-line input{min-width:0;width:100%;background:#211824;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px 7px;font-size:12px;color:#fff}
+    .invoice-line .mini-action{padding:8px 3px;width:32px}
+    .invoice-line-title{font-size:11px;color:#d6bac9}
+    .invoice-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .invoice-tools button{flex:1 1 auto;min-width:90px}
+    .invoice-live{border:1px solid rgba(241,198,123,.29);border-radius:17px;overflow:hidden;background:#fefbf7;color:#3b2730;box-shadow:0 15px 38px rgba(0,0,0,.17)}
+    .invoice-live-head{padding:15px 17px;background:linear-gradient(110deg,#4e1e37,#231522);color:#fff;display:flex;justify-content:space-between;gap:10px;align-items:center}
+    .invoice-live-head small{display:block;color:#efcddc;font-size:10px}.invoice-live-head strong{display:block;color:#ffe0aa;font-size:18px}
+    .invoice-live-logo{width:50px;height:50px;object-fit:contain;border-radius:50%;background:white;padding:3px}
+    .invoice-live-body{padding:16px;font-size:12px}
+    .invoice-live-meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#65535c;padding-bottom:13px;border-bottom:1px solid #e7dfe0}
+    .invoice-live-table{width:100%;border-collapse:collapse;margin:12px 0;table-layout:fixed}
+    .invoice-live-table th{background:#f7eef0;color:#5c2d44;font-size:10px}
+    .invoice-live-table td,.invoice-live-table th{padding:9px 5px;text-align:right;border-bottom:1px solid #eee4e7;overflow-wrap:anywhere;font-size:11px}
+    .invoice-live-totals{margin-top:15px;background:#f8f1ed;border-radius:12px;padding:10px}
+    .invoice-live-totals>div{display:flex;justify-content:space-between;gap:12px;padding:5px 4px}
+    .invoice-live-totals .grand{font-size:16px;font-weight:900;color:#6e2542;border-top:1px solid #dccad0;padding-top:9px;margin-top:7px}
+    .invoice-live-foot{font-size:10px;text-align:center;color:#765c64;border-top:1px solid #e3d7dd;padding-top:10px;margin-top:15px;line-height:1.9}
+    .invoice-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px;margin-top:12px}
+    .invoice-card{border:1px solid rgba(241,198,123,.22);background:linear-gradient(142deg,#322034,#201822);border-radius:17px;padding:17px;min-width:0}
+    .invoice-card h4{margin:0;color:#ffe1aa;font-size:16px}.invoice-card small{color:#d8becb;font-size:11px}
+    .invoice-pill{padding:5px 9px;border-radius:20px;font-size:11px;font-weight:750;border:1px solid rgba(241,198,123,.3);color:#ffe0a7;background:rgba(241,198,123,.11)}
+    .invoice-pill.paid{color:#69e9ab;background:rgba(57,217,154,.1);border-color:rgba(57,217,154,.3)}
+    .invoice-pill.unpaid{color:#ff9da9;background:rgba(236,70,95,.1);border-color:rgba(236,70,95,.3)}
+    .invoice-card-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:13px 0}
+    .invoice-card-metrics div{background:rgba(0,0,0,.12);padding:9px;border-radius:10px}
+    .invoice-card-metrics span{display:block;font-size:11px;color:#d5baca}.invoice-card-metrics b{display:block;font-size:17px;margin-top:3px}
+    .invoice-empty{text-align:center;background:rgba(255,255,255,.025);border:1px dashed rgba(241,198,123,.3);border-radius:18px;padding:32px 16px;color:#e0c6d1}
+    .invoice-empty strong{display:block;font-size:20px;color:#ffe1ab;margin-bottom:5px}
+    .invoice-shortcut{background:linear-gradient(145deg,#411e32,#1e1821)!important}
+    .invoice-help{font-size:11px;color:#e1c0d3;line-height:1.95}
+    @media(max-width:880px){.invoice-workspace{grid-template-columns:minmax(0,1fr)}.invoice-panel{padding:15px}}
+    @media(max-width:640px){
+      body{background-attachment:scroll}
+      main{padding:13px 12px 102px}
+      header{flex-wrap:nowrap;gap:7px;padding:10px 12px}
+      header .brand{min-width:0}header .brand img{height:41px;width:41px}header .brand-title{font-size:17px}
+      header .brand-sub{max-width:180px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+      .top-actions{gap:5px}.top-actions .btn-sm{padding:9px 8px;font-size:11px}
+      .top-actions .test-sound{display:none}
+      .nav{padding:8px 10px;gap:6px}.nav-btn{padding:8px 11px;font-size:11px;min-height:36px}
+      .panel{padding:15px}.stat{border-radius:16px}.invoice-banner{padding:18px 15px}
+      .invoice-field-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+      .invoice-line{grid-template-columns:minmax(0,1.7fr) 49px 77px 28px;gap:4px}
+      .invoice-line input{padding:9px 5px;font-size:11px}.invoice-line .mini-action{width:28px}
+      .app-bottom-dock{position:fixed;bottom:0;right:0;left:0;z-index:38;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;padding:7px 7px max(8px,env(safe-area-inset-bottom));background:rgba(27,15,27,.97);backdrop-filter:blur(14px);border-top:1px solid rgba(241,198,123,.32);box-shadow:0 -12px 30px rgba(0,0,0,.38)}
+      .app-bottom-dock .dock-btn{background:transparent;color:#d2bccb;font-size:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:6px 2px;border-radius:12px;min-width:0}
+      .app-bottom-dock .dock-btn .dock-ico{font-size:21px;line-height:1.3}
+      .app-bottom-dock .dock-btn.active{color:#ffe1a8;background:linear-gradient(145deg,#67304b,#36192d)}
+      .azha-credits{padding-bottom:91px}
+    }
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
   </style>
 </head>
 <body>
@@ -298,7 +496,8 @@
         </div>
       </div>
       <div class="top-actions">
-        <button class="btn-dark btn-sm" onclick="testAlertSound()">🔊 تجربة التنبيه</button>
+        <button class="btn-dark btn-sm test-sound" onclick="testAlertSound()">🔊 تجربة التنبيه</button>
+        <button class="btn-sm new-invoice" onclick="invoiceNew()">＋ فاتورة</button>
         <button class="btn-red btn-sm" onclick="lockApp()">🔒 قفل</button>
       </div>
     </header>
@@ -309,6 +508,8 @@
       <button class="nav-btn" data-tab="owedByMe" onclick="switchTab('owedByMe')">📤 ديون عليّ للناس</button>
       <button class="nav-btn" data-tab="tx" onclick="switchTab('tx')">💳 المصروفات والدخل</button>
       <button class="nav-btn" data-tab="tasks" onclick="switchTab('tasks')">🛠️ أشغال الزبائن</button>
+      <button class="nav-btn" data-tab="ads" onclick="switchTab('ads')">🖨️ أشغال الدعاية</button>
+      <button class="nav-btn" data-tab="invoices" onclick="switchTab('invoices')">🧾 الفواتير</button>
       <button class="nav-btn" data-tab="reports" onclick="switchTab('reports')">📅 التقارير</button>
       <button class="nav-btn" data-tab="settings" onclick="switchTab('settings')">⚙️ الإعدادات</button>
     </nav>
@@ -316,17 +517,23 @@
     <main>
       <!-- الملخص -->
       <section id="tab-dash">
-        <div class="report-intro"><div class="row-between"><div><div style="font-size:17px;font-weight:800;color:var(--gold)">📊 لوحة حساباتي</div><div style="font-size:12px;color:var(--muted);margin-top:6px">نظرة سريعة إلى أقسامك المالية — اضغط أي بطاقة لفتح تفاصيلها</div></div><button class="btn-dark btn-sm" onclick="switchTab('reports')">📅 عرض التقارير</button></div></div>
+        <div class="report-intro"><div class="row-between"><div><div class="ad-tag">✦ AZHA FINANCE • 1.5</div><div class="hero-title">📊 حساباتك تحت السيطرة</div><div class="hero-lede">كل شغلك ودفعاتك ومصروفاتك في لوحة واحدة. <b class="green-txt">الخالص بالأخضر</b> و<b class="red-txt">الدين بالأحمر</b>.</div></div><button class="btn-dark btn-sm" onclick="switchTab('reports')">📅 عرض التقارير</button></div></div>
+        <div class="quick-actions"><button class="quick-action" onclick="invoiceNew()">🧾 إنشاء فاتورة جديدة</button><button class="quick-action" onclick="switchTab('ads')">🖨️ أشغال الدعاية</button><button class="quick-action" onclick="switchTab('tasks')">⏳ متابعة الأشغال</button></div>
         <div class="stats">
           <div class="stat stat-link" tabindex="0" role="button" aria-label="فتح قسم tx" onclick="switchTab('tx')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('tx')}"><small>صافي المقبوضات والمصروفات المسجّلة</small><strong id="stNet" class="gold-txt">0 د.ل</strong><div class="stat-hint">اضغط لعرض التفاصيل ←</div></div>
-          <div class="stat stat-link" tabindex="0" role="button" aria-label="فتح قسم owedToMe" onclick="switchTab('owedToMe')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('owedToMe')}"><small>إجمالي الديون لي</small><strong id="stOwedToMe" class="green-txt">0 د.ل</strong><div class="stat-hint">اضغط لعرض التفاصيل ←</div></div>
-          <div class="stat stat-link" tabindex="0" role="button" aria-label="فتح قسم owedByMe" onclick="switchTab('owedByMe')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('owedByMe')}"><small>إجمالي الديون عليّ</small><strong id="stOwedByMe" class="red-txt">0 د.ل</strong><div class="stat-hint">اضغط لعرض التفاصيل ←</div></div>
+          <div class="stat stat-link" data-tone="red" tabindex="0" role="button" aria-label="فتح قسم owedToMe" onclick="switchTab('owedToMe')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('owedToMe')}"><small>إجمالي الديون لي</small><strong id="stOwedToMe" class="red-txt">0 د.ل</strong><div class="stat-hint">اضغط لعرض التفاصيل ←</div></div>
+          <div class="stat stat-link" data-tone="red" tabindex="0" role="button" aria-label="فتح قسم owedByMe" onclick="switchTab('owedByMe')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('owedByMe')}"><small>إجمالي الديون عليّ</small><strong id="stOwedByMe" class="red-txt">0 د.ل</strong><div class="stat-hint">اضغط لعرض التفاصيل ←</div></div>
           <div class="stat stat-link" tabindex="0" role="button" aria-label="فتح قسم tasks" onclick="switchTab('tasks')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('tasks')}"><small>أشغال لم تُسلّم</small><strong id="stTasks" class="gold-txt">0 شغل</strong><div class="stat-hint">اضغط لعرض التفاصيل ←</div></div>
-          <div class="stat stat-link" tabindex="0" role="button" aria-label="فتح قسم tasks" onclick="switchTab('tasks')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('tasks')}"><small>مقبوض من أشغال الزبائن</small><strong id="stTaskPaid" class="green-txt">0 د.ل</strong><div class="stat-hint">اضغط لعرض التفاصيل ←</div></div>
-          <div class="stat stat-link" tabindex="0" role="button" aria-label="فتح قسم tasks" onclick="switchTab('tasks')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('tasks')}"><small>مبالغ متبقية على الزبائن</small><strong id="stTaskDue" class="gold-txt">0 د.ل</strong><div class="stat-hint">اضغط لعرض التفاصيل ←</div></div>
+          <div class="stat stat-link" data-tone="green" tabindex="0" role="button" aria-label="فتح قسم tasks" onclick="switchTab('tasks')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('tasks')}"><small>مقبوض من أشغال الزبائن</small><strong id="stTaskPaid" class="green-txt">0 د.ل</strong><div class="stat-hint">اضغط لعرض التفاصيل ←</div></div>
+          <div class="stat stat-link" data-tone="red" tabindex="0" role="button" aria-label="فتح قسم tasks" onclick="switchTab('tasks')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('tasks')}"><small>مبالغ متبقية على الزبائن</small><strong id="stTaskDue" class="red-txt">0 د.ل</strong><div class="stat-hint">اضغط لعرض التفاصيل ←</div></div>
           <div class="stat stat-link" tabindex="0" role="button" onclick="switchTab('tasks')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('tasks')}"><small>القيمة الكلية لأشغال الزبائن</small><strong id="stJobTotal" class="gold-txt">0 د.ل</strong><div class="stat-hint">اضغط لعرض تفاصيل الأشغال ←</div></div>
           <div class="stat stat-link" tabindex="0" role="button" onclick="switchTab('reports')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('reports')}"><small>صافي حركة هذا الشهر</small><strong id="stMonthNet" class="gold-txt">0 د.ل</strong><div class="stat-hint">اضغط لفتح التقرير الشهري ←</div></div>
         </div>
+        <div class="stats">
+          <button class="stat stat-link" onclick="switchTab('ads')" style="text-align:right"><small>أشغال الدعاية — قيمة الأشغال كاملة</small><strong id="stAdsTotal" class="gold-txt">0 د.ل</strong><div class="stat-hint">عرض حسابات الدعاية ←</div></button>
+          <button class="stat stat-link" data-tone="green" onclick="switchTab('ads')" style="text-align:right"><small>أشغال الدعاية — النقد المقبوض فقط</small><strong id="stAdsCash" class="green-txt">0 د.ل</strong><div class="stat-hint">المبالغ غير المدفوعة غير داخلة ←</div></button>
+        </div>
+        <button class="stat stat-link invoice-shortcut" onclick="switchTab('invoices')" style="width:100%;text-align:right;display:block;margin-bottom:15px;min-height:90px"><small>🧾 الفواتير الجاهزة للطباعة والمشاركة</small><strong id="stInvoiceCount" class="gold-txt">0 فاتورة</strong><div class="stat-hint">إنشاء • تعديل • إضافة بنود • طباعة ومشاركة ←</div></button>
         <div class="panel">
           <h3>تذكيرات اليوم والأشغال المعلقة</h3>
           <div id="dashReminders" style="font-size:13px; color:var(--muted);">جاري التحميل...</div>
@@ -403,7 +610,8 @@
             <div class="field"><label>اسم الزبون</label><input id="taskClient" type="text" placeholder="اسم الزبون" /></div>
             <div class="field"><label>هاتف الزبون (اختياري)</label><input id="taskPhone" type="tel" inputmode="tel" placeholder="091..." /></div>
             <div class="field"><label>تفاصيل الشغل المطلوب</label><input id="taskDesc" type="text" placeholder="مثال: تصميم، طباعة، صيانة..." /></div>
-            <div class="field"><label>تاريخ التسليم المحدد</label><input id="taskDue" type="date" /></div>
+            <div class="grid-2"><div class="field"><label>تاريخ التسليم المحدد</label><input id="taskDue" type="date" /></div><div class="field"><label>ساعة التسليم (اختياري)</label><input id="taskDueTime" type="time" /></div></div>
+            <div class="field"><label>حالة الشغل عند التسجيل</label><select id="taskInitialStatus"><option value="not_started">لم يبدأ حتى الآن</option><option value="working">قيد الانتظار / التنفيذ</option><option value="ready">جاهز للتسليم</option><option value="delivered">تم التسليم</option></select></div>
             <div class="field"><label>قيمة الشغل المتفق عليها (د.ل)</label><input id="taskPrice" type="number" step="0.01" placeholder="0.00" /></div>
             <div class="field"><label>العربون المقبوض الآن (اختياري) — يُحتسب دخلًا عند تسجيله فقط</label><input id="taskDeposit" type="number" min="0" step="0.01" placeholder="0.00" /></div>
             <button id="saveTaskBtn" class="btn-gold" style="width:100%;" onclick="addTask()">إضافة الشغل</button>
@@ -412,11 +620,150 @@
           </div>
           <div class="panel">
             <h3>أشغال الزبائن — حالة الشغل وحالة السداد منفصلتان</h3>
+            <p class="section-caption">غيّر الحالة أمام أي شغل أو حدّد موعد إنجازه. التنبيه يستمر للأشغال غير المسلّمة.</p>
             <div id="listTasks"></div>
           </div>
         </div>
       </section>
 
+
+
+      <!-- أشغال الدعاية: نفس أشغال الزبائن، مع تكاليف موردين مستقلة وأقساط محصلة -->
+      <section id="tab-ads" class="hidden">
+        <div class="report-intro">
+          <div class="ad-tag">✦ AZHA ADVERTISING</div><div class="hero-title">🖨️ إدارة أشغال الدعاية</div>
+          <p class="hero-lede">سجّل الزبون والمورّد وتكلفة المواد والأقساط. <b class="green-txt">الخالص = مبالغ قُبضت بالفعل</b>، والمبالغ المتبقية تُعرض <b class="red-txt">بالأحمر</b> داخل تفاصيل الشغل ولا تُحسب ضمن المقبوض.</p>
+        </div>
+        <div class="panel">
+          <div class="ads-period-select">
+            <div class="field"><label>عرض الحسابات</label><select id="adsPeriod" onchange="adsPeriodChanged()"><option value="day">يومي</option><option value="month" selected>شهري</option><option value="all">كل الأشغال</option></select></div>
+            <div class="field" id="adsDateField"><label>التاريخ / الشهر</label><input id="adsDate" type="month" onchange="renderAds()" /></div>
+          </div>
+          <div class="ads-headline">
+            <div class="ads-big-card"><small>إجمالي قيمة الأشغال بالكامل</small><strong id="adsAgreed" class="gold-txt">0 د.ل</strong><em>إجمالي قيم كل أشغال الدعاية المسجلة</em></div>
+            <div class="ads-big-card receipts"><small>إجمالي النقود الخالصة المستلمة</small><strong id="adsReceived" class="green-txt">0 د.ل</strong><em>إجمالي العربون والأقساط التي قبضتها بالفعل</em></div>
+          </div>
+          <div class="report-kpis">
+            <div class="report-kpi"><small>قيمة الأشغال الجديدة خلال الفترة المحددة</small><b id="adsPeriodAgreed" class="gold-txt">0 د.ل</b></div>
+            <div class="report-kpi"><small>إجمالي الأقساط المقبوضة خلال الفترة</small><b id="adsPeriodCash" class="green-txt">0 د.ل</b></div>
+            <div class="report-kpi"><small>تكاليف المواد المسجلة للأشغال الجديدة</small><b id="adsCosts" class="red-txt">0 د.ل</b></div>
+            <div class="report-kpi"><small>الربح المتوقع من الأشغال الجديدة</small><b id="adsExpectedProfit" class="gold-txt">0 د.ل</b></div>
+            <div class="report-kpi"><small>هامش الربح المتوقع</small><b id="adsMargin" class="gold-txt">0%</b></div>
+            <div class="report-kpi"><small>المدفوع فعلًا للموردين خلال الفترة</small><b id="adsSupplierCash" class="red-txt">0 د.ل</b></div>
+            <div class="report-kpi"><small>صافي المقبوض والمدفوع نقدًا خلال الفترة</small><b id="adsCashNet" class="green-txt">0 د.ل</b></div>
+            <div class="report-kpi"><small>عدد الأشغال الجديدة في الفترة</small><b id="adsCount">0</b></div>
+          </div>
+          <p class="ads-small-summary">«الربح المتوقع» يخص قيمة الأشغال المنشأة في التاريخ المختار ناقص تكاليفها المسجلة (وقد تتغير لاحقًا). «صافي النقد» يخص المقبوض والمدفوع فعليًا خلال التاريخ المختار، وليس الربح المحاسبي النهائي. لا تسجل مصروف المورد مرتين في قسم المصروفات العامة.</p>
+          <div class="report-actions"><button class="btn-dark" onclick="exportAdCsv()">⬇️ تنزيل حسابات الدعاية (Excel CSV)</button><button class="btn-dark" onclick="printAdReport()">🖨️ تقرير الدعاية PDF</button></div>
+        </div>
+        <div class="grid-2">
+          <div class="panel">
+            <h3>➕ إضافة شغل دعاية جديد</h3>
+            <div class="field"><label>اسم الزبون *</label><input id="adsClient" placeholder="الزبون أو الشركة" maxlength="160" /></div>
+            <div class="field"><label>هاتف الزبون (اختياري)</label><input id="adsPhone" type="tel" placeholder="091..." /></div>
+            <div class="field"><label>تفاصيل شغل الدعاية *</label><input id="adsDescription" placeholder="بنر، لوحات، طباعة، تصميم..." maxlength="500" /></div>
+            <div class="grid-2"><div class="field"><label>تاريخ تسجيل الشغل</label><input id="adsCreated" type="date" /></div><div class="field"><label>موعد التسليم</label><input id="adsDue" type="date" /></div></div>
+            <div class="grid-2"><div class="field"><label>ساعة التسليم (اختياري)</label><input id="adsDueTime" type="time" /></div><div class="field"><label>حالة الشغل عند التسجيل</label><select id="adsInitialStatus"><option value="not_started">لم يبدأ حتى الآن</option><option value="working">قيد الانتظار / التنفيذ</option><option value="ready">جاهز للتسليم</option><option value="delivered">تم التسليم</option></select></div></div>
+            <div class="field"><label>قيمة الشغل بالكامل (د.ل) *</label><input id="adsPrice" type="number" min="0" step="0.01" placeholder="1000" /></div>
+            <div class="field"><label>عربون استلمته نقدًا الآن (اختياري)</label><input id="adsDeposit" type="number" min="0" step="0.01" placeholder="0" /></div>
+            <div class="field"><label>الشركة التي أخذت منها البضاعة (اختياري)</label><input id="adsSupplier" placeholder="اسم المطبعة أو المورد" maxlength="160" /></div>
+            <div class="field"><label>اسم المادة أو الخدمة</label><input id="adsMaterial" placeholder="فليكس، حبر، ستكر، قص..." maxlength="200" /></div>
+            <div class="field"><label>تكلفة المادة أو الخدمة كاملة (د.ل)</label><input id="adsCost" type="number" min="0" step="0.01" placeholder="0" /></div>
+            <div class="field"><label>مبلغ دفعته فعليًا للمورد (اختياري)</label><input id="adsSupplierDeposit" type="number" min="0" step="0.01" placeholder="0" /></div>
+            <button class="btn-gold" style="width:100%" onclick="createAdJob()">حفظ شغل الدعاية</button>
+          </div>
+          <div>
+            <div class="panel">
+              <h3>💵 تسجيل دفعة استلمتها من زبون</h3>
+              <div class="field"><label>اختر الشغل</label><select id="adsPayJob"></select></div>
+              <div class="field"><label>الدفعة المستلمة نقدًا (د.ل)</label><input id="adsPayAmount" type="number" min="0" step="0.01" /></div>
+              <div class="field"><label>تاريخ استلام الدفعة</label><input id="adsPayDate" type="date" /></div>
+              <div class="field"><label>بيان الدفعة</label><input id="adsPayNote" placeholder="الدفعة الأولى، الثانية، الباقي..." /></div>
+              <button class="btn-gold" style="width:100%" onclick="recordAdCustomerPayment()">تسجيل المبلغ المقبوض</button>
+              <p class="section-caption" style="margin-top:9px">الدفعة لا تظهر في المقبوض إلا بعد تسجيل استلامها. ولا يجوز تسجيل مبلغ أكبر من الباقي.</p>
+            </div>
+            <div class="panel">
+              <h3>🏭 إضافة فاتورة مواد/تكلفة لشغل موجود</h3>
+              <div class="field"><label>اختر الشغل</label><select id="adsCostJob"></select></div>
+              <div class="field"><label>اسم الشركة المورِّدة</label><input id="adsNewSupplier" placeholder="الشركة" maxlength="160" /></div>
+              <div class="field"><label>نوع المادة أو الخدمة</label><input id="adsNewMaterial" placeholder="المواد التي تم شراؤها" maxlength="200" /></div>
+              <div class="field"><label>التكلفة الإجمالية (د.ل)</label><input id="adsNewCost" type="number" min="0" step="0.01" /></div>
+              <div class="field"><label>ما دفعته للمورِّد بالفعل (د.ل)</label><input id="adsNewSupplierPaid" type="number" min="0" step="0.01" placeholder="0" /></div>
+              <div class="field"><label>تاريخ الفاتورة/الدفعة الأولى</label><input id="adsCostDate" type="date" /></div>
+              <button class="btn-dark" style="width:100%" onclick="addAdCost()">حفظ فاتورة المواد</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="row-between"><h3>🗂️ متابعة إنجاز أشغال الدعاية</h3><span class="badge">تنبيه كل 3 أو 4 ساعات</span></div>
+          <p class="section-caption">اضغط البطاقة لتصفية الأشغال، ثم غيّر حالة كل شغل وحدّد موعد التسليم. يتم إيقاف تنبيه الشغل عند اختيار «تم التسليم» ولو بقي له مبلغ مالي.</p>
+          <div class="work-stages">
+            <button type="button" class="stage-card" data-stage="new" onclick="setAdsWorkFilter('not_started')"><small>🟡 أشغال لم تبدأ</small><strong id="adsNotStartedCount">0</strong><small>تحتاج بدء العمل</small></button>
+            <button type="button" class="stage-card" data-stage="working" onclick="setAdsWorkFilter('in_progress')"><small>🔴 قيد الانتظار / التنفيذ</small><strong id="adsWorkingCount">0</strong><small>تشمل الجاهزة للتسليم</small></button>
+            <button type="button" class="stage-card" data-stage="delivered" onclick="setAdsWorkFilter('delivered')"><small>🟢 تم تسليمها</small><strong id="adsDeliveredCount">0</strong><small>أشغال منجزة</small></button>
+          </div>
+          <div class="row-between"><h3>📋 سجل أشغال الدعاية</h3><span class="badge" id="adsListLabel">جميع الأشغال</span></div>
+          <div class="ads-period-select" style="margin:10px 0 16px">
+            <div class="field"><label>بحث بالزبون أو الشركة المورّدة</label><input type="search" id="adsSearch" placeholder="مثال: طباعة أو اسم الزبون" oninput="renderAds()" /></div>
+            <div class="field"><label>حالة التحصيل</label><select id="adsPayFilter" onchange="renderAds()"><option value="all">كل الأشغال</option><option value="unpaid">عليها باقي / دين</option><option value="paid">خالصة بالكامل</option></select></div>
+            <div class="field"><label>حالة إنجاز الشغل</label><select id="adsWorkFilter" onchange="renderAds()"><option value="all">جميع الحالات</option><option value="not_started">لم يبدأ حتى الآن</option><option value="in_progress">قيد الانتظار / التنفيذ</option><option value="delivered">تم التسليم</option></select></div>
+          </div>
+          <p class="section-caption">في تفاصيل كل شغل ترى قيمة العقد والدفعات المسددة والباقي وتكاليف الشركات. اضغط «سجل الدفعات والمواد» لتعديل الدفعات أو دفع أقساط الموردين.</p>
+          <div id="adsJobsList"></div>
+        </div>
+      </section>
+
+
+      <!-- الفواتير: مستندات مالية مستقلة؛ ليست قبضًا تلقائيًا -->
+      <section id="tab-invoices" class="hidden">
+        <div class="invoice-banner">
+          <div class="section-label">AZHA ADVERTISING · INVOICES</div>
+          <div class="row-between"><div><h2>🧾 فواتير احترافية في ثوانٍ</h2><p>أضف البنود والكميات وأسعارها، وعدّل الفاتورة وقت ما تحتاج، ثم اطبعها على ورق A4 أو احفظها PDF أو شارك تفاصيلها مع الزبون.</p></div><button class="quick-action" onclick="invoiceNew()">＋ فاتورة جديدة</button></div>
+        </div>
+        <div class="report-kpis" style="margin-top:15px">
+          <div class="report-kpi"><small>إجمالي عدد الفواتير</small><b id="invoiceStatCount" class="gold-txt">0</b></div>
+          <div class="report-kpi"><small>إجمالي قيم الفواتير (لا يدخل كدخل نقدي)</small><b id="invoiceStatTotal" class="gold-txt">0 د.ل</b></div>
+        </div>
+        <div class="invoice-workspace">
+          <div class="invoice-panel" id="invoiceEditor">
+            <div class="row-between"><h3 id="invoiceEditorTitle">✦ إصدار فاتورة جديدة</h3><button class="btn-dark btn-sm" onclick="invoiceResetForm()">مسح الحقول</button></div>
+            <div class="invoice-field-grid">
+              <div class="field"><label>نوع المستند</label><select id="invoiceType" onchange="renderInvoiceLive()"><option value="invoice">فاتورة</option><option value="quote">عرض سعر</option></select></div>
+              <div class="field"><label>رقم الفاتورة *</label><input id="invoiceNumber" maxlength="64" oninput="renderInvoiceLive()" /></div>
+              <div class="field"><label>تاريخ الإصدار</label><input id="invoiceDate" type="date" onchange="renderInvoiceLive()" /></div>
+              <div class="field"><label>موعد السداد (اختياري)</label><input id="invoiceDue" type="date" onchange="renderInvoiceLive()" /></div>
+            </div>
+            <div class="field"><label>ربط الفاتورة بشغل مسجل (اختياري)</label><select id="invoiceJob" onchange="invoiceSelectJob()"><option value="">فاتورة مستقلة — لا تغير حسابات الشغل</option></select><div class="invoice-help">عند الربط تظهر المبالغ المقبوضة من سجل ذلك الشغل تلقائيًا؛ لا نضيف أي دخل مرتين.</div></div>
+            <div class="invoice-field-grid">
+              <div class="field"><label>اسم الزبون *</label><input id="invoiceClient" maxlength="160" placeholder="الاسم أو الشركة" oninput="renderInvoiceLive()" /></div>
+              <div class="field"><label>هاتف الزبون</label><input id="invoicePhone" maxlength="24" type="tel" placeholder="091..." oninput="renderInvoiceLive()" /></div>
+            </div>
+            <div class="row-between" style="margin-top:7px"><h3 style="margin:0">بنود الفاتورة</h3><button class="btn-dark btn-sm" onclick="invoiceAddLine()">＋ إضافة بند</button></div>
+            <div class="invoice-line invoice-line-title"><div>البيان / الخدمة</div><div>الكمية</div><div>السعر</div><div></div></div>
+            <div id="invoiceLines"></div>
+            <div class="invoice-field-grid" style="margin-top:16px">
+              <div class="field"><label>خصم (د.ل)</label><input id="invoiceDiscount" type="number" min="0" step="0.01" value="0" oninput="renderInvoiceLive()" /></div>
+              <div class="field"><label>رسوم إضافية (اختياري)</label><input id="invoiceExtra" type="number" min="0" step="0.01" value="0" oninput="renderInvoiceLive()" /></div>
+            </div>
+            <div class="field"><label>ملاحظات وشروط إضافية</label><textarea id="invoiceNote" rows="3" maxlength="1200" placeholder="مثال: موعد التسليم، شروط الدفع، ملاحظات للزبون" oninput="renderInvoiceLive()"></textarea></div>
+            <div class="invoice-tools"><button class="btn-gold" onclick="invoiceSave()">💾 حفظ الفاتورة</button><button class="btn-dark" onclick="invoicePrintDraft()">🖨️ طباعة المعاينة</button><button class="btn-dark" onclick="invoiceShareDraft()">↗ مشاركة المعاينة</button></div>
+            <p class="invoice-help" style="margin:12px 0 0">الفاتورة مستند للزبون ولا تُسجّل كدخل نقدي تلقائيًا. التحصيل الفعلي يُسجّل من خلال دفعات الشغل المرتبط، ومبالغ الفاتورة المستقلة لا تدخل في ملخص المقبوض.</p>
+          </div>
+          <div class="invoice-panel">
+            <div class="row-between"><h3>👁️ معاينة مباشرة للفاتورة</h3><span class="badge">مهيأة للطباعة</span></div>
+            <div id="invoiceLivePreview"></div>
+            <p class="invoice-help" style="margin:12px 0 0">ستظهر البيانات المعبّأة هنا قبل الحفظ. للطباعة اختر «حفظ كملف PDF» من خيارات الطابعة، ثم أرسل ملف PDF عبر WhatsApp أو أي تطبيق مشاركة.</p>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <div class="row-between"><div><h3 style="margin:0">📚 الفواتير المحفوظة</h3><p class="section-caption" style="margin:3px 0 0">عدّل أو احذف أو اطبع أو أرسل أي فاتورة محفوظة.</p></div><button class="btn-gold btn-sm" onclick="invoiceNew()">＋ فاتورة</button></div>
+          <div class="invoice-field-grid" style="margin-top:14px">
+            <div class="field"><label>بحث بالرقم أو اسم الزبون</label><input id="invoiceSearch" type="search" placeholder="بحث سريع..." oninput="renderInvoices()" /></div>
+            <div class="field"><label>نوع المستند</label><select id="invoiceFilter" onchange="renderInvoices()"><option value="all">الكل</option><option value="invoice">فواتير</option><option value="quote">عروض أسعار</option></select></div>
+          </div>
+          <div id="invoiceList" class="invoice-list"></div>
+        </div>
+      </section>
 
       <!-- التقارير اليومية والشهرية -->
       <section id="tab-reports" class="hidden">
@@ -446,7 +793,7 @@
               <select id="setTaskHours">
                 <option value="3">كل 3 ساعات</option>
                 <option value="4">كل 4 ساعات</option>
-                <option value="5">كل 5 ساعات</option>
+                <option value="5">كل 5 ساعات (للمستخدمين السابقين)</option>
               </select>
             </div>
             <div class="field">
@@ -456,7 +803,7 @@
             <div class="field"><label>موعد إشعار ملخص اليوم</label><select id="setReportTime"><option value="23:00">11:00 ليلاً</option><option value="23:30">11:30 ليلاً</option><option value="00:00">12:00 منتصف الليل (عن اليوم السابق)</option></select></div>
             <div class="field"><label>تفعيل التقرير اليومي</label><select id="setDailyReportEnabled"><option value="yes">نعم — إشعار كل يوم</option><option value="no">لا</option></select></div>
             <div class="field"><label>تفعيل التقرير الشهري</label><select id="setMonthlyReportEnabled"><option value="yes">نعم — يوم 1 من الشهر الجديد عن الشهر السابق</option><option value="no">لا</option></select></div>
-            <p class="section-caption">إشعارات Android تعمل في الخلفية إذا منحت التطبيق إذن الإشعارات. قد يتأخر وقتها قليلًا بسبب توفير البطارية.</p>
+            <p class="section-caption">إشعارات أشغال الدعاية/الزبائن تظهر كل 3 أو 4 ساعات ما دام هناك شغل لم يُسلّم، مع تنبيه إضافي عند حلول موعد التسليم. يُستخدم صوت الإشعارات الافتراضي للهاتف. يلزم السماح بالإشعارات في Android وقد تتأخر بسبب توفير البطارية. على الموقع تعمل تنبيهات الصوت فقط ما دامت الصفحة مفتوحة.</p>
             <div class="field"><label>اسم المستخدم</label><input id="setUser" type="text" /></div>
             <div class="field"><label>كلمة مرور جديدة (اتركها فارغة إن لم ترغب بتغييرها)</label><input id="setPass" type="password" autocomplete="new-password" placeholder="8 أحرف أو أكثر" /></div>
             <button class="btn-gold" style="width:100%;" onclick="saveSettings()">حفظ الإعدادات</button>
@@ -476,6 +823,13 @@
       </section>
     </main>
 
+    <div class="app-bottom-dock" aria-label="التنقل السريع">
+      <button class="dock-btn active" data-tab="dash" onclick="switchTab('dash')"><span class="dock-ico">⌂</span>الرئيسية</button>
+      <button class="dock-btn" data-tab="ads" onclick="switchTab('ads')"><span class="dock-ico">▦</span>الدعاية</button>
+      <button class="dock-btn" data-tab="invoices" onclick="switchTab('invoices')"><span class="dock-ico">▤</span>الفواتير</button>
+      <button class="dock-btn" data-tab="tasks" onclick="switchTab('tasks')"><span class="dock-ico">◷</span>الأشغال</button>
+      <button class="dock-btn" data-tab="reports" onclick="switchTab('reports')"><span class="dock-ico">▥</span>التقارير</button>
+    </div>
     <!-- الشعار والاعتماد المعتمدان ثابتان في جميع أقسام حساباتي -->
     <footer class="azha-credits" aria-label="معلومات إعداد وتصميم تطبيق حساباتي">
       <img src="azha-logo.png" alt="شعار AZHA ADVERTISING المعتمد" loading="lazy" />
@@ -509,8 +863,38 @@
     function cleanText(x,max=500) { return String(x??'').slice(0,max); }
     function cleanMoney(x) { const n=Number(x); return Number.isFinite(n)&&n>=0&&n<=1e12?roundMoney(n):0; }
     function sumTaskPaid(task){return roundMoney((task.payments||[]).reduce((sum,p)=>sum+Number(p.amount||0),0));}
+    function adJobCosts(t){return roundMoney((t.adCosts||[]).reduce((s,c)=>s+Number(c.amount||0),0));}
+    function adCostPaid(c){return roundMoney((c.payments||[]).reduce((s,p)=>s+Number(p.amount||0),0));}
+    function adJobSupplierPaid(t){return roundMoney((t.adCosts||[]).reduce((s,c)=>s+adCostPaid(c),0));}
     function taskRemaining(task){return Math.max(0,roundMoney(Number(task.price||0)-sumTaskPaid(task)));}
-    function taskStatus(task){return ['working','ready','delivered'].includes(task.status)?task.status:(task.done?'delivered':'working');}
+    function taskStatus(task){return ['not_started','working','ready','delivered'].includes(task.status)?task.status:(task.done?'delivered':'working');}
+    function statusLabel(t){return ({not_started:'لم يبدأ حتى الآن',working:'قيد الانتظار / التنفيذ',ready:'جاهز للتسليم',delivered:'تم التسليم'})[taskStatus(t)];}
+    function validTime(x){return /^([01]\d|2[0-3]):[0-5]\d$/.test(String(x||''))?String(x):'';}
+    function taskDeadline(t){
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(String(t.due||'')))return null;
+      const time=validTime(t.dueTime)||'23:59';const d=new Date(t.due+'T'+time+':00');
+      return Number.isFinite(d.getTime())?d:null;
+    }
+    function deadlineDescription(t){
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(String(t.due||'')))return {text:'لم يُحدَّد موعد للتسليم',css:''};
+      const end=taskDeadline(t),diff=end.getTime()-Date.now(),isClosed=taskStatus(t)==='delivered';
+      const dueText=t.due+(validTime(t.dueTime)?' — '+t.dueTime:' (نهاية اليوم)');
+      if(!isClosed && diff<0)return {text:'🔴 متأخر عن موعد التسليم: '+dueText,css:'job-due-overdue'};
+      if(!isClosed && diff<=24*3600000)return {text:'🟡 التسليم قريب: '+dueText,css:'job-due-soon'};
+      return {text:'موعد التسليم: '+dueText,css:''};
+    }
+    function taskStatusOptions(t){const st=taskStatus(t);return [['not_started','لم يبدأ حتى الآن'],['working','قيد الانتظار / التنفيذ'],['ready','جاهز للتسليم'],['delivered','تم التسليم']].map(([k,label])=>`<option value="${k}" ${st===k?'selected':''}>${label}</option>`).join('');}
+    function deadlineEditor(t,prefix){return `<div class="deadline-edit"><label>تاريخ إنجاز الشغل<input type="date" id="${prefix}Date${t.id}" value="${/^\d{4}-\d{2}-\d{2}$/.test(t.due)?esc(t.due):''}" /></label><label>الساعة (اختياري)<input type="time" id="${prefix}Time${t.id}" value="${esc(validTime(t.dueTime))}" /></label><button type="button" class="btn-dark mini-action" onclick="saveTaskDeadline('${t.id}','${prefix}')">💾 حفظ الموعد</button></div>`;}
+    function saveTaskDeadline(id,prefix){
+      const t=state.tasks.find(x=>x.id===id);if(!t)return;
+      const due=document.getElementById(prefix+'Date'+id).value;
+      const time=document.getElementById(prefix+'Time'+id).value;
+      if(time&&!due)return showToast('اختر التاريخ أولًا قبل تحديد الساعة');
+      if(time&&!validTime(time))return showToast('ساعة الموعد غير صحيحة');
+      t.due=due||'غير محدد';t.dueTime=due?time:'';
+      if(saveState())showToast('تم حفظ موعد التسليم وتحديث تنبيهات الأشغال');
+    }
+    function setAdsWorkFilter(filter){document.getElementById('adsWorkFilter').value=filter;document.getElementById('adsPeriod').value='all';adsPeriodChanged();renderAds();}
     function safePhone(phone){return String(phone??'').replace(/[^+0-9]/g,'').slice(0,24);}
     function callPhone(phone){
       const normalized=safePhone(phone);
@@ -531,10 +915,13 @@
         })).filter(p=>p.name);
       }
       normalized.tasks=(Array.isArray(obj.tasks)?obj.tasks:[]).slice(0,10000).map(t=>{
-        const status=['working','ready','delivered'].includes(t?.status)?t.status:(t?.done?'delivered':'working');
+        const status=['not_started','working','ready','delivered'].includes(t?.status)?t.status:(t?.done?'delivered':'working');
         return {id:cleanId(t?.id),client:cleanText(t?.client,160),phone:safePhone(t?.phone),desc:cleanText(t?.desc,500),
-          due:String(t?.due||'غير محدد').slice(0,24),createdAt:/^\d{4}-\d{2}-\d{2}$/.test(String(t?.createdAt||''))?String(t.createdAt):'',deliveredAt:/^\d{4}-\d{2}-\d{2}$/.test(String(t?.deliveredAt||''))?String(t.deliveredAt):'',price:cleanMoney(t?.price),status,done:status==='delivered',
-          payments:(Array.isArray(t?.payments)?t.payments:[]).slice(0,10000).map(p=>({id:cleanId(p?.id),amount:cleanMoney(p?.amount),date:validDate(p?.date),note:cleanText(p?.note,200)}))};
+          due:String(t?.due||'غير محدد').slice(0,24),dueTime:validTime(t?.dueTime),createdAt:/^\d{4}-\d{2}-\d{2}$/.test(String(t?.createdAt||''))?String(t.createdAt):'',deliveredAt:/^\d{4}-\d{2}-\d{2}$/.test(String(t?.deliveredAt||''))?String(t.deliveredAt):'',price:cleanMoney(t?.price),status,done:status==='delivered',
+          payments:(Array.isArray(t?.payments)?t.payments:[]).slice(0,10000).map(p=>({id:cleanId(p?.id),amount:cleanMoney(p?.amount),date:validDate(p?.date),note:cleanText(p?.note,200)})),
+          isAdvertising:t?.isAdvertising===true,
+          adCosts:(Array.isArray(t?.adCosts)?t.adCosts:[]).slice(0,2000).map(c=>({id:cleanId(c?.id),supplier:cleanText(c?.supplier,160),item:cleanText(c?.item,200),amount:cleanMoney(c?.amount),date:validDate(c?.date),
+            payments:(Array.isArray(c?.payments)?c.payments:[]).slice(0,2000).map(p=>({id:cleanId(p?.id),amount:cleanMoney(p?.amount),date:validDate(p?.date),note:cleanText(p?.note,200)}))}))};
       }).filter(t=>t.client && t.desc);
       // Older Gemini versions booked the *entire* agreed amount as income on delivery.
       // Preserve those historical rows for audit, but exclude them from real cash income.
@@ -551,6 +938,18 @@
       });
       // This release intentionally replaces the old Gemini placeholder logo with the user's approved AZHA logo.
       if(Number(obj.logoVersion)>=2 && typeof obj.logo==='string' && obj.logo.startsWith('data:image/') && obj.logo.length<1000000)normalized.logo=obj.logo;
+
+      // Version 1.5: Invoice documents are records, not payments or revenue.
+      normalized.invoices=(Array.isArray(obj.invoices)?obj.invoices:[]).slice(0,5000).map(inv=>({
+        id:cleanId(inv?.id),number:cleanText(inv?.number,64),type:inv?.type==='quote'?'quote':'invoice',
+        client:cleanText(inv?.client,160),phone:safePhone(inv?.phone),
+        date:validDate(inv?.date),due:/^\d{4}-\d{2}-\d{2}$/.test(String(inv?.due||''))?String(inv.due):'',
+        taskId:cleanText(inv?.taskId,100),note:cleanText(inv?.note,1200),
+        discount:cleanMoney(inv?.discount),extra:cleanMoney(inv?.extra),
+        items:(Array.isArray(inv?.items)?inv.items:[]).slice(0,100).map(item=>({
+          id:cleanId(item?.id),desc:cleanText(item?.desc,200),qty:cleanMoney(item?.qty),price:cleanMoney(item?.price)
+        })).filter(item=>item.desc&&item.qty>0)
+      })).filter(inv=>inv.client && inv.number && inv.items.length);
       const cfg=obj.settings||{};
       normalized.settings.taskAlertHours=[3,4,5].includes(Number(cfg.taskAlertHours))?Number(cfg.taskAlertHours):3;
       normalized.settings.dailyReminderTime=/^([01]\d|2[0-3]):[0-5]\d$/.test(String(cfg.dailyReminderTime))?String(cfg.dailyReminderTime):'21:00';
@@ -580,7 +979,8 @@
     }
     function nativeReminders(){
       if(window.HisabatiAndroid?.configureReminders && hasAccount()){
-        try{window.HisabatiAndroid.configureReminders(Number(state.settings.taskAlertHours),String(state.settings.dailyReminderTime),state.tasks.filter(t=>!t.done).length);}catch(err){console.warn(err)}
+        const pending=state.tasks.filter(t=>taskStatus(t)!=='delivered').map(t=>({id:t.id,status:taskStatus(t),dueAt:taskDeadline(t)?.getTime()||0,isAdvertising:!!t.isAdvertising}));
+        try{window.HisabatiAndroid.configureReminders(Number(state.settings.taskAlertHours),String(state.settings.dailyReminderTime),pending.length,JSON.stringify(pending));}catch(err){console.warn(err)}
       }
     }
 
@@ -591,7 +991,8 @@
       owedToMe: [],
       owedByMe: [],
       tx: [],
-      tasks: []
+      tasks: [],
+      invoices: []
     };
 
     function loadState() {
@@ -609,6 +1010,8 @@
 
     let state = loadState();
     let editingTaskId = null;
+    let editingInvoiceId = null;
+    let invoiceDraftLines = [{id:nextId(),desc:'',qty:1,price:0}];
 
     function saveState() {
       try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
@@ -666,11 +1069,13 @@
     }
 
     function switchTab(tab) {
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
-      ['dash', 'owedToMe', 'owedByMe', 'tx', 'tasks', 'reports', 'settings'].forEach(id => {
+      document.querySelectorAll('.nav-btn, .dock-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+      ['dash', 'owedToMe', 'owedByMe', 'tx', 'tasks', 'ads', 'invoices', 'reports', 'settings'].forEach(id => {
         document.getElementById('tab-' + id).classList.toggle('hidden', id !== tab);
       });
       if(tab==='reports'){if(!document.getElementById('reportDate').value)reportPeriodChanged();else renderReport();}
+      if(tab==='ads')renderAds();
+      if(tab==='invoices'){invoiceSyncJobOptions();renderInvoices();renderInvoiceLive();}
     }
 
     function addDebt(bucket){
@@ -764,6 +1169,9 @@
       const phone=safePhone(document.getElementById('taskPhone').value);
       const desc=document.getElementById('taskDesc').value.trim();
       const due=document.getElementById('taskDue').value||'غير محدد';
+      const dueTime=document.getElementById('taskDueTime').value;
+      const status=document.getElementById('taskInitialStatus').value;
+      if(dueTime&&due==='غير محدد')return showToast('حدد تاريخ التسليم مع الساعة');
       const priceInput=document.getElementById('taskPrice').value;
       const price=Number(priceInput);
       const initial=Number(document.getElementById('taskDeposit').value||0);
@@ -774,12 +1182,12 @@
         const task=state.tasks.find(x=>x.id===editingTaskId);
         if(!task){cancelTaskEdit();return;}
         if(roundMoney(price)<sumTaskPaid(task))return showToast('قيمة الشغل لا يمكن أن تقل عن الدفعات المستلمة');
-        Object.assign(task,{client,phone,desc,due,price:roundMoney(price)});
+        Object.assign(task,{client,phone,desc,due,dueTime,status,done:status==='delivered',deliveredAt:status==='delivered'?(task.deliveredAt||todayLocal()):'',price:roundMoney(price)});
         if(!saveState())return;
         cancelTaskEdit();showToast('تم تحديث بيانات الشغل دون تغيير الدفعات');return;
       }
       const payments=initial>0?[{id:nextId(),amount:roundMoney(initial),date:todayLocal(),note:'عربون عند الاتفاق'}]:[];
-      state.tasks.unshift({id:nextId(),client,phone,desc,due,price:roundMoney(price),status:'working',done:false,createdAt:todayLocal(),deliveredAt:'',payments});
+      state.tasks.unshift({id:nextId(),client,phone,desc,due,dueTime,price:roundMoney(price),status,done:status==='delivered',createdAt:todayLocal(),deliveredAt:status==='delivered'?todayLocal():'',payments});
       clearTaskForm();
       if(saveState())showToast(initial>0?'تم تسجيل الشغل والعربون المقبوض':'تم تسجيل الشغل دون إضافة أي دخل');
     }
@@ -791,7 +1199,8 @@
     }
 
     function clearTaskForm(){
-      for(const id of ['taskClient','taskPhone','taskDesc','taskDue','taskPrice','taskDeposit'])document.getElementById(id).value='';
+      for(const id of ['taskClient','taskPhone','taskDesc','taskDue','taskDueTime','taskPrice','taskDeposit'])document.getElementById(id).value='';
+      document.getElementById('taskInitialStatus').value='not_started';
     }
     function cancelTaskEdit(){
       editingTaskId=null;clearTaskForm();
@@ -802,16 +1211,17 @@
     function editTask(id){
       const t=state.tasks.find(x=>x.id===id);if(!t)return;
       editingTaskId=id;switchTab('tasks');
-      for(const [key,value] of Object.entries({taskClient:t.client,taskPhone:t.phone||'',taskDesc:t.desc,taskDue:t.due==='غير محدد'?'':t.due,taskPrice:String(t.price)}))
+      for(const [key,value] of Object.entries({taskClient:t.client,taskPhone:t.phone||'',taskDesc:t.desc,taskDue:t.due==='غير محدد'?'':t.due,taskDueTime:t.dueTime||'',taskPrice:String(t.price)}))
         document.getElementById(key).value=value;
+      document.getElementById('taskInitialStatus').value=taskStatus(t);
       document.getElementById('taskDeposit').value='';document.getElementById('taskDeposit').disabled=true;
       document.getElementById('saveTaskBtn').textContent='حفظ تعديل الشغل';
       document.getElementById('cancelTaskEditBtn').classList.remove('hidden');
       document.getElementById('taskClient').scrollIntoView({behavior:'smooth',block:'center'});
     }
     function setTaskStatus(id,status){
-      const t=state.tasks.find(x=>x.id===id);if(!t||!['working','ready','delivered'].includes(status))return;
-      t.status=status;t.done=status==='delivered';t.deliveredAt=status==='delivered'?todayLocal():'';
+      const t=state.tasks.find(x=>x.id===id);if(!t||!['not_started','working','ready','delivered'].includes(status))return;
+      t.status=status;t.done=status==='delivered';t.deliveredAt=status==='delivered'?(t.deliveredAt||todayLocal()):'';
       if(saveState())showToast(status==='delivered'?'تم التسليم؛ لم يُسجَّل أي دخل جديد':'تم تعديل حالة الشغل');
     }
     function recordTaskPayment(id){
@@ -886,7 +1296,7 @@
         const payments=p.payments.map(e=>`<div class="pay-row"><span class="green-txt">دفعة ${esc(e.date)}: ${money(e.amount)} د.ل</span><span><button class="btn-dark mini-action" onclick="editDebtPayment('${bucket}','${p.id}','${e.id}')">تعديل</button> <button class="btn-red mini-action" onclick="deleteDebtPayment('${bucket}','${p.id}','${e.id}')">حذف</button></span></div>`).join('');
         return `<div class="item-card"><div class="row-between"><strong>${esc(p.name)}</strong>${badge}</div>
           ${p.phone?`<div style="margin-top:5px;font-size:12px;color:var(--muted)">الهاتف: ${esc(p.phone)} <button class="btn-dark mini-action" onclick="callPhone('${p.phone}')">اتصال</button></div>`:''}
-          <div class="financial-line">الإجمالي: <b>${money(taken)} د.ل</b> | المسدّد: <b class="green-txt">${money(paid)} د.ل</b> | المتبقي: <b class="gold-txt">${money(rem)} د.ل</b></div>
+          <div class="financial-line">الإجمالي: <b>${money(taken)} د.ل</b> | المسدّد: <b class="green-txt">${money(paid)} د.ل</b> | المتبقي: <b class="red-txt">${money(rem)} د.ل</b></div>
           <div class="sub-list">${entries}${payments}</div>
           <div class="flex-actions"><button class="btn-gold mini-action" onclick="addPayment('${bucket}','${p.id}')">+ تسجيل دفعة</button>
           <button class="btn-dark mini-action" onclick="editDebtPerson('${bucket}','${p.id}')">تعديل الاسم والهاتف</button></div></div>`;
@@ -896,7 +1306,8 @@
     function renderAll(){
       applyLogos();
       const realIncome=state.tx.filter(t=>t.type==='income'&&!t.legacyAccrual).reduce((sum,t)=>sum+t.amount,0);
-      const expense=state.tx.filter(t=>t.type==='expense').reduce((sum,t)=>sum+t.amount,0);
+      const expense=state.tx.filter(t=>t.type==='expense').reduce((sum,t)=>sum+t.amount,0)
+        +state.tasks.filter(t=>t.isAdvertising).reduce((sum,t)=>sum+adJobSupplierPaid(t),0);
       const jobIncome=state.tasks.reduce((sum,t)=>sum+sumTaskPaid(t),0);
       const jobDue=state.tasks.reduce((sum,t)=>sum+taskRemaining(t),0);
       const unfinished=state.tasks.filter(t=>taskStatus(t)!=='delivered');
@@ -907,17 +1318,23 @@
       document.getElementById('stTasks').textContent=unfinished.length+' شغل';
       document.getElementById('stTaskPaid').textContent=money(jobIncome)+' د.ل';
       document.getElementById('stTaskDue').textContent=money(jobDue)+' د.ل';
+      document.getElementById('stInvoiceCount').textContent=state.invoices.filter(i=>i.type==='invoice').length+' فاتورة';
       document.getElementById('stJobTotal').textContent=money(state.tasks.reduce((sum,t)=>sum+Number(t.price||0),0))+' د.ل';
+      document.getElementById('stAdsTotal').textContent=money(state.tasks.filter(t=>t.isAdvertising).reduce((s,t)=>s+Number(t.price||0),0))+' د.ل';
+      document.getElementById('stAdsCash').textContent=money(state.tasks.filter(t=>t.isAdvertising).reduce((s,t)=>s+sumTaskPaid(t),0))+' د.ل';
       document.getElementById('stMonthNet').textContent=money(makeSummary('month',todayLocal().slice(0,7)).net)+' د.ل';
       if(!document.getElementById('tab-reports').classList.contains('hidden'))renderReport();
-      document.getElementById('dashReminders').innerHTML=`<p>• لديك <strong>${unfinished.length}</strong> أشغال لم تُسلم بعد. التنبيه كل <b>${state.settings.taskAlertHours}</b> ساعات.</p>
-        <p>• الرصيد هنا يحسب المال المقبوض فعلاً من الأشغال والدخل اليدوي، مطروحًا منه المصروفات؛ ولا يشمل استرداد السلف كإيراد.</p>
+      document.getElementById('dashReminders').innerHTML=`<p>• لديك <strong>${unfinished.length}</strong> أشغال لم تُسلّم بعد: <b>${unfinished.filter(t=>taskStatus(t)==='not_started').length} لم تبدأ</b>، و<b>${unfinished.filter(t=>taskStatus(t)!=='not_started').length} قيد العمل / التسليم</b>. تذكير كل <b>${state.settings.taskAlertHours}</b> ساعات على Android.</p>
+        <p>• الرصيد يحسب المقبوض فعلاً والدخل اليدوي، مطروحًا منه المصروفات <b>ومدفوعات الموردين</b>؛ ولا يشمل السلف كإيراد.</p>
         <p>• تذكير تسجيل اليوميات: <b>${esc(state.settings.dailyReminderTime)}</b>.</p>`;
       const notice=document.getElementById('legacyNotice');
       notice.classList.toggle('hidden',legacy.length===0);
       if(legacy.length)notice.textContent=`تنبيه بشأن البيانات القديمة: توجد ${legacy.length} عمليات أضافتها النسخة القديمة تلقائيًا عند التسليم. أبقيتها في السجل للمراجعة لكنها لا تدخل في حساب المبالغ المقبوضة؛ إذا كنت استلمت قيمتها بالفعل، سجّل المبلغ المدفوع في دفعات الشغل المناسب لتجنب تضخيم الدخل.`;
       renderDebts('owedToMe','listOwedToMe');renderDebts('owedByMe','listOwedByMe');
+      if(!document.getElementById('tab-ads').classList.contains('hidden'))renderAds();
+      if(!document.getElementById('tab-invoices').classList.contains('hidden'))renderInvoices();
       const allTx=[...state.tx.map(t=>({id:t.id,type:t.type,amount:t.amount,note:t.note,date:t.date,legacy:!!t.legacyAccrual,job:false})),
+        ...state.tasks.filter(t=>t.isAdvertising).flatMap(t=>(t.adCosts||[]).flatMap(c=>(c.payments||[]).map(p=>({id:p.id,type:'expense',amount:p.amount,note:`دفع للمورد ${c.supplier} — ${c.item} — شغل ${t.client}`,date:p.date,job:true,legacy:false})))),
         ...state.tasks.flatMap(t=>(t.payments||[]).map(p=>({id:p.id,type:'income',amount:p.amount,note:`قبض من ${t.client} — ${p.note||t.desc}`,date:p.date,job:true,legacy:false})))];
       allTx.sort((a,b)=>b.date.localeCompare(a.date));
       document.getElementById('listTx').innerHTML=allTx.length?allTx.map(t=>`<div class="item-card row-between">
@@ -926,25 +1343,424 @@
         ${!t.job&&!t.legacy?`<div class="flex-actions"><button class="btn-dark mini-action" onclick="editTx('${t.id}')">تعديل</button><button class="btn-red mini-action" onclick="deleteTx('${t.id}')">حذف</button></div>`:''}</div></div>`).join(''):'<p style="color:var(--muted);font-size:13px">لا توجد عمليات بعد.</p>';
       document.getElementById('listTasks').innerHTML=state.tasks.length?state.tasks.map(t=>{
         const paid=sumTaskPaid(t),remaining=taskRemaining(t);
-        const payLabel=remaining===0?'مسدّد بالكامل':paid>0?'عربون / دفعات جزئية':'لم يدفع بعد';
+        const payLabel=remaining===0?'مسدّد بالكامل':paid>0?'دفعات جزئية — عليه باقي':'لم يدفع بعد';
         const status=taskStatus(t);
         const payments=(t.payments||[]).map(p=>`<div class="pay-row"><span><span class="green-txt">${money(p.amount)} د.ل</span> — ${esc(p.date)} — ${esc(p.note||'دفعة')}</span>
           <span><button class="btn-dark mini-action" onclick="editTaskPayment('${t.id}','${p.id}')">تعديل</button> <button class="btn-red mini-action" onclick="deleteTaskPayment('${t.id}','${p.id}')">حذف</button></span></div>`).join('');
         return `<div class="item-card"><div class="row-between"><strong>${esc(t.client)} — ${esc(t.desc)}</strong>
-          <span class="badge ${remaining===0?'badge-green':paid>0?'':'badge-red'}">${payLabel}</span></div>
-          <div style="margin-top:7px;color:var(--muted);font-size:12px">موعد التسليم: ${esc(t.due)}${t.phone?` | الهاتف: ${esc(t.phone)} <button class="btn-dark mini-action" onclick="callPhone('${t.phone}')">اتصال</button>`:''}</div>
-          <div class="financial-line">قيمة الشغل: <b>${money(t.price)} د.ل</b> | المقبوض: <b class="green-txt">${money(paid)} د.ل</b> | الباقي: <b class="gold-txt">${money(remaining)} د.ل</b></div>
-          <div style="margin-top:7px;font-size:12px">حالة الشغل / التسليم: <select class="status-select" aria-label="حالة شغل ${esc(t.client)}" onchange="setTaskStatus('${t.id}',this.value)">
-          <option value="working" ${status==='working'?'selected':''}>قيد التنفيذ / لم يسلم</option>
-          <option value="ready" ${status==='ready'?'selected':''}>جاهز للتسليم</option>
-          <option value="delivered" ${status==='delivered'?'selected':''}>تم التسليم</option></select></div>
+          <span class="badge ${remaining===0?'badge-green':'badge-red'}">${payLabel}</span></div>
+          <div class="${deadlineDescription(t).css}" style="margin-top:7px;font-size:12px">${esc(deadlineDescription(t).text)}${t.phone?` | الهاتف: ${esc(t.phone)} <button class="btn-dark mini-action" onclick="callPhone('${t.phone}')">اتصال</button>`:''}</div>
+          <div class="financial-line">قيمة الشغل: <b>${money(t.price)} د.ل</b> | المقبوض: <b class="green-txt">${money(paid)} د.ل</b> | الباقي: <b class="red-txt">${money(remaining)} د.ل</b></div>
+          <div style="margin-top:7px;font-size:12px"><span class="job-status-tag" data-status="${status}">${esc(statusLabel(t))}</span> حالة الشغل: <select class="status-select" aria-label="حالة شغل ${esc(t.client)}" onchange="setTaskStatus('${t.id}',this.value)">${taskStatusOptions(t)}</select></div>
+          ${deadlineEditor(t,'taskReminder')}
           ${payments?`<div class="sub-list"><b>سجل الدفعات المقبوضة:</b>${payments}</div>`:''}
           <div class="flex-actions"><button class="btn-gold mini-action" ${remaining<=0?'disabled':''} onclick="recordTaskPayment('${t.id}')">+ تسجيل دفعة مستلمة</button>
-          <button class="btn-dark mini-action" onclick="editTask('${t.id}')">تعديل الشغل</button>
+          <button class="btn-dark mini-action" onclick="editTask('${t.id}')">تعديل الشغل</button><button class="btn-dark mini-action" onclick="invoiceNew();document.getElementById('invoiceJob').value='${t.id}';invoiceSelectJob()">🧾 إصدار فاتورة</button>
+          ${t.isAdvertising?`<button class="btn-dark mini-action" onclick="switchTab('ads')">🖨️ تكاليف الدعاية</button>`:`<button class="btn-dark mini-action" onclick="markTaskAsAdvertising('${t.id}')">🖨️ ربط بالدعاية</button>`}
           <button class="btn-red mini-action" onclick="deleteTask('${t.id}')">حذف الشغل</button></div></div>`;
       }).join(''):'<p style="color:var(--muted);font-size:13px">لا توجد أشغال مسجلة.</p>';
     }
 
+
+
+
+    /* فواتير AZHA: سندات قابلة للتعديل والطباعة والمشاركة؛ ليست إيرادات مسجلة. */
+    function invoiceSafeAmount(v){
+      if(v===''||v==null)return 0;
+      const n=Number(v);return Number.isFinite(n)&&n>=0&&n<=1e10?roundMoney(n):NaN;
+    }
+    function invoiceSuggestNumber(){
+      const yy=todayLocal().slice(2,4);let seq=1;
+      const seen=new Set(state.invoices.map(x=>x.number));
+      while(seen.has('AZ-'+yy+'-'+String(seq).padStart(4,'0')))seq++;
+      return 'AZ-'+yy+'-'+String(seq).padStart(4,'0');
+    }
+    function invoiceReadFields(){
+      const get=id=>document.getElementById(id).value;
+      return {id:editingInvoiceId||nextId(),number:get('invoiceNumber').trim().slice(0,64),
+        type:get('invoiceType')==='quote'?'quote':'invoice',client:get('invoiceClient').trim().slice(0,160),
+        phone:safePhone(get('invoicePhone')),date:get('invoiceDate')||todayLocal(),due:get('invoiceDue')||'',
+        taskId:get('invoiceJob')||'',discount:invoiceSafeAmount(get('invoiceDiscount')),
+        extra:invoiceSafeAmount(get('invoiceExtra')),note:get('invoiceNote').slice(0,1200),
+        items:invoiceDraftLines.map(x=>({...x,desc:x.desc.trim().slice(0,200),qty:invoiceSafeAmount(x.qty),price:invoiceSafeAmount(x.price)}))};
+    }
+    function invoiceTotals(inv){
+      const subtotal=roundMoney((inv.items||[]).reduce((z,x)=>z+Number(x.qty||0)*Number(x.price||0),0));
+      const discount=Number(inv.discount||0),extra=Number(inv.extra||0);
+      return {subtotal,total:Math.max(0,roundMoney(subtotal-discount+extra))};
+    }
+    function invoicePayments(inv){
+      if(inv.type==='quote'||!inv.taskId)return 0;
+      const job=state.tasks.find(t=>t.id===inv.taskId);
+      return job?Math.min(invoiceTotals(inv).total,sumTaskPaid(job)):0;
+    }
+    function invoiceStatus(inv){
+      if(inv.type==='quote')return {text:'عرض سعر',cls:''};
+      if(!inv.taskId)return {text:'غير مرتبط بالتحصيل',cls:'unpaid'};
+      if(!state.tasks.some(t=>t.id===inv.taskId))return {text:'الشغل المرتبط غير موجود',cls:'unpaid'};
+      const total=invoiceTotals(inv).total,paid=invoicePayments(inv);
+      return total<=paid?{text:'خالص',cls:'paid'}:paid>0?{text:'دفعات جزئية',cls:'unpaid'}:{text:'غير مدفوع',cls:'unpaid'};
+    }
+    function invoiceSyncJobOptions(){
+      const el=document.getElementById('invoiceJob');if(!el)return;
+      const keep=el.value;
+      el.innerHTML='<option value="">فاتورة مستقلة — لا تغير حسابات الشغل</option>'+state.tasks.map(t=>
+        `<option value="${t.id}">${esc(t.client)} — ${esc(t.desc.slice(0,60))} (${money(t.price)} د.ل)</option>`).join('');
+      el.value=keep;
+    }
+    function invoiceRenderLines(){
+      document.getElementById('invoiceLines').innerHTML=invoiceDraftLines.map(line=>
+        `<div class="invoice-line"><input aria-label="وصف البند" placeholder="مثال: طباعة بنر" maxlength="200" value="${esc(line.desc)}" oninput="invoiceChangeLine('${line.id}','desc',this.value)" />
+          <input aria-label="الكمية" type="number" step="0.01" min="0.01" value="${esc(line.qty)}" oninput="invoiceChangeLine('${line.id}','qty',this.value)" />
+          <input aria-label="السعر" type="number" step="0.01" min="0" value="${esc(line.price)}" oninput="invoiceChangeLine('${line.id}','price',this.value)" />
+          <button class="btn-red mini-action" aria-label="حذف البند" title="حذف البند" onclick="invoiceRemoveLine('${line.id}')">×</button></div>`).join('');
+    }
+    function invoiceChangeLine(id,key,value){
+      const line=invoiceDraftLines.find(x=>x.id===id);if(!line)return;
+      line[key]=value;renderInvoiceLive();
+    }
+    function invoiceAddLine(){
+      if(invoiceDraftLines.length>=100)return showToast('الحد الأقصى 100 بند');
+      invoiceDraftLines.push({id:nextId(),desc:'',qty:1,price:0});invoiceRenderLines();renderInvoiceLive();
+    }
+    function invoiceRemoveLine(id){
+      if(invoiceDraftLines.length<=1)return showToast('الفاتورة تحتاج إلى بند واحد على الأقل');
+      invoiceDraftLines=invoiceDraftLines.filter(x=>x.id!==id);invoiceRenderLines();renderInvoiceLive();
+    }
+    function invoiceResetForm(){
+      editingInvoiceId=null;
+      document.getElementById('invoiceEditorTitle').textContent='✦ إصدار فاتورة جديدة';
+      for(const id of ['invoiceClient','invoicePhone','invoiceDue','invoiceNote'])document.getElementById(id).value='';
+      document.getElementById('invoiceNumber').value=invoiceSuggestNumber();
+      document.getElementById('invoiceDate').value=todayLocal();
+      document.getElementById('invoiceDiscount').value='0';document.getElementById('invoiceExtra').value='0';
+      document.getElementById('invoiceType').value='invoice';
+      invoiceSyncJobOptions();document.getElementById('invoiceJob').value='';
+      invoiceDraftLines=[{id:nextId(),desc:'',qty:1,price:0}];invoiceRenderLines();renderInvoiceLive();
+    }
+    function invoiceNew(){switchTab('invoices');invoiceResetForm();document.getElementById('invoiceEditor').scrollIntoView({behavior:'smooth',block:'start'});}
+    function invoiceSelectJob(){
+      const job=state.tasks.find(t=>t.id===document.getElementById('invoiceJob').value);
+      if(!job){renderInvoiceLive();return;}
+      document.getElementById('invoiceClient').value=job.client;
+      document.getElementById('invoicePhone').value=job.phone||'';
+      invoiceDraftLines=[{id:nextId(),desc:job.desc,qty:1,price:job.price}];
+      invoiceRenderLines();renderInvoiceLive();
+    }
+    function invoiceValidate(inv){
+      if(!inv.number||!inv.client)return 'أدخل رقم المستند واسم الزبون';
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(inv.date))return 'تاريخ الإصدار غير صحيح';
+      if(inv.due&&(!/^\d{4}-\d{2}-\d{2}$/.test(inv.due)||inv.due<inv.date))return 'موعد السداد يجب ألا يسبق تاريخ الإصدار';
+      if(state.invoices.some(x=>x.number===inv.number&&x.id!==inv.id))return 'رقم الفاتورة مستخدم بالفعل، اختر رقمًا آخر';
+      if(!inv.items.length||inv.items.some(x=>!x.desc||!(x.qty>0)||!(x.qty<=10000)||!(x.price>=0)||!Number.isFinite(x.price)))return 'تأكد من وصف كل بند وكميته وسعره';
+      if(!Number.isFinite(inv.discount)||!Number.isFinite(inv.extra))return 'الخصم أو الرسوم الإضافية غير صحيحة';
+      if(inv.discount>invoiceTotals({...inv,discount:0,extra:0}).subtotal)return 'الخصم لا يجوز أن يتجاوز قيمة البنود';
+      if(!Number.isFinite(invoiceTotals(inv).total)||invoiceTotals(inv).total>1e12)return 'قيمة الفاتورة خارج الحد المسموح';
+      if(inv.taskId&&!state.tasks.some(t=>t.id===inv.taskId))return 'الشغل المرتبط غير موجود؛ اختر شغلًا صحيحًا';
+      return '';
+    }
+    function invoiceSave(){
+      const inv=invoiceReadFields(),error=invoiceValidate(inv);if(error)return showToast(error);
+      const idx=state.invoices.findIndex(x=>x.id===inv.id);
+      if(idx>=0)state.invoices[idx]=inv;else state.invoices.unshift(inv);
+      if(!saveState())return;
+      const wasEditing=idx>=0;invoiceResetForm();
+      showToast(wasEditing?'تم تحديث الفاتورة وحفظ جميع البنود':'تم حفظ الفاتورة بنجاح');
+      document.getElementById('invoiceList').scrollIntoView({behavior:'smooth',block:'start'});
+    }
+    function invoiceEdit(id){
+      const inv=state.invoices.find(x=>x.id===id);if(!inv)return;
+      switchTab('invoices');editingInvoiceId=id;
+      document.getElementById('invoiceEditorTitle').textContent='✎ تعديل فاتورة '+inv.number;
+      for(const [k,v] of Object.entries({invoiceNumber:inv.number,invoiceType:inv.type,invoiceClient:inv.client,invoicePhone:inv.phone,
+        invoiceDate:inv.date,invoiceDue:inv.due,invoiceNote:inv.note,invoiceDiscount:inv.discount,invoiceExtra:inv.extra}))
+        document.getElementById(k).value=v;
+      invoiceSyncJobOptions();document.getElementById('invoiceJob').value=inv.taskId||'';
+      invoiceDraftLines=structuredClone(inv.items);invoiceRenderLines();renderInvoiceLive();
+      document.getElementById('invoiceEditor').scrollIntoView({behavior:'smooth',block:'start'});
+    }
+    function invoiceDelete(id){
+      const inv=state.invoices.find(x=>x.id===id);if(!inv||!confirmRemove('حذف الفاتورة '+inv.number+' نهائيًا؟ لن يؤثر هذا في سجلات الشغل أو الدفعات.'))return;
+      state.invoices=state.invoices.filter(x=>x.id!==id);
+      if(editingInvoiceId===id)invoiceResetForm();
+      if(saveState())showToast('تم حذف الفاتورة، وحسابات الشغل لم تتغير');
+    }
+    function invoiceLiveHtml(inv){
+      const sums=invoiceTotals(inv),paid=invoicePayments(inv),remaining=Math.max(0,roundMoney(sums.total-paid));
+      const rows=(inv.items||[]).filter(x=>x.desc).map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.desc)}</td><td>${money(x.qty)}</td><td>${money(x.price)}</td><td>${money(x.qty*x.price)}</td></tr>`).join('');
+      return `<div class="invoice-live"><div class="invoice-live-head"><div><small>AZHA ADVERTISING</small><strong>${inv.type==='quote'?'عرض سعر':'فاتورة'} • ${esc(inv.number||'جديدة')}</strong></div><img class="invoice-live-logo" src="azha-logo.png" alt="AZHA" /></div>
+        <div class="invoice-live-body"><div class="invoice-live-meta"><div><b>الزبون:</b> ${esc(inv.client||'—')}<div>${esc(inv.phone||'')}</div></div><div><b>التاريخ:</b> ${esc(inv.date||'—')}<div><b>استحقاق:</b> ${esc(inv.due||'غير محدد')}</div></div></div>
+        <table class="invoice-live-table"><thead><tr><th style="width:9%">#</th><th style="width:38%">الخدمة / المادة</th><th>الكمية</th><th>السعر</th><th>الإجمالي</th></tr></thead><tbody>${rows||'<tr><td colspan="5">أضف بنود الفاتورة...</td></tr>'}</tbody></table>
+        <div class="invoice-live-totals"><div><span>مجموع البنود</span><b>${money(sums.subtotal)} د.ل</b></div>${inv.discount?`<div><span>الخصم</span><b>- ${money(inv.discount)} د.ل</b></div>`:''}${inv.extra?`<div><span>رسوم إضافية</span><b>+ ${money(inv.extra)} د.ل</b></div>`:''}
+        <div class="grand"><span>الإجمالي</span><span>${money(sums.total)} د.ل</span></div>
+        ${inv.type==='invoice'&&inv.taskId?`<div><span>المقبوض من الشغل المرتبط</span><b style="color:#197e55">${money(paid)} د.ل</b></div><div><span>المتبقي</span><b style="color:#b72e45">${money(remaining)} د.ل</b></div>`:''}</div>
+        ${inv.note?`<p style="white-space:pre-wrap;line-height:1.8"><b>ملاحظات:</b> ${esc(inv.note)}</p>`:''}
+        <div class="invoice-live-foot">AZHA ADVERTISING — إعداد وتصميم: المهندس معز محفوظ علي أبو سيف<br>(الرجاء الدعاء لوالدي)</div></div></div>`;
+    }
+    function renderInvoiceLive(){
+      const el=document.getElementById('invoiceLivePreview');if(!el)return;
+      el.innerHTML=invoiceLiveHtml(invoiceReadFields());
+    }
+    function renderInvoices(){
+      const countEl=document.getElementById('invoiceStatCount');if(!countEl)return;
+      countEl.textContent=state.invoices.filter(x=>x.type==='invoice').length+' فاتورة';
+      document.getElementById('invoiceStatTotal').textContent=money(state.invoices.filter(x=>x.type==='invoice').reduce((z,x)=>z+invoiceTotals(x).total,0))+' د.ل';
+      const query=(document.getElementById('invoiceSearch').value||'').toLowerCase().trim();
+      const filter=document.getElementById('invoiceFilter').value;
+      const shown=state.invoices.filter(inv=>(filter==='all'||inv.type===filter)&&(!query||(inv.number+' '+inv.client+' '+inv.phone).toLowerCase().includes(query)));
+      document.getElementById('invoiceList').innerHTML=shown.length?shown.map(inv=>{
+        const total=invoiceTotals(inv).total,paid=invoicePayments(inv),remain=Math.max(0,roundMoney(total-paid)),status=invoiceStatus(inv);
+        return `<article class="invoice-card"><div class="row-between"><div><small>${inv.type==='quote'?'عرض سعر':'فاتورة'} • ${esc(inv.date)}</small><h4>${esc(inv.number)}</h4></div><span class="invoice-pill ${status.cls}">${status.text}</span></div>
+          <div style="font-size:13px;margin-top:9px">👤 ${esc(inv.client)}</div><div class="invoice-card-metrics"><div><span>إجمالي الفاتورة</span><b class="gold-txt">${money(total)}</b></div><div><span>${inv.taskId?'المتبقي حسب الشغل':'المبلغ المستحق (مستند)'}</span><b class="${inv.taskId?'red-txt':'gold-txt'}">${money(remain)}</b></div></div>
+          <div class="invoice-tools"><button class="btn-dark mini-action" onclick="invoiceEdit('${inv.id}')">✏️ تعديل</button><button class="btn-gold mini-action" onclick="invoicePrint('${inv.id}')">🖨️ PDF</button><button class="btn-dark mini-action" onclick="invoiceShare('${inv.id}')">↗ إرسال</button><button class="btn-red mini-action" onclick="invoiceDelete('${inv.id}')">حذف</button></div></article>`;
+      }).join(''):`<div class="invoice-empty"><strong>لا توجد فواتير بعد</strong><span>ابدأ بإنشاء أول فاتورة من النموذج بالأعلى.</span></div>`;
+    }
+    function invoicePlainText(inv){
+      const t=invoiceTotals(inv),paid=invoicePayments(inv);
+      return [inv.type==='quote'?'عرض سعر — AZHA ADVERTISING':'فاتورة — AZHA ADVERTISING',
+        'الرقم: '+inv.number,'التاريخ: '+inv.date,'الزبون: '+inv.client,inv.phone?'الهاتف: '+inv.phone:'',
+        inv.due?'موعد الاستحقاق: '+inv.due:'',
+        '-----------------------------',...inv.items.map(x=>x.desc+' | '+x.qty+' × '+money(x.price)+' = '+money(x.qty*x.price)+' د.ل'),
+        '-----------------------------','المجموع: '+money(t.subtotal)+' د.ل',
+        inv.discount?'خصم: '+money(inv.discount)+' د.ل':'',inv.extra?'رسوم إضافية: '+money(inv.extra)+' د.ل':'',
+        'الإجمالي: '+money(t.total)+' د.ل',inv.taskId&&inv.type==='invoice'?'المقبوض: '+money(paid)+' د.ل':'',
+        inv.taskId&&inv.type==='invoice'?'المتبقي: '+money(Math.max(0,t.total-paid))+' د.ل':'',
+        inv.note?'ملاحظات: '+inv.note:'','AZHA ADVERTISING',
+        'إعداد وتصميم: المهندس معز محفوظ علي أبو سيف','(الرجاء الدعاء لوالدي)'].filter(Boolean).join('\n');
+    }
+    async function invoiceShareDocument(inv){
+      const t=invoicePlainText(inv);
+      if(window.HisabatiAndroid?.shareInvoice){window.HisabatiAndroid.shareInvoice(t);return;}
+      if(navigator.share){try{await navigator.share({title:inv.type==='quote'?'عرض سعر '+inv.number:'فاتورة '+inv.number,text:t});return;}catch(e){if(e.name==='AbortError')return;}}
+      try{await navigator.clipboard.writeText(t);showToast('نسخت تفاصيل الفاتورة؛ الصقها في WhatsApp أو الرسائل');}
+      catch(e){showToast('لم تتوفر المشاركة. استخدم طباعة PDF ثم شارك الملف');}
+    }
+    function invoicePrintHtml(inv){
+      const total=invoiceTotals(inv),paid=invoicePayments(inv);
+      const rows=inv.items.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.desc)}</td><td>${money(x.qty)}</td><td>${money(x.price)}</td><td>${money(x.qty*x.price)}</td></tr>`).join('');
+      let logo='';try{const im=document.getElementById('topLogo');const c=document.createElement('canvas');c.width=100;c.height=100;c.getContext('2d').drawImage(im,0,0,100,100);logo=c.toDataURL('image/png');}catch(e){}
+      return `<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>${esc(inv.number)}</title><style>
+        @page{size:A4;margin:16mm}*{box-sizing:border-box}body{font-family:Tahoma,Arial,sans-serif;color:#292027;font-size:12px;direction:rtl;margin:0;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+        .head{display:flex;justify-content:space-between;align-items:center;gap:20px;background:#4c2138;color:#fff;border-bottom:5px solid #d5aa60;padding:20px 23px;border-radius:10px 10px 0 0}
+        .head h1{font-size:24px;margin:0;color:#ffe1a4}.head .sub{font-size:12px;color:#ecd1df;margin-top:5px}.logo{width:78px;height:78px;object-fit:contain;border-radius:100%;background:white;padding:3px}
+        .meta{padding:20px 9px;display:grid;grid-template-columns:1fr 1fr;gap:12px;border-bottom:1px solid #dacbd2}.meta div{line-height:2}
+        table{width:100%;border-collapse:collapse;margin-top:22px;table-layout:fixed}th{background:#f5e9ee;color:#56283f;text-align:right}td,th{padding:11px 6px;border-bottom:1px solid #e7dce0;font-size:12px;word-break:break-word}
+        .totals{max-width:340px;margin:20px 0 20px auto;background:#fbf6f5;border:1px solid #ebdbe0;padding:12px;border-radius:9px}.totals div{display:flex;justify-content:space-between;padding:7px 4px}.totals .grand{border-top:1px solid #dbbfcb;font-size:17px;font-weight:900;color:#55223a}
+        .notice{margin-top:20px;white-space:pre-wrap;line-height:1.85}footer{text-align:center;color:#755c68;margin-top:34px;padding-top:15px;border-top:1px solid #e4d8dd;font-size:11px;line-height:2}
+        tr{page-break-inside:avoid} </style></head><body><div class="head"><div><div>AZHA ADVERTISING</div><h1>${inv.type==='quote'?'عرض سعر':'فاتورة'} ${esc(inv.number)}</h1><div class="sub">خدمات الطباعة والدعاية والإعلان</div></div>${logo?`<img class="logo" src="${logo}" alt="AZHA">`:''}</div>
+        <div class="meta"><div><b>الزبون:</b> ${esc(inv.client)}${inv.phone?'<br><b>الهاتف:</b> '+esc(inv.phone):''}</div><div><b>تاريخ الإصدار:</b> ${esc(inv.date)}${inv.due?'<br><b>تاريخ الاستحقاق:</b> '+esc(inv.due):''}</div></div>
+        <table><thead><tr><th style="width:7%">#</th><th style="width:45%">البيان</th><th>الكمية</th><th>سعر الوحدة</th><th>الإجمالي</th></tr></thead><tbody>${rows}</tbody></table>
+        <div class="totals"><div><span>إجمالي البنود</span><b>${money(total.subtotal)} د.ل</b></div>${inv.discount?`<div><span>الخصم</span><b>${money(inv.discount)} د.ل</b></div>`:''}${inv.extra?`<div><span>رسوم إضافية</span><b>${money(inv.extra)} د.ل</b></div>`:''}
+        <div class="grand"><span>الإجمالي النهائي</span><b>${money(total.total)} د.ل</b></div>${inv.type==='invoice'&&inv.taskId?`<div><span>المقبوض من الشغل</span><b>${money(paid)} د.ل</b></div><div><span>المتبقي</span><b>${money(Math.max(0,total.total-paid))} د.ل</b></div>`:''}</div>
+        ${inv.note?`<div class="notice"><b>الملاحظات والشروط:</b><br>${esc(inv.note)}</div>`:''}
+        <footer>AZHA ADVERTISING<br>إعداد وتصميم: المهندس معز محفوظ علي أبو سيف<br>(الرجاء الدعاء لوالدي)</footer></body></html>`;
+    }
+    function invoicePrintDoc(inv){
+      if(window.HisabatiAndroid?.printReport){window.HisabatiAndroid.printReport(invoicePrintHtml(inv),'AZHA-'+inv.number);return;}
+      const w=window.open('','_blank');if(!w){showToast('فعّل النوافذ المنبثقة للطباعة، أو استخدم تطبيق Android');return;}
+      w.document.write(invoicePrintHtml(inv));w.document.close();w.focus();setTimeout(()=>{try{w.print();}catch(e){}},400);
+    }
+    function invoicePrint(id){const inv=state.invoices.find(x=>x.id===id);if(inv)invoicePrintDoc(inv);}
+    function invoiceShare(id){const inv=state.invoices.find(x=>x.id===id);if(inv)invoiceShareDocument(inv);}
+    function invoicePrintDraft(){const inv=invoiceReadFields(),err=invoiceValidate(inv);if(err)return showToast(err);invoicePrintDoc(inv);}
+    function invoiceShareDraft(){const inv=invoiceReadFields(),err=invoiceValidate(inv);if(err)return showToast(err);invoiceShareDocument(inv);}
+
+    /* أشغال الدعاية: لا تضف أي قيمة إلى الدخل إلا عند تسجيل دفعة قبض فعلية. */
+    function adsValidAmount(id,allowZero=false){
+      const str=document.getElementById(id).value.trim();
+      if(str==='')return allowZero?0:NaN;
+      const n=Number(str);
+      return Number.isFinite(n)&&n>=0&&n<=1e12?roundMoney(n):NaN;
+    }
+    function adsDateVal(id){return document.getElementById(id).value||todayLocal();}
+    function adCostRecord(supplier,item,amount,paid,date){
+      return {id:nextId(),supplier:supplier.slice(0,160),item:item.slice(0,200),amount,date,payments:paid>0?[{id:nextId(),amount:paid,date,note:'مدفوع عند الشراء'}]:[]};
+    }
+    function createAdJob(){
+      const get=id=>document.getElementById(id).value.trim();
+      const client=get('adsClient'),phone=safePhone(get('adsPhone')),desc=get('adsDescription');
+      const price=adsValidAmount('adsPrice'),deposit=adsValidAmount('adsDeposit',true);
+      const cost=adsValidAmount('adsCost',true),supplierPaid=adsValidAmount('adsSupplierDeposit',true);
+      const supplier=get('adsSupplier'),item=get('adsMaterial');
+      const createdAt=adsDateVal('adsCreated'),due=get('adsDue')||'غير محدد';
+      const dueTime=get('adsDueTime'),status=get('adsInitialStatus');
+      if(dueTime&&due==='غير محدد')return showToast('حدد تاريخ التسليم مع الساعة');
+      if(!client||!desc)return showToast('أدخل اسم الزبون ووصف الشغل');
+      if(!Number.isFinite(price)||!Number.isFinite(deposit)||deposit>price)return showToast('راجع قيمة الشغل والعربون المقبوض');
+      if(!Number.isFinite(cost)||!Number.isFinite(supplierPaid)||supplierPaid>cost)return showToast('راجع تكلفة المواد والمدفوع للمورد');
+      if(cost>0&&!supplier)return showToast('أدخل اسم الشركة الموردة');
+      const payments=deposit>0?[{id:nextId(),amount:deposit,date:createdAt,note:'عربون مقبوض'}]:[];
+      const adCosts=cost>0?[adCostRecord(supplier,item||'مواد دعاية',cost,supplierPaid,createdAt)]:[];
+      state.tasks.unshift({id:nextId(),client:client.slice(0,160),phone,desc:desc.slice(0,500),due,dueTime,price,status,done:status==='delivered',createdAt,deliveredAt:status==='delivered'?createdAt:'',payments,isAdvertising:true,adCosts});
+      for(const id of ['adsClient','adsPhone','adsDescription','adsDue','adsDueTime','adsPrice','adsDeposit','adsSupplier','adsMaterial','adsCost','adsSupplierDeposit'])document.getElementById(id).value='';
+      document.getElementById('adsInitialStatus').value='not_started';
+      if(saveState())showToast('تم تسجيل شغل الدعاية؛ أضيف للمقبوض العربون المدفوع فقط');
+    }
+    function markTaskAsAdvertising(id){
+      const t=state.tasks.find(x=>x.id===id);if(!t)return;
+      if(!confirm('ربط هذا الشغل بقسم الدعاية؟ سيظل في أشغال الزبائن بنفس الدفعات ولن يتكرر حسابه.'))return;
+      t.isAdvertising=true;t.adCosts=t.adCosts||[];
+      if(saveState()){switchTab('ads');showToast('تم ربط الشغل بالدعاية دون تكرار الإيراد');}
+    }
+    function recordAdCustomerPayment(){
+      const t=state.tasks.find(x=>x.id===document.getElementById('adsPayJob').value&&x.isAdvertising);
+      if(!t)return showToast('اختر شغل الدعاية أولاً');
+      const amount=adsValidAmount('adsPayAmount');const remain=taskRemaining(t);
+      if(!Number.isFinite(amount)||amount<=0||amount>remain)return showToast('الدفعة يجب أن تكون أكبر من صفر ولا تتجاوز المتبقي: '+money(remain));
+      const date=adsDateVal('adsPayDate');const note=document.getElementById('adsPayNote').value.trim().slice(0,200);
+      t.payments.push({id:nextId(),amount,date,note:note||'دفعة مقبوضة'});
+      document.getElementById('adsPayAmount').value='';document.getElementById('adsPayNote').value='';
+      if(saveState())showToast('أُضيفت الدفعة المقبوضة إلى النقد فقط وخصمت من الباقي');
+    }
+    function addAdCost(){
+      const t=state.tasks.find(x=>x.id===document.getElementById('adsCostJob').value&&x.isAdvertising);
+      if(!t)return showToast('اختر شغل الدعاية أولاً');
+      const supplier=document.getElementById('adsNewSupplier').value.trim(),item=document.getElementById('adsNewMaterial').value.trim();
+      const amount=adsValidAmount('adsNewCost'),paid=adsValidAmount('adsNewSupplierPaid',true);
+      if(!supplier||!item||!Number.isFinite(amount)||amount<=0||!Number.isFinite(paid)||paid>amount)return showToast('أدخل الشركة والمادة والتكلفة والمدفوع الصحيح');
+      t.adCosts=t.adCosts||[];
+      t.adCosts.push(adCostRecord(supplier,item,amount,paid,adsDateVal('adsCostDate')));
+      for(const id of ['adsNewSupplier','adsNewMaterial','adsNewCost','adsNewSupplierPaid'])document.getElementById(id).value='';
+      if(saveState())showToast('سُجّلت تكلفة المواد، والمدفوع فقط يخصم من النقد');
+    }
+    function recordAdSupplierPayment(jobId,costId){
+      const job=state.tasks.find(t=>t.id===jobId&&t.isAdvertising),cost=job?.adCosts.find(c=>c.id===costId);
+      if(!cost)return;
+      const remain=roundMoney(cost.amount-adCostPaid(cost));
+      if(remain<=0)return showToast('فاتورة المورد مسددة بالكامل');
+      const raw=prompt('كم دفعت للمورد بالفعل؟ المبلغ المتبقي '+money(remain)+' د.ل');if(raw===null)return;
+      const n=Number(raw);if(!Number.isFinite(n)||n<=0||roundMoney(n)>remain)return showToast('القيمة غير صحيحة أو أكبر من الباقي');
+      const date=prompt('تاريخ الدفع للمورد (YYYY-MM-DD)',todayLocal());if(date===null)return;
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(date))return showToast('تاريخ غير صحيح');
+      cost.payments.push({id:nextId(),amount:roundMoney(n),date,note:'سداد مورد'});
+      if(saveState())showToast('تم خصم الدفعة من النقد المدفوع للموردين');
+    }
+    function editAdCost(jobId,costId){
+      const job=state.tasks.find(t=>t.id===jobId&&t.isAdvertising),cost=job?.adCosts.find(c=>c.id===costId);if(!cost)return;
+      const supplier=prompt('اسم المورد',cost.supplier);if(supplier===null)return;
+      const item=prompt('المادة أو الخدمة',cost.item);if(item===null)return;
+      const raw=prompt('تكلفة المادة الإجمالية',cost.amount);if(raw===null)return;
+      const amount=Number(raw);
+      if(!supplier.trim()||!item.trim()||!Number.isFinite(amount)||amount<=0||roundMoney(amount)<adCostPaid(cost))return showToast('التكلفة الجديدة لا يجوز أن تقل عن المدفوع للمورد');
+      cost.supplier=supplier.trim().slice(0,160);cost.item=item.trim().slice(0,200);cost.amount=roundMoney(amount);saveState();
+    }
+    function editAdSupplierPayment(jobId,costId,paymentId){
+      const c=state.tasks.find(t=>t.id===jobId&&t.isAdvertising)?.adCosts.find(c=>c.id===costId);
+      const p=c?.payments.find(x=>x.id===paymentId);if(!p)return;
+      const raw=prompt('المبلغ المدفوع للمورد',p.amount);if(raw===null)return;
+      const amount=Number(raw),other=roundMoney(adCostPaid(c)-p.amount);
+      if(!Number.isFinite(amount)||amount<=0||roundMoney(amount+other)>c.amount)return showToast('الدفعة أكبر من المتبقي في فاتورة المواد');
+      const date=prompt('تاريخ الدفع (YYYY-MM-DD)',p.date);if(date===null)return;
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(date))return showToast('تاريخ غير صحيح');
+      p.amount=roundMoney(amount);p.date=date;saveState();
+    }
+    function deleteAdSupplierPayment(jobId,costId,paymentId){
+      const cost=state.tasks.find(t=>t.id===jobId&&t.isAdvertising)?.adCosts.find(c=>c.id===costId);if(!cost)return;
+      if(!confirmRemove('حذف دفعة المورد؟'))return;
+      cost.payments=cost.payments.filter(p=>p.id!==paymentId);saveState();
+    }
+    function deleteAdCost(jobId,costId){
+      const job=state.tasks.find(t=>t.id===jobId&&t.isAdvertising);if(!job)return;
+      if(!confirmRemove('حذف فاتورة المورد بكل دفعاتها سيغير حساب الربح والنقد. هل تريد المتابعة؟'))return;
+      job.adCosts=job.adCosts.filter(c=>c.id!==costId);saveState();
+    }
+    function adsPeriodChanged(){
+      const period=document.getElementById('adsPeriod').value,input=document.getElementById('adsDate');
+      document.getElementById('adsDateField').classList.toggle('hidden',period==='all');
+      if(period!=='all'){
+        const type=period==='day'?'date':'month';
+        if(input.type!==type||!input.value||input.value.length!==(period==='day'?10:7)){
+          input.type=type;input.value=period==='day'?todayLocal():todayLocal().slice(0,7);
+        }
+      }
+      renderAds();
+    }
+    function adsInPeriod(date,period,key){return period==='all'||(period==='day'?date===key:date?.slice(0,7)===key);}
+    function adsFinancial(period,key){
+      const jobs=state.tasks.filter(t=>t.isAdvertising);
+      const newJobs=jobs.filter(t=>adsInPeriod(t.createdAt||'',period,key));
+      const agreed=roundMoney(newJobs.reduce((s,t)=>s+Number(t.price||0),0));
+      const costs=roundMoney(newJobs.reduce((s,t)=>s+adJobCosts(t),0));
+      const received=roundMoney(jobs.reduce((s,t)=>s+(t.payments||[]).filter(p=>adsInPeriod(p.date,period,key)).reduce((z,p)=>z+Number(p.amount||0),0),0));
+      const supplierPaid=roundMoney(jobs.reduce((s,t)=>s+(t.adCosts||[]).reduce((z,c)=>z+(c.payments||[]).filter(p=>adsInPeriod(p.date,period,key)).reduce((v,p)=>v+Number(p.amount||0),0),0),0));
+      return {jobs,newJobs,agreed,costs,received,supplierPaid,profit:roundMoney(agreed-costs),cashNet:roundMoney(received-supplierPaid),margin:agreed>0?roundMoney((agreed-costs)*100/agreed):0};
+    }
+    function renderAds(){
+      const section=document.getElementById('tab-ads');if(!section)return;
+      const period=document.getElementById('adsPeriod').value||'month';
+      const key=document.getElementById('adsDate').value||todayLocal().slice(0,7);
+      const r=adsFinancial(period,key),all=adsFinancial('all','');
+      const set=(id,txt)=>{document.getElementById(id).textContent=txt;};
+      for(const [id,n] of [['adsAgreed',all.agreed],['adsReceived',all.received],['adsPeriodAgreed',r.agreed],['adsPeriodCash',r.received],['adsCosts',r.costs],['adsExpectedProfit',r.profit],['adsSupplierCash',r.supplierPaid],['adsCashNet',r.cashNet]])set(id,money(n)+' د.ل');
+      set('adsMargin',money(r.margin)+'%');set('adsCount',String(r.newJobs.length));
+      document.getElementById('adsCashNet').className=r.cashNet>=0?'green-txt':'red-txt';
+      document.getElementById('adsExpectedProfit').className=r.profit>=0?'green-txt':'red-txt';
+      document.getElementById('adsListLabel').textContent=period==='all'?'كل الأشغال':period==='day'?'أشغال يوم '+key:'أشغال شهر '+key;
+      const opts=r.jobs.map(t=>`<option value="${t.id}">${esc(t.client)} — ${esc(t.desc)} (باقي ${money(taskRemaining(t))})</option>`).join('');
+      for(const id of ['adsPayJob','adsCostJob']){const el=document.getElementById(id),selected=el.value;el.innerHTML=opts||'<option value="">لا توجد أشغال دعاية</option>';if(r.jobs.some(t=>t.id===selected))el.value=selected;}
+      const search=document.getElementById('adsSearch').value.trim().toLocaleLowerCase('ar');
+      const payFilter=document.getElementById('adsPayFilter').value;
+      const workFilter=document.getElementById('adsWorkFilter').value;
+      const adJobs=state.tasks.filter(t=>t.isAdvertising);
+      document.getElementById('adsNotStartedCount').textContent=adJobs.filter(t=>taskStatus(t)==='not_started').length;
+      document.getElementById('adsWorkingCount').textContent=adJobs.filter(t=>['working','ready'].includes(taskStatus(t))).length;
+      document.getElementById('adsDeliveredCount').textContent=adJobs.filter(t=>taskStatus(t)==='delivered').length;
+      for(const b of section.querySelectorAll('.stage-card'))b.classList.toggle('is-active',workFilter===({new:'not_started',working:'in_progress',delivered:'delivered'})[b.dataset.stage]);
+      const listed=(period==='all'?r.jobs:r.newJobs).filter(t=>(!search||[t.client,t.desc,...(t.adCosts||[]).map(c=>c.supplier+' '+c.item)].join(' ').toLocaleLowerCase('ar').includes(search))
+        &&(payFilter==='all'||(payFilter==='paid'?taskRemaining(t)===0:taskRemaining(t)>0))
+        &&(workFilter==='all'||(workFilter==='in_progress'?['working','ready'].includes(taskStatus(t)):taskStatus(t)===workFilter)));
+      document.getElementById('adsJobsList').innerHTML=listed.length?listed.map(t=>{
+        const paid=sumTaskPaid(t),remaining=taskRemaining(t),cost=adJobCosts(t),supplierPaid=adJobSupplierPaid(t);
+        const customerPayments=(t.payments||[]).map(p=>`<div class="pay-row"><span>✅ ${esc(p.date)} — قبض <b class="green-txt">${money(p.amount)} د.ل</b> — ${esc(p.note||'دفعة')}</span><span><button class="btn-dark mini-action" onclick="editTaskPayment('${t.id}','${p.id}')">تعديل</button> <button class="btn-red mini-action" onclick="deleteTaskPayment('${t.id}','${p.id}')">حذف</button></span></div>`).join('');
+        const materials=(t.adCosts||[]).map(c=>{
+          const cp=adCostPaid(c),cr=Math.max(0,roundMoney(c.amount-cp));
+          const history=(c.payments||[]).map(p=>`<div class="pay-row"><span>${esc(p.date)} — تم دفع <b>${money(p.amount)} د.ل</b></span><span><button class="btn-dark mini-action" onclick="editAdSupplierPayment('${t.id}','${c.id}','${p.id}')">تعديل</button> <button class="btn-red mini-action" onclick="deleteAdSupplierPayment('${t.id}','${c.id}','${p.id}')">حذف</button></span></div>`).join('');
+          return `<div class="sub-list"><b>🏭 ${esc(c.supplier)} — ${esc(c.item)}</b><div>تكلفة ${money(c.amount)} د.ل | مدفوع للمورد ${money(cp)} د.ل | متبقي للمورد ${money(cr)} د.ل</div>${history}<div class="flex-actions"><button class="btn-dark mini-action" ${cr<=0?'disabled':''} onclick="recordAdSupplierPayment('${t.id}','${c.id}')">+ دفع للمورد</button><button class="btn-dark mini-action" onclick="editAdCost('${t.id}','${c.id}')">تعديل المادة</button><button class="btn-red mini-action" onclick="deleteAdCost('${t.id}','${c.id}')">حذف المادة</button></div></div>`;
+        }).join('');
+        return `<div class="item-card"><div class="row-between"><strong class="ads-job-title">${esc(t.client)} — ${esc(t.desc)}</strong><span class="badge ${remaining===0?'badge-green':'badge-red'}">${remaining===0?'خالص بالكامل':paid>0?'عليه باقي من الحساب':'لم يستلم منه شيء'}</span></div>
+          <div class="ads-small-summary">تاريخ الشغل: ${esc(t.createdAt||'غير معروف')} | <span class="${deadlineDescription(t).css}">${esc(deadlineDescription(t).text)}</span> ${t.phone?` | ${esc(t.phone)} <button class="btn-dark mini-action" onclick="callPhone('${t.phone}')">اتصال</button>`:''}</div>
+          <div><span class="job-status-tag" data-status="${taskStatus(t)}">${esc(statusLabel(t))}</span></div>
+          <div class="deadline-edit"><label>حالة التنفيذ<select class="status-select" style="max-width:100%" aria-label="حالة الشغل" onchange="setTaskStatus('${t.id}',this.value)">${taskStatusOptions(t)}</select></label></div>
+          ${deadlineEditor(t,'adsReminder')}
+          <div class="ads-financial"><div class="ads-metric"><small>القيمة الكاملة للشغل</small><strong class="gold-txt">${money(t.price)} د.ل</strong></div><div class="ads-metric"><small>المقبوض نقدًا فعليًا</small><strong class="green-txt">${money(paid)} د.ل</strong></div></div>
+          <details class="ads-detail"><summary>عرض الدفعات والمواد والباقي وحساب الربح</summary>
+            <div class="ads-small-summary">الباقي لدى الزبون: <b class="red-txt">${money(remaining)} د.ل</b> (غير داخل المقبوض) | تكلفة المواد: <b>${money(cost)} د.ل</b> | الربح المتوقع: <b>${money(roundMoney(t.price-cost))} د.ل</b> | المدفوع فعليًا للموردين: <b>${money(supplierPaid)} د.ل</b></div>
+            <div class="sub-list"><b>سجل الدفعات المستلمة من الزبون:</b>${customerPayments||'<p>لم يتم تسجيل دفعات مستلمة بعد.</p>'}</div>
+            <div class="sub-list"><b>الشركات الموردة وتكاليف المواد:</b>${materials||'<p>لم تسجل تكاليف مواد لهذا الشغل.</p>'}</div>
+          </details>
+          <div class="flex-actions"><button class="btn-gold mini-action" ${remaining<=0?'disabled':''} onclick="document.getElementById('adsPayJob').value='${t.id}';document.getElementById('adsPayAmount').focus();window.scrollTo({top:document.getElementById('adsPayAmount').getBoundingClientRect().top+window.scrollY-150,behavior:'smooth'})">+ قبض دفعة</button>
+          <button class="btn-dark mini-action" onclick="editTask('${t.id}')">تعديل بيانات الشغل</button><button class="btn-dark mini-action" onclick="invoiceNew();document.getElementById('invoiceJob').value='${t.id}';invoiceSelectJob()">🧾 فاتورة للزبون</button><button class="btn-red mini-action" onclick="deleteTask('${t.id}')">حذف الشغل</button></div></div>`;
+      }).join(''):'<p class="section-caption">لا توجد أشغال دعاية مسجلة في هذه الفترة. يمكنك اختيار «كل الأشغال» لعرض الأشغال القديمة.</p>';
+    }
+
+
+    // تقرير مستقل لأشغال الدعاية: لا يدرج أي مبلغ مستحق كدخل نقدي.
+    function adExportRows(){
+      const period=document.getElementById('adsPeriod').value,key=document.getElementById('adsDate').value;
+      const r=adsFinancial(period,key),all=adsFinancial('all','');
+      const rows=[['حساباتي — AZHA','تقرير أشغال الدعاية',period==='all'?'كل الفترة':key],[],
+        ['القيمة الكلية لجميع الأشغال',all.agreed],['المقبوض الفعلي من جميع الأشغال',all.received],
+        ['قيمة الأشغال الجديدة خلال الفترة',r.agreed],['المقبوض خلال الفترة',r.received],
+        ['تكاليف الأشغال الجديدة',r.costs],['الربح المتوقع للأشغال الجديدة',r.profit],['هامش الربح المتوقع (%)',r.margin],
+        ['المدفوع بالفعل للموردين خلال الفترة',r.supplierPaid],['صافي النقد خلال الفترة',r.cashNet],[],
+        ['الزبون','تفاصيل الشغل','حالة الإنجاز','تاريخ التسجيل','تاريخ التسليم','ساعة التسليم','القيمة الإجمالية','المقبوض','المتبقي غير المقبوض','تكاليف المواد','المدفوع للموردين','ربح متوقع','الشركات الموردة']];
+      for(const t of (period==='all'?r.jobs:r.newJobs))rows.push([t.client,t.desc,statusLabel(t),t.createdAt||'',t.due||'',t.dueTime||'',t.price,sumTaskPaid(t),taskRemaining(t),adJobCosts(t),adJobSupplierPaid(t),roundMoney(t.price-adJobCosts(t)),(t.adCosts||[]).map(c=>c.supplier).join(' | ')]);
+      rows.push([],['ملحوظة','الإجمالي النقدي لا يشمل الأقساط غير المسددة، والربح المتوقع ليس أرباحًا محاسبية نهائية.']);
+      return rows;
+    }
+    function exportAdCsv(){
+      const csv='\ufeff'+adExportRows().map(row=>row.map(csvCell).join(',')).join('\r\n');
+      const name='azha-advertising-'+document.getElementById('adsPeriod').value+'-'+(document.getElementById('adsDate').value||'all')+'.csv';
+      if(window.HisabatiAndroid?.saveReportFile){window.HisabatiAndroid.saveReportFile(csv,name,'text/csv');return;}
+      const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);
+    }
+    function printAdReport(){
+      const rows=adExportRows(),tr=row=>'<tr>'+row.map(cell=>'<td>'+esc(cell)+'</td>').join('')+'</tr>';
+      const html='<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>تقرير أشغال الدعاية AZHA</title><style>body{font-family:Tahoma,Arial,sans-serif;direction:rtl;margin:30px;color:#222}h1{color:#7d2443}table{width:100%;border-collapse:collapse;margin-top:20px;direction:rtl}td{border:1px solid #c8bfc3;padding:6px;font-size:11px;vertical-align:top}tr:nth-child(odd){background:#f6f1f3}footer{font-size:11px;color:#555;margin-top:20px}</style></head><body><h1>حساباتي — AZHA | أشغال الدعاية</h1><table>'+rows.map(tr).join('')+'</table><footer>إعداد وتصميم: المهندس معز محفوظ علي أبو سيف (الرجاء الدعاء لوالدي)</footer></body></html>';
+      const name='azha-advertising-report';
+      if(window.HisabatiAndroid?.printReport){window.HisabatiAndroid.printReport(html,name);return;}
+      const w=window.open('','_blank');if(!w){showToast('السماح بالنوافذ المنبثقة مطلوب للطباعة');return;}w.document.write(html);w.document.close();w.focus();w.print();
+    }
 
     function openNotifiedReport(){
       const target=window.__openHisabatiReport;
@@ -967,15 +1783,18 @@
       const details=[];
       const add=(date,kind,amount,note,scope)=>{if(reportMatch(date,period,key))details.push({date,kind,amount:roundMoney(amount),note:String(note||'').slice(0,500),scope:scope||'unknown'});};
       for(const t of state.tx||[]){if(t.legacyAccrual)continue;add(t.date,t.type==='income'?'income':'expense',t.amount,t.note,t.scope||'unknown');}
-      for(const job of state.tasks||[]){for(const p of job.payments||[])add(p.date,'jobIncome',p.amount,'قبض شغل: '+job.client+' — '+(p.note||job.desc),'business');}
+      for(const job of state.tasks||[]){
+        for(const p of job.payments||[])add(p.date,'jobIncome',p.amount,'قبض شغل: '+job.client+' — '+(p.note||job.desc),'business');
+        if(job.isAdvertising)for(const cost of job.adCosts||[])for(const pay of cost.payments||[])add(pay.date,'supplierExpense',pay.amount,'دفع مواد دعاية: '+cost.supplier+' — '+cost.item+' / '+job.client,'business');
+      }
       for(const [bucket,list] of [['owedToMe',state.owedToMe||[]],['owedByMe',state.owedByMe||[]]]){
         for(const person of list){for(const e of person.entries||[])add(e.date,bucket==='owedToMe'?'lent':'borrowed',e.amount,person.name+' — '+e.reason,'debt');
           for(const p of person.payments||[])add(p.date,bucket==='owedToMe'?'lentPaid':'borrowedPaid',p.amount,person.name+' — سداد دين','debt');}}
       details.sort((a,b)=>b.date.localeCompare(a.date));
       const sum=(k)=>roundMoney(details.filter(x=>x.kind===k).reduce((z,x)=>z+x.amount,0));
-      const manualIncome=sum('income'),jobIncome=sum('jobIncome'),income=roundMoney(manualIncome+jobIncome),expense=sum('expense');
+      const manualIncome=sum('income'),jobIncome=sum('jobIncome'),income=roundMoney(manualIncome+jobIncome),supplierExpense=sum('supplierExpense'),expense=roundMoney(sum('expense')+supplierExpense);
       const businessIncome=roundMoney(jobIncome+details.filter(x=>x.kind==='income'&&x.scope==='business').reduce((z,x)=>z+x.amount,0));
-      const businessExpenses=roundMoney(details.filter(x=>x.kind==='expense'&&x.scope==='business').reduce((z,x)=>z+x.amount,0));
+      const businessExpenses=roundMoney(supplierExpense+details.filter(x=>x.kind==='expense'&&x.scope==='business').reduce((z,x)=>z+x.amount,0));
       const unclassified=details.filter(x=>(x.kind==='income'||x.kind==='expense')&&x.scope==='unknown').length;
       const businessNet=roundMoney(businessIncome-businessExpenses);
       const lent=sum('lent'),borrowed=sum('borrowed'),lentPaid=sum('lentPaid'),borrowedPaid=sum('borrowedPaid');
@@ -987,7 +1806,7 @@
       const newJobsValue=roundMoney(newJobs.reduce((z,t)=>z+Number(t.price||0),0));
       const netCash=roundMoney(income-expense-lent+lentPaid+borrowed-borrowedPaid);
       return {period,key,details,manualIncome,jobIncome,income,expense,net:roundMoney(income-expense),netCash,newJobsCount:newJobs.length,deliveredJobsCount:deliveredJobs.length,newJobsValue,
-        businessIncome,businessExpenses,businessNet,unclassified,lent,borrowed,lentPaid,borrowedPaid,
+        businessIncome,businessExpenses,businessNet,supplierExpense,unclassified,lent,borrowed,lentPaid,borrowedPaid,
         outstandingToMe,outstandingByMe,jobOutstanding,tasksActive};
     }
     function reportPeriodChanged(){
@@ -1000,13 +1819,13 @@
       const key=document.getElementById('reportDate').value||(period==='day'?todayLocal():todayLocal().slice(0,7));
       return makeSummary(period,key);
     }
-    const reportTypes={income:'دخل يدوي',expense:'مصروف',jobIncome:'مقبوض من شغل',lent:'دين لك عند شخص',borrowed:'دين عليك',lentPaid:'دفعة سداد لك',borrowedPaid:'دفعة سداد منك'};
+    const reportTypes={income:'دخل يدوي',expense:'مصروف',supplierExpense:'مدفوع للموردين (دعاية)',jobIncome:'مقبوض من شغل',lent:'دين لك عند شخص',borrowed:'دين عليك',lentPaid:'دفعة سداد لك',borrowedPaid:'دفعة سداد منك'};
     function reportKpi(title,value,cls='gold-txt'){return `<div class="report-kpi"><small>${title}</small><b class="${cls}">${money(value)} د.ل</b></div>`;}
     function renderReport(){
       const r=currentReport();
       document.getElementById('reportTitle').textContent=(r.period==='day'?'التقرير اليومي — ':'التقرير الشهري — ')+r.key;
       const businessLabel=r.unclassified>0?'صافي النشاط المصنف (غير مكتمل)':'صافي النشاط التجاري المسجل';
-      const rows=r.details.map(x=>`<div class="report-row"><div style="flex:1"><b>${esc(reportTypes[x.kind]||x.kind)}</b><div><small>${esc(x.date)} — ${esc(x.note)}</small></div></div><strong class="${x.kind==='expense'?'red-txt':x.kind==='income'||x.kind==='jobIncome'?'green-txt':'gold-txt'}">${money(x.amount)} د.ل</strong></div>`).join('');
+      const rows=r.details.map(x=>`<div class="report-row"><div style="flex:1"><b>${esc(reportTypes[x.kind]||x.kind)}</b><div><small>${esc(x.date)} — ${esc(x.note)}</small></div></div><strong class="${(x.kind==='expense'||x.kind==='supplierExpense')?'red-txt':x.kind==='income'||x.kind==='jobIncome'?'green-txt':'gold-txt'}">${money(x.amount)} د.ل</strong></div>`).join('');
       document.getElementById('reportResult').innerHTML=`
       <div class="report-kpis">
         ${reportKpi('إجمالي الدخل المقبوض',r.income,'green-txt')}${reportKpi('المصروفات المسجلة',r.expense,'red-txt')}
@@ -1016,7 +1835,7 @@
         ${reportKpi('سداد ديون دفعتها',r.borrowedPaid,'red-txt')}${reportKpi('قيمة الأشغال الجديدة',r.newJobsValue)}
       </div>
       <div class="report-note">مبالغ حالية وليست رصيد نهاية الفترة: ديون لك ${money(r.outstandingToMe)} د.ل، ديون عليك ${money(r.outstandingByMe)} د.ل، باقي أشغال الزبائن ${money(r.jobOutstanding)} د.ل، أشغال لم تُسلّم ${r.tasksActive}.<div>أشغال أضيفت في الفترة: ${r.newJobsCount} | أشغال تم تسليمها في الفترة: ${r.deliveredJobsCount}.</div>
-        <div style="margin-top:7px">صافي الدخل والمصروفات = الدخل المقبوض − المصروفات. أما تغير النقد فيشمل أيضًا ما اقترضته وسددته وما أقرضته واستعدته. ولا يعني بالضرورة الربح المحاسبي؛ سداد السلف لا يدخل الإيرادات أو المصروفات، ويُحسب صافي النشاط التجاري من القيود المصنفة للنشاط فقط.
+        <div style="margin-top:7px">صافي الدخل والمصروفات = الدخل المقبوض − المصروفات (بما فيها المبالغ المدفوعة للموردين في قسم الدعاية). أما تغير النقد فيشمل أيضًا ما اقترضته وسددته وما أقرضته واستعدته. ولا يعني بالضرورة الربح المحاسبي؛ سداد السلف لا يدخل الإيرادات أو المصروفات، ويُحسب صافي النشاط التجاري من القيود المصنفة للنشاط فقط.
         ${r.unclassified>0?'توجد '+r.unclassified+' حركة قديمة أو غير مصنفة؛ راجع تصنيفها قبل الاعتماد على نتيجة الربح والخسارة.':''}</div>
       </div>
       <h4 style="color:var(--gold);margin-bottom:4px">الحركات داخل الفترة (${r.details.length})</h4>
@@ -1059,10 +1878,13 @@
       try{
         const keys=new Set(),months=new Set(),today=todayLocal();keys.add(today);months.add(today.slice(0,7));
         for(const x of state.tx||[]){keys.add(x.date);months.add(x.date.slice(0,7));}
-        for(const t of state.tasks||[])for(const p of t.payments||[]){keys.add(p.date);months.add(p.date.slice(0,7));}
+        for(const t of state.tasks||[]){
+          for(const p of t.payments||[]){keys.add(p.date);months.add(p.date.slice(0,7));}
+          if(t.isAdvertising)for(const c of t.adCosts||[])for(const p of c.payments||[]){keys.add(p.date);months.add(p.date.slice(0,7));}
+        }
         for(const b of ['owedToMe','owedByMe'])for(const person of state[b]||[])for(const e of [...(person.entries||[]),...(person.payments||[])]){keys.add(e.date);months.add(e.date.slice(0,7));}
         const days={},month={};
-        const shorten=r=>({income:r.income,expense:r.expense,net:r.net,netCash:r.netCash,newJobsCount:r.newJobsCount,deliveredJobsCount:r.deliveredJobsCount,jobIncome:r.jobIncome,businessNet:r.businessNet,unclassified:r.unclassified,lent:r.lent,borrowed:r.borrowed,lentPaid:r.lentPaid,borrowedPaid:r.borrowedPaid});
+        const shorten=r=>({income:r.income,expense:r.expense,supplierExpense:r.supplierExpense,net:r.net,netCash:r.netCash,newJobsCount:r.newJobsCount,deliveredJobsCount:r.deliveredJobsCount,jobIncome:r.jobIncome,businessNet:r.businessNet,unclassified:r.unclassified,lent:r.lent,borrowed:r.borrowed,lentPaid:r.lentPaid,borrowedPaid:r.borrowedPaid});
         for(const d of keys){if(/^\d{4}-\d{2}-\d{2}$/.test(d))days[d]=shorten(makeSummary('day',d));}
         for(const m of months){if(/^\d{4}-\d{2}$/.test(m))month[m]=shorten(makeSummary('month',m));}
         window.HisabatiAndroid.syncReports(JSON.stringify({days,months:month}));
@@ -1117,7 +1939,7 @@
 
     function exportBackup() {
       const {auth,...data}=state;
-      const serialized=JSON.stringify({format:'hisabati-azha-backup',version:2,exportedAt:new Date().toISOString(),data},null,2);
+      const serialized=JSON.stringify({format:'hisabati-azha-backup',version:3,exportedAt:new Date().toISOString(),data},null,2);
       if(window.HisabatiAndroid?.exportBackup){window.HisabatiAndroid.exportBackup(serialized);return;}
       const blob=new Blob([serialized],{type:'application/json'});
       const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='hisabati-azha-backup-'+todayLocal()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);
@@ -1195,7 +2017,9 @@
         state.settings.lastTaskAlert = now;
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         playBeep();
-        showToast(`تذكير: لديك ${openTasks.length} أشغال زبائن لم تُنجز بعد!`);
+        const pendingNew=openTasks.filter(t=>taskStatus(t)==='not_started').length;
+        const overdue=openTasks.filter(t=>taskDeadline(t)&&taskDeadline(t).getTime()<now).length;
+        showToast(`تنبيه الأشغال: ${pendingNew} لم تبدأ، و${openTasks.length-pendingNew} قيد الانتظار/التنفيذ${overdue?'، منها '+overdue+' متأخرة':''}.`);
       }
 
       const d = new Date();
@@ -1213,6 +2037,11 @@
     applyLogos();
     refreshAuthScreen();
     reportPeriodChanged();
+    document.getElementById('adsCreated').value=todayLocal();
+    document.getElementById('adsPayDate').value=todayLocal();
+    document.getElementById('adsCostDate').value=todayLocal();
+    adsPeriodChanged();
+    invoiceResetForm();
     if(hasAccount())syncNativeReports();
   </script>
 </body>
