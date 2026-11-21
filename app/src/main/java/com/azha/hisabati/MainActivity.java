@@ -104,9 +104,9 @@ public final class MainActivity extends Activity {
                 try{startActivityForResult(i,LOAD_BACKUP);}catch(Exception e){toast("لا يمكن فتح ملف النسخة الاحتياطية");}
             });
         }
-        @JavascriptInterface public void configureReminders(int hours,String time,int unfinished){
+        @JavascriptInterface public void configureReminders(int hours,String time,int unfinished,String jobSnapshot){
             runOnUiThread(()->{
-                ReminderReceiver.configure(MainActivity.this,hours,time,unfinished);
+                ReminderReceiver.configure(MainActivity.this,hours,time,unfinished,jobSnapshot);
                 if(Build.VERSION.SDK_INT>=33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)!=PackageManager.PERMISSION_GRANTED){
                     requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS},NOTIFICATION_PERMISSION);
                 }
@@ -161,6 +161,20 @@ public final class MainActivity extends Activity {
         }
         @JavascriptInterface public void clearReminders(){
             runOnUiThread(()->ReminderReceiver.clear(MainActivity.this));
+        }
+        // Share invoice details through Android's native chooser (WhatsApp, Messages, etc.).
+        // Invoices are private local records; do not upload them to a server.
+        @JavascriptInterface public void shareInvoice(String details){
+            if(details==null || details.length()>50000)return;
+            runOnUiThread(()->{
+                try{
+                    Intent send=new Intent(Intent.ACTION_SEND);
+                    send.setType("text/plain");
+                    send.putExtra(Intent.EXTRA_SUBJECT,"فاتورة من حساباتي AZHA");
+                    send.putExtra(Intent.EXTRA_TEXT,details);
+                    startActivity(Intent.createChooser(send,"إرسال تفاصيل الفاتورة"));
+                }catch(Exception e){toast("تعذّر فتح المشاركة على هذا الجهاز");}
+            });
         }
         @JavascriptInterface public void openDialer(String phone){
             if(phone==null || !phone.matches("\\+?[0-9]{3,20}"))return;
